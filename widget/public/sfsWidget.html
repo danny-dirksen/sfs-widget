@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>SfS Music</title>
+    <style>
+      @font-face {
+          font-family: "renner-light";
+          src: url("../public/resources/fonts/renner-light.otf");
+      }
+      @font-face {
+          font-family: "renner-medium";
+          src: url("../public/resources/fonts/renner-medium.otf");
+      }
+    </style>
+    <link rel="stylesheet" href="../public/sfsStyle.css">
+    <script src="../public/sfsWidget.js"></script>
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5f235f63f2358a001232f21e&product=inline-share-buttons" async="async"></script>
+  </head>
+  <body>
+    <a id="bottom-logo-container" href="https://songsforsaplings.com/" target="_blank" onclick="sfsButtonClicked('sfs-website', this)">
+      <img id="bottom-logo" alt="Songs for Saplings" src="../public/resources/ui/sfsLogoWhite.png" alt="Songs for Saplings"></img>
+    </a>
+    <div id="main">
+      <div class="pane left-pane">
+        <div id="prompt"></div>
+        <div class="small-gap"></div>
+        <div class="selected" id="selected-channel">
+          SELECTED: SPOTIFY
+        </div>
+        <div class="selected" id="selected-language">
+          SELECTED: ENGLISH
+        </div>
+        <div id="selected-gap" class="small-gap"></div>
+        <div id="hint-container">
+          <img class="arrow hint-arrow" src="../public/resources/ui/sfsArrow.svg"></img>
+          <span id="hint">SELECT A SOURCE</span>
+          <img class="arrow hint-arrow" src="../public/resources/ui/sfsArrow.svg"></img>
+        </div>
+      </div>
+      <div class="pane right-pane">
+        <div id="back-container">
+          <div class="back" onclick="sfsButtonClicked('back', this)">
+            <div class="arrow-container">
+              <img class="arrow" src="../public/resources/ui/sfsArrow.svg"></img>
+            </div>
+            <span>BACK</span>
+          </div>
+        </div>
+        <div class="right-pane-inner">
+          <div class="dropdown" id="dropdown-channel"></div>
+          <div class="dropdown" id="dropdown-language"></div>
+          <div class="dropdown" id="dropdown-album"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pop-up-screen" id="share-screen">
+      <div class="pop-up-container">
+        <div class="x-container">
+          <img class="x" alt="X" src="../public/resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+        </div>
+        <div class="pop-up-content share">
+          <div class="pop-up-header">SHARE WITH A FRIEND!</div>
+          <p class="pop-up-text">
+            Word of mouth is how we grow. You can make an impact by spreading this resource on your favorite platforms:
+          </p>
+          <div id="share-buttons">
+              <a href="http://www.digg.com/submit?url=THISURL" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" />
+              </a>
+              <a href="mailto:?Subject=THISTITLE&amp;Body=Hey,%20thought%20you%20would%20enjoy%20this%20great%20kid's%20music%20that%20teaches%20the%20Bible!">
+                  <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
+              </a>
+              <a href="http://www.facebook.com/sharer.php?u=THISURL" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+              </a>
+              <a href="https://plus.google.com/share?url=THISURL" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
+              </a>
+              <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=THISURL" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" />
+              </a>
+              <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());">
+                  <img src="https://simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" />
+              </a>
+              <a href="javascript:;" onclick="window.print()">
+                  <img src="https://simplesharebuttons.com/images/somacro/print.png" alt="Print" />
+              </a>
+              <a href="http://reddit.com/submit?url=THISURL&amp;title=THISTITLE" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
+              </a>
+              <a href="http://www.stumbleupon.com/submit?url=THISURL&amp;title=THISTITLE" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" />
+              </a>
+              <a href="http://www.tumblr.com/share/link?url=THISURL&amp;title=THISTITLE" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/tumblr.png" alt="Tumblr" />
+              </a>
+              <a href="https://twitter.com/share?url=THISURL&amp;text=THISURL&amp;hashtags=Songs4Saplings" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+              </a>
+              <a href="http://vkontakte.ru/share.php?url=THISURL" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/vk.png" alt="VK" />
+              </a>
+              <a href="http://www.yummly.com/urb/verify?url=THISURL&amp;title=THISTITLE" target="_blank">
+                  <img src="https://simplesharebuttons.com/images/somacro/yummly.png" alt="Yummly" />
+              </a>
+
+          </div>
+          <form>
+            <!--
+            <input type="email" placeholder="Please enter your email address."></input>
+            <input type="email" placeholder="Please enter your frient's email address."></input>
+            <textarea rows="6" placeholder="Type your message: Hey, thought you would enjoy this great kid's music that teaches the Bible!">Hey, thought you would enjoy this great kid's music that teaches the Bible!</textarea>
+            <input type="submit" class="form-button" value="SEND"></input>
+            -->
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="pop-up-screen" id="info-screen">
+      <div class="pop-up-container">
+        <div class="x-container">
+          <img class="x" alt="X" src="../public/resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+        </div>
+        <div class="pop-up-content info">
+          <h1 class="info" id="info-header"></h1>
+          <p class="info" id="info-text"></p>
+          <p class="info">
+            Thanks for your interest in our music. Using these links you can learn about
+            <a href="https://songsforsaplings.com/resources/" target="_blank"> our other free resources</a>, how to
+            <a href="https://songsforsaplings.com/freemusic/" target="_blank">share this music</a> with your friends and church for free, or how to
+            <a href="https://songsforsaplings.com/contact/" target="_blank">get in touch</a> with Songs for Saplings.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="pop-up-screen" id="download-screen">
+      <div class="pop-up-container">
+        <div class="x-container">
+          <img class="x" alt="X" src="../public/resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+        </div>
+        <div class="pop-up-content share">
+          <form onsubmit="return false">
+            <div class="pop-up-header">Download this resource for free!</div>
+            <p class="pop-up-text download-instructions">Enter your email address below to receive a free download link.</p>
+            <input type="email" id="download-email" placeholder="Please enter your email address." oninput="checkEmailAddress(this)"></input>
+            <a class="form-button" id="download-link" target="_blank" onclick="addEmail()" disabled>SEND DOWNLOAD LINK</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      updatePageContent();
+    </script>
+  </body>
+</html>

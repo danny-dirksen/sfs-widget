@@ -1,0 +1,19 @@
+{
+  "name": "daniel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "I don't know what to put here",
+  "main": "lib/app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "google-spreadsheet": "^3.0.11",
+    "google-spreadsheets": "^2.0.0",
+    "nodemailer": "^6.4.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
