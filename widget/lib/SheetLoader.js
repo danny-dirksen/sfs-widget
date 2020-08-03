@@ -1,5 +1,6 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const fs = require('fs');
+const path = require('path');
 const Logger = require('./Logger.js');
 const logger = new Logger();
 
@@ -171,7 +172,7 @@ SheetLoader.prototype.loadSheetData = async function () {
   }
 
   // save json file to serve to client
-  await fs.writeFile("../public/songs.json", JSON.stringify(songsObject), 'utf8', function (err) {
+  await fs.writeFile(path.dirname(__dirname) + "/public/songs.json", JSON.stringify(songsObject), 'utf8', function (err) {
     if (err) {
         logger.log("An error occured while writing songsObject to File.");
         return logger.log(err);

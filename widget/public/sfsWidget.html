@@ -7,20 +7,19 @@
     <style>
       @font-face {
           font-family: "renner-light";
-          src: url("../public/resources/fonts/renner-light.otf");
+          src: url("../resources/fonts/renner-light.otf");
       }
       @font-face {
           font-family: "renner-medium";
-          src: url("../public/resources/fonts/renner-medium.otf");
+          src: url("../resources/fonts/renner-medium.otf");
       }
     </style>
-    <link rel="stylesheet" href="../public/sfsStyle.css">
-    <script src="../public/sfsWidget.js"></script>
-    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5f235f63f2358a001232f21e&product=inline-share-buttons" async="async"></script>
+    <link rel="stylesheet" href="../sfsStyle.css">
+    <script src="../sfsWidget.js"></script>
   </head>
   <body>
     <a id="bottom-logo-container" href="https://songsforsaplings.com/" target="_blank" onclick="sfsButtonClicked('sfs-website', this)">
-      <img id="bottom-logo" alt="Songs for Saplings" src="../public/resources/ui/sfsLogoWhite.png" alt="Songs for Saplings"></img>
+      <img id="bottom-logo" alt="Songs for Saplings" src="../resources/ui/sfsLogoWhite.png" alt="Songs for Saplings"></img>
     </a>
     <div id="main">
       <div class="pane left-pane">
@@ -34,16 +33,16 @@
         </div>
         <div id="selected-gap" class="small-gap"></div>
         <div id="hint-container">
-          <img class="arrow hint-arrow" src="../public/resources/ui/sfsArrow.svg"></img>
+          <img class="arrow hint-arrow" src="../resources/ui/sfsArrow.svg"></img>
           <span id="hint">SELECT A SOURCE</span>
-          <img class="arrow hint-arrow" src="../public/resources/ui/sfsArrow.svg"></img>
+          <img class="arrow hint-arrow" src="../resources/ui/sfsArrow.svg"></img>
         </div>
       </div>
       <div class="pane right-pane">
         <div id="back-container">
           <div class="back" onclick="sfsButtonClicked('back', this)">
             <div class="arrow-container">
-              <img class="arrow" src="../public/resources/ui/sfsArrow.svg"></img>
+              <img class="arrow" src="../resources/ui/sfsArrow.svg"></img>
             </div>
             <span>BACK</span>
           </div>
@@ -58,7 +57,7 @@
     <div class="pop-up-screen" id="share-screen">
       <div class="pop-up-container">
         <div class="x-container">
-          <img class="x" alt="X" src="../public/resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+          <img class="x" alt="X" src="../resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
         </div>
         <div class="pop-up-content share">
           <div class="pop-up-header">SHARE WITH A FRIEND!</div>
@@ -121,12 +120,12 @@
     <div class="pop-up-screen" id="info-screen">
       <div class="pop-up-container">
         <div class="x-container">
-          <img class="x" alt="X" src="../public/resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+          <img class="x" alt="X" src="../resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
         </div>
         <div class="pop-up-content info">
           <h1 class="info" id="info-header"></h1>
-          <p class="info" id="info-text"></p>
-          <p class="info">
+          <p class="info pop-up-text" id="info-text"></p>
+          <p class="info pop-up-text">
             Thanks for your interest in our music. Using these links you can learn about
             <a href="https://songsforsaplings.com/resources/" target="_blank"> our other free resources</a>, how to
             <a href="https://songsforsaplings.com/freemusic/" target="_blank">share this music</a> with your friends and church for free, or how to
@@ -138,7 +137,7 @@
     <div class="pop-up-screen" id="download-screen">
       <div class="pop-up-container">
         <div class="x-container">
-          <img class="x" alt="X" src="../public/resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+          <img class="x" alt="X" src="../resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
         </div>
         <div class="pop-up-content share">
           <form onsubmit="return false">

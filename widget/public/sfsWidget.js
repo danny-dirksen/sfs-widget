@@ -73,7 +73,7 @@ if (client.channel != "") {
 
 // get song json data
 let songs;
-fetch('/public/songs.json')
+fetch('/songs.json')
   .then(res => res.json()).then(data => {
     songs = data;
     if (! Object.keys(songs.channels).some(channel => {
@@ -171,30 +171,25 @@ function updatePageContent () {
     }, 200);
   }
 
-  // a list of element selectors for each dynamic element, and whether or not they are visible on pages 1, 2, and/or 3
-  visibilities = [
-    ["#selected-channel",   false, true , true ],
-    ["#selected-language",  false, false, true ],
-    ["#back-container",     false, true , true ],
-    ["#dropdown-channel",   true , false, false],
-    ["#dropdown-language",  false, true , false],
-    ["#dropdown-album",     false, false, true ],
-    [".hint-arrow", true, true, false],
-    ["#selected-gap", false, true, true],
-    ["#page-1-padding", true, false, false]
+  // a list of element selectors for each dynamic element, the property name, and its value on pages 1, 2, and/or 3
+  changingStyles = [
+    ["#selected-channel", "visibility",  "hidden", "visible" , "visible" ],
+    ["#selected-language", "visibility", "hidden", "hidden", "visible" ],
+    ["#back-container", "visibility", "hidden", "visible" , "visible" ],
+    ["#dropdown-channel", "visibility", "visible" , "hidden", "hidden"],
+    ["#dropdown-language", "visibility", "hidden", "visible" , "hidden"],
+    ["#dropdown-album", "visibility", "hidden", "hidden", "visible" ],
+    [".hint-arrow", "display", "inline", "inline", "none"],
+    ["#selected-gap", "visibility", "hidden", "visible", "visible"],
+    ["#page-1-padding", "visibility", "visible", "hidden", "hidden"]
   ];
   // updates which elements are visible, according to the above list
-  for (let i = 0; i < visibilities.length; i ++) {
-    let nodes = document.querySelectorAll(visibilities[i][0]);
-    let visible = visibilities[i][client.pageNum];
+  for (let i = 0; i < changingStyles.length; i ++) {
+    let nodes = document.querySelectorAll(changingStyles[i][0]);
+    let styleName = changingStyles[i][1];
+    let value = changingStyles[i][client.pageNum + 1];
     for (let j = 0; j < nodes.length; j ++) {
-      if (visible) {
-        nodes[j].style.opacity = "1";
-        nodes[j].style.visibility = "visible";
-      } else {
-        nodes[j].style.opacity = "0";
-        nodes[j].style.visibility = "hidden";
-      }
+      nodes[j].style[styleName] = value;
     }
   }
 
@@ -303,8 +298,8 @@ function updatePageContent () {
           `<div class="dropdown-option" data-id="${id}">
             <a class="dropdown-text" onclick="sfsButtonClicked('${actionType}', this)" ${hrefTags}>${line1}${line2}</a>
             <div>
-              <img src="./public/resources/sfsInfo.svg" alt="Info" onclick="sfsButtonClicked('info-screen', this)"></img>
-              <img src="./public/resources/sfsShare.svg" alt="Share" onclick="sfsButtonClicked('share-screen', this)"></img>
+              <img src="./resources/ui/sfsInfo.svg" alt="Info" onclick="sfsButtonClicked('info-screen', this)"></img>
+              <img src="./resources/ui/sfsShare.svg" alt="Share" onclick="sfsButtonClicked('share-screen', this)"></img>
             </div>
           </div>`
         document.getElementById("dropdown-album").innerHTML += dropdown;

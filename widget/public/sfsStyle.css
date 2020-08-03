@@ -7,11 +7,9 @@ body {
   background-color: #48c275;
   background: linear-gradient(#48c275, #67ae82);
   color: white;
-  font-family: "renner-light", SANS-SERIF, ARIAL, HELVETICA;
-  font-weight: lighter;
-  letter-spacing: 0.1em;
   margin: 0;
   height: 100%;
+  font-family: "renner-light", SANS-SERIF, ARIAL, HELVETICA;
 }
 
 #prompt, .selected, #hint-container, #back-container, .dropdown {
@@ -36,6 +34,7 @@ body {
   padding-bottom: 2vh;
   overflow: hidden;
   flex: 1;
+  letter-spacing: 0.1em;
 }
 
 #prompt {
@@ -50,25 +49,22 @@ body {
 
 .selected {
   color: black;
-  font-family: "renner-medium", SANS-SERIF, ARIAL, HELVETICA;
-  font-weight: normal;
   font-size: 2vh;
   margin-bottom: 1vh;
+  font-family: "renner-medium", SANS-SERIF, ARIAL, HELVETICA;
 }
 
 #hint-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 #hint {
   font-size: 3vh;
+  margin: 0 1vh;
+  line-height: 1;
 }
 
 .arrow {
-  width: 2vh;
-  margin: 1vh;
+  width: 2.5vh;
   transform: rotate(90deg);
 }
 
@@ -92,12 +88,15 @@ body {
 
 #back-container {
   width: 100%;
+  letter-spacing: 0.1em;
+
 }
 
 .back {
   display: flex;
   align-items: center;
   width: fit-content;
+  line-height: 1;
 }
 
 .arrow-container {
@@ -111,7 +110,7 @@ body {
 
 .back > span {
   color: white;
-  font-size: 2vh;
+  font-size: 2.5vh;
   //transition: transform 0.1s;
 }
 
@@ -131,6 +130,7 @@ body {
 
 .right-pane-inner {
   padding: 0 5vh;
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 
 .dropdown {
@@ -168,8 +168,6 @@ body {
 .dropdown-text {
   text-decoration: none;
   color: #222;
-  font-family: SANS-SERIF, ARIAL, HELVETICA;
-  letter-spacing: 0;
   font-size: 3vh;
   margin: 0;
   height: fit-content;
@@ -181,7 +179,7 @@ body {
 }
 
 #dropdown-channel > .dropdown-option > .dropdown-text {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #dropdown-language > .dropdown-option {
@@ -204,7 +202,7 @@ body {
 
 u {
   color: #3fa660;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 #dropdown-album > .dropdown-option > div {
@@ -243,7 +241,8 @@ u {
   height: fit-content;
   max-height: 70vh;
   overflow-y: scroll;
-  width: 50vh;
+  width: 70vh;
+  max-width: 90vw;
   background: white;
   box-sizing: border-box;
   box-shadow: 0 0 4vh rgba(0, 0, 0, 0.3);
@@ -275,14 +274,14 @@ u {
 .pop-up-content {
   color: black;
   font-size: 2.7vh;
-  letter-spacing: 0;
 }
 
 #share-buttons {
   display: flex;
   flex-flow: wrap;
   justify-content: center;
-  padding: 0 7%;
+  margin: auto;
+  max-width: 35vh;
 }
 
 #share-buttons img {
@@ -301,24 +300,21 @@ u {
 }
 
 .info {
-  font-family: ARIAL, SANS-SERIF, HELVETICA;
-  margin: 0;
-  letter-spacing: 0;
 }
 
 h1.info {
   color: #3fa660;
-  font-weight: bold;
   font-size: 1em;
+  margin-top: 0;
 }
 
 p.info {
   margin-top: 1em;
-  font-weight: normal;
 }
 
 p.info > a {
   color: #3fa660;
+  text-decoration: none;
 }
 
 
@@ -339,6 +335,11 @@ form > * {
   font-family: "renner-medium", SANS-SERIF, ARIAL, HELVETICA;
   width: 100%;
   box-sizing: border-box;
+}
+
+.pop-up-text {
+  font-family: "renner-light", SANS-SERIF, ARIAL, HELVETICA;
+  padding: 0;
 }
 
 input[type="email" i] {
@@ -376,8 +377,4 @@ textarea {
 input[type="submit" i]:focus {
   outline: none !important;
   transform: scale(0.97);
-}
-
-.download-instructions {
-  padding: 0;
 }
