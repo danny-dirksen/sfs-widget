@@ -298,8 +298,8 @@ function updatePageContent () {
           `<div class="dropdown-option" data-id="${id}">
             <a class="dropdown-text" onclick="sfsButtonClicked('${actionType}', this)" ${hrefTags}>${line1}${line2}</a>
             <div>
-              <img src="./resources/ui/sfsInfo.svg" alt="Info" onclick="sfsButtonClicked('info-screen', this)"></img>
-              <img src="./resources/ui/sfsShare.svg" alt="Share" onclick="sfsButtonClicked('share-screen', this)"></img>
+              <img src="./resources/ui/info.svg" alt="Info" onclick="sfsButtonClicked('info-screen', this)"></img>
+              <img style="visibility: hidden" src="./resources/ui/share.svg" alt="Share" onclick="sfsButtonClicked('share-screen', this)"></img>
             </div>
           </div>`
         document.getElementById("dropdown-album").innerHTML += dropdown;

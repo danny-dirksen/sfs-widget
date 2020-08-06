@@ -14,8 +14,8 @@
           src: url("../resources/fonts/renner-medium.otf");
       }
     </style>
-    <link rel="stylesheet" href="../sfsStyle.css">
-    <script src="../sfsWidget.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <script src="../widget.js"></script>
   </head>
   <body>
     <a id="bottom-logo-container" href="https://songsforsaplings.com/" target="_blank" onclick="sfsButtonClicked('sfs-website', this)">
@@ -33,16 +33,16 @@
         </div>
         <div id="selected-gap" class="small-gap"></div>
         <div id="hint-container">
-          <img class="arrow hint-arrow" src="../resources/ui/sfsArrow.svg"></img>
+          <img class="arrow hint-arrow" src="../resources/ui/arrow.svg"></img>
           <span id="hint">SELECT A SOURCE</span>
-          <img class="arrow hint-arrow" src="../resources/ui/sfsArrow.svg"></img>
+          <img class="arrow hint-arrow" src="../resources/ui/arrow.svg"></img>
         </div>
       </div>
       <div class="pane right-pane">
         <div id="back-container">
           <div class="back" onclick="sfsButtonClicked('back', this)">
             <div class="arrow-container">
-              <img class="arrow" src="../resources/ui/sfsArrow.svg"></img>
+              <img class="arrow" src="../resources/ui/arrow.svg"></img>
             </div>
             <span>BACK</span>
           </div>
@@ -57,7 +57,7 @@
     <div class="pop-up-screen" id="share-screen">
       <div class="pop-up-container">
         <div class="x-container">
-          <img class="x" alt="X" src="../resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+          <img class="x" alt="X" src="../resources/ui/x.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
         </div>
         <div class="pop-up-content share">
           <div class="pop-up-header">SHARE WITH A FRIEND!</div>
@@ -66,43 +66,43 @@
           </p>
           <div id="share-buttons">
               <a href="http://www.digg.com/submit?url=THISURL" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" />
+                  <img src="../resources/share-logos/diggit.png" alt="Digg" />
               </a>
               <a href="mailto:?Subject=THISTITLE&amp;Body=Hey,%20thought%20you%20would%20enjoy%20this%20great%20kid's%20music%20that%20teaches%20the%20Bible!">
-                  <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
+                  <img src="../resources/share-logos/email.png" alt="Email" />
               </a>
               <a href="http://www.facebook.com/sharer.php?u=THISURL" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+                  <img src="../resources/share-logos/facebook.png" alt="Facebook" />
               </a>
               <a href="https://plus.google.com/share?url=THISURL" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
+                  <img src="../resources/share-logos/google.png" alt="Google" />
               </a>
               <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=THISURL" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" />
+                  <img src="../resources/share-logos/linkedin.png" alt="LinkedIn" />
               </a>
               <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());">
-                  <img src="https://simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" />
+                  <img src="../resources/share-logos/pinterest.png" alt="Pinterest" />
               </a>
               <a href="javascript:;" onclick="window.print()">
-                  <img src="https://simplesharebuttons.com/images/somacro/print.png" alt="Print" />
+                  <img src="../resources/share-logos/print.png" alt="Print" />
               </a>
               <a href="http://reddit.com/submit?url=THISURL&amp;title=THISTITLE" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
+                  <img src="../resources/share-logos/reddit.png" alt="Reddit" />
               </a>
               <a href="http://www.stumbleupon.com/submit?url=THISURL&amp;title=THISTITLE" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" />
+                  <img src="../resources/share-logos/stumbleupon.png" alt="StumbleUpon" />
               </a>
               <a href="http://www.tumblr.com/share/link?url=THISURL&amp;title=THISTITLE" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/tumblr.png" alt="Tumblr" />
+                  <img src="../resources/share-logos/tumblr.png" alt="Tumblr" />
               </a>
               <a href="https://twitter.com/share?url=THISURL&amp;text=THISURL&amp;hashtags=Songs4Saplings" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+                  <img src="../resources/share-logos/twitter.png" alt="Twitter" />
               </a>
               <a href="http://vkontakte.ru/share.php?url=THISURL" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/vk.png" alt="VK" />
+                  <img src="../resources/share-logos/vk.png" alt="VK" />
               </a>
               <a href="http://www.yummly.com/urb/verify?url=THISURL&amp;title=THISTITLE" target="_blank">
-                  <img src="https://simplesharebuttons.com/images/somacro/yummly.png" alt="Yummly" />
+                  <img src="../resources/share-logos/yummly.png" alt="Yummly" />
               </a>
 
           </div>
@@ -120,7 +120,7 @@
     <div class="pop-up-screen" id="info-screen">
       <div class="pop-up-container">
         <div class="x-container">
-          <img class="x" alt="X" src="../resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+          <img class="x" alt="X" src="../resources/ui/x.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
         </div>
         <div class="pop-up-content info">
           <h1 class="info" id="info-header"></h1>
@@ -137,7 +137,7 @@
     <div class="pop-up-screen" id="download-screen">
       <div class="pop-up-container">
         <div class="x-container">
-          <img class="x" alt="X" src="../resources/ui/sfsX.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
+          <img class="x" alt="X" src="../resources/ui/x.svg" onClick="sfsButtonClicked('exit-screen', this)"></img>
         </div>
         <div class="pop-up-content share">
           <form onsubmit="return false">

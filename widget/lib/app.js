@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   app.set('trust proxy', true)
   const ip = req.ip;
   res.set('clientIP', ip);
-  res.sendFile(rootPath + '/public/sfsWidget.html');
+  res.sendFile(rootPath + '/public/widget.html');
 });
 
 app.get('/api/cpt', (req, res) => {
