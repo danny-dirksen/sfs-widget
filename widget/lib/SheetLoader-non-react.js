@@ -57,7 +57,7 @@ SheetLoader.prototype.loadSheetData = async function () {
           cptLanguagColumn = j;
         }
         let language = cpt.getCell(i + 1, j).value;
-        if ((j >= cptLanguagColumn) && language) {
+        if (j >= cptLanguagColumn && language != null) {
           allLanguages.push(language);
         }
       }
@@ -67,7 +67,7 @@ SheetLoader.prototype.loadSheetData = async function () {
 
   for (let i = cptStartRow + 2; i < cpt.rowCount; i ++) {
     let pic = cpt.getCell(i, 0).value;
-    if (pic) {
+    if (pic != null) {
       let partner = {
         "emailAddress": cpt.getCell(i, 1).value,
         "emailSubject": cpt.getCell(i, 2).value,
@@ -75,8 +75,8 @@ SheetLoader.prototype.loadSheetData = async function () {
       }
       for (let j = cptLanguagColumn; j < cpt.columnCount; j ++) {
         let language = cpt.getCell(cptStartRow + 1, j).value;
-        if (language) {
-          if (cpt.getCell(i, j).value) {
+        if (language != null) {
+          if (cpt.getCell(i, j).value != null) {
             partner.languages.push(language);
           }
         }
@@ -88,7 +88,7 @@ SheetLoader.prototype.loadSheetData = async function () {
     }
   }
 
-
+  //logger.log(cptObject)
   await fs.writeFile("cpt.json", JSON.stringify(cptObject), 'utf8', function (err) {
     if (err) {
         logger.log("An error occured while writing cptObject to File.");
@@ -100,94 +100,84 @@ SheetLoader.prototype.loadSheetData = async function () {
   const sheet = doc.sheetsById[1548340038];
   await sheet.loadCells(); // loads a range of cells
 
+  //process.stdout.write("Done.\nUpdating Sheets... ");
+
   // initialize the json file that will be sent
-  let links = {
-    lastUpdated: dateString,
-    languages: [],
-    channels: [],
-    resources: []
+  let resourceData = {
+    "lastUpdated": dateString,
+    "channels": {},
+    "languages": {}
   };
+
+  // find the row on the spreadsheet at which the data starts
   let startRow;
   for (let i = 0; i < sheet.rowCount; i ++) {
+    // look for a cell that says "language"
     if (sheet.getCell(i, 0).value == "language") {
       startRow = i;
       break;
     }
   }
-  for (let i = startRow + 1; i < sheet.rowCount; i ++) {
-    let languageName = sheet.getCell(i, 0).value;
-    if (languageName) {
-      let language = {
-        name: languageName,
-        autonym: sheet.getCell(i, 1).value,
-        row: i,
-        nextRow: sheet.rowCount,
-        resources: []
-      }
-      for (let j = i; j < sheet.rowCount; j ++) {
-        // if this row is a new language row, and it isn't the first row in the loop, then it must be the start of the next language
-        if (sheet.getCell(j, 0).value && j != i) {
-          language.nextRow = j;
-          // skip the main reader to the next song
-          i = j
-          break;
-        } else {
-          let resource = {
-            id: sheet.getCell(j, 2).value,
-            line1: sheet.getCell(j, 3).value,
-            line2: sheet.getCell(j, 4).value,
-            info: sheet.getCell(j, 5).value,
-          }
-          if (resource.id && resource.line2) {
-            language.resources.push(resource);
-          }
-        }
-      }
-      if (language.resources.length > 0) {
-        links.languages.push(language);
-      }
-    }
-  }
-  // for all columns that may have a channel
-  for (let i = 6; i < sheet.columnCount; i ++) {
+  // store all channels
+  for (let i = 4; i < sheet.columnCount; i ++) {
     let channelName = sheet.getCell(startRow + 1, i).value;
-    // if this row contains a channel
-    if (channelName) {
-      let channel = {
-        name: channelName,
-        image: sheet.getCell(startRow + 2, i).value,
-        languages: []
-      }
-      // for all stored languages
-      for (let j = 0; j < links.languages.length; j ++) {
-
-        let language = {
-          name: links.languages[j].name,
-          resources: []
-        }
-        for (let k = links.languages[j].row; k < links.languages[j].nextRow; k ++) {
-          let id = sheet.getCell(k, 2).value;
-          let link = sheet.getCell(k, i).value;
-          if (id && link) {
-            language.resources.push({
-              id: id,
-              link: link
-            });
-          }
-        }
-        if (language.resources.length > 0) {
-          channel.languages.push(language);
-        }
-      }
-      if (channel.languages.length > 0) {
-        links.channels.push(channel);
-      }
+    if (channelName != null) {
+      // store it in the channels list. If cells are blank, null values are stored.
+      channelPath = sheet.getCell(startRow + 2, i).value;
+      resourceData.channels[channelName] = {
+        "column": i,
+        "path": channelPath
+      };
     }
   }
+  // add all languages, in which the link data is stored
+  for (let i = startRow + 1; i < sheet.rowCount; i ++) {
+    let languageName = sheet.getCell(i, 0).value; // get language name
+    if (languageName != null) {
+      let autonym = sheet.getCell(i, 1).value; // language autonym
+      let language = {
+        "autonym": autonym,
+        "albums": {}
+      };
+      for (let j = i; j < sheet.rowCount; j ++) {
+        // stop looking for albums for this language once the j pointer reaches the next language
+        if (j != i && sheet.getCell(j, 0).value != null) {
+          break;
+        }
+        // refers to the current list of albums
+        let albums = language.albums;
+        let albumTitle = sheet.getCell(j, 4).value;
+        if (albumTitle != null) {
+          let album = {
+            "order": j - i,
+            "line1": sheet.getCell(j, 3).value,
+            "line2": albumTitle,
+            "info": sheet.getCell(j, 5).value,
+            "channels": {}
+          };
+          // gets all channel links for album
+          for (let k = 6; k < sheet.columnCount; k ++) {
+            let albumLink = sheet.getCell(j, k).value;
+            if (albumLink != null) {
+              let channelName = sheet.getCell(startRow + 1, k).value;
+              album.channels[channelName] = {
+                "link": albumLink
+              };
+            }
+          }
+          albums[sheet.getCell(j, 2).value] = album;
+        }
+      }
+      resourceData.languages[languageName] = language;
+    }
+  }
+
+  console.log(resourceData);
+
   // save json file to serve to client
-  await fs.writeFile(path.dirname(__dirname) + "/public/links.json", JSON.stringify(links), 'utf8', function (err) {
+  await fs.writeFile(path.dirname(__dirname) + "/public/songs.json", JSON.stringify(resourceData), 'utf8', function (err) {
     if (err) {
-        logger.log("An error occured while writing links to File.");
+        logger.log("An error occured while writing resourceData to File.");
         return logger.log(err);
     }
     logger.log("JSON file containing links has been saved.");

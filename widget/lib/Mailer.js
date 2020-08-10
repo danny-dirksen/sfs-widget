@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const fs = require('fs')
 
-let songs = require('../public/songs.json');;
+let songs = require('../public/links.json');;
 const Logger = require('./Logger.js');
 const logger = new Logger();
 
