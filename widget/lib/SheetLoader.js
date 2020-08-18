@@ -149,7 +149,7 @@ SheetLoader.prototype.loadSheetData = async function () {
     }
   }
   // for all columns that may have a channel
-  for (let i = 6; i < sheet.columnCount; i ++) {
+  for (let i = 7; i < sheet.columnCount; i ++) {
     let channelName = sheet.getCell(startRow + 1, i).value;
     // if this row contains a channel
     if (channelName) {
@@ -167,11 +167,12 @@ SheetLoader.prototype.loadSheetData = async function () {
         }
         for (let k = links.languages[j].row; k < links.languages[j].nextRow; k ++) {
           let id = sheet.getCell(k, 2).value;
+          let allLink = sheet.getCell(k, 6).value;
           let link = sheet.getCell(k, i).value;
-          if (id && link) {
+          if (id && (link || allLink)) {
             language.resources.push({
               id: id,
-              link: link
+              link: (link || allLink)
             });
           }
         }
