@@ -1,54 +1,81 @@
-const nodemailer = require("nodemailer");
 const fs = require('fs')
+const path = require('path')
+const mailgun = require("mailgun-js")
+var http = require('http')
+const mailchimp = require("@mailchimp/mailchimp_marketing");
 
-let songs = require('../public/links.json');;
-const Logger = require('./Logger.js');
-const logger = new Logger();
+const common = require('./common.js')
+const shareEmailTemplate = fs.readFileSync(common.root + '/lib/shareEmailTemplate.html', 'utf8')
+const downloadEmailTemplate = fs.readFileSync(common.root + '/lib/downloadEmailTemplate.html', 'utf8')
 
 class Mailer {
-  constructor () {
-    // Generate test SMTP service account from ethereal.email
-    nodemailer.createTestAccount((err, account) => {
-      this.account = account
-      //logger.log(this.account);
-    });
-
+  constructor (api) {
+    this.mg = mailgun({apiKey: api.key, domain: api.domain})
   }
 
-  async sendDownloadLink () {
-      try {
-      // create reusable transporter object using the default SMTP transport
-      let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: this.account.user, // generated ethereal user
-          pass: this.account.pass, // generated ethereal password
-        },
-      });
-
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: '"Songs for Saplings" <foo@example.com>', // sender address
-        to: "daniel@dirksen.com", // list of receivers
-        subject: "Free Download Link", // Subject line
-        text: `Below is the download link for your resource. Have a great day!\n\nhttps://example.com`, // plain text body
-        html: `Below is the download link for your resource. Have a great day!<br><b><a href="https://example.com">Download</b>`, // html body
-      });
-
-      logger.log("Message sent: %s", info.messageId);
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-      // Preview only available when sending through an Ethereal account
-      logger.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    } catch (err) {
-      logger.log(err)
+  async share (from, to, message, link, name) {
+    // replace certain tags with request-specific info
+    let shareHTML = shareEmailTemplate
+      .replace("{from}", from)
+      .replace("{to}", to)
+      .replace("{message}", message)
+      .replace("{link}", link)
+      .replace("{name}", name)
+    // send mail
+    const data = {
+      from: '"Songs for Saplings" <info@songsforsaplings.com>', // sender address
+      to: to, // list of receivers
+      subject: `A Note From "${from}"`, // Subject line
+      text: `Someone shared one of our resources with you! They left a note: \n\n  ${message} \n\n${name} \n${link} \nWe hope you enjoy! If you find our resource helpful, please consider donating to our ministry.`, // plain text body
+      html: shareHTML, // html body
     }
+    this.mg.messages().send(data, function (error, body) {
+      common.log(body)
+    })
+  }
+
+  async download (to, name, link) {
+    // replace certain tags with request-specific info
+    let downloadHTML = downloadEmailTemplate
+      .replace("{albumname}", name)
+      .replace("{downloadlink}", link)
+      .replace("{unsubscribelink}", "unsubscribe.test")
+
+    const data = {
+      from: '"Songs for Saplings" <info@songsforsaplings.com>', // sender address
+      to: to, // list of receivers
+      subject: "Your Free Download", // Subject line
+      text: `Hi there, \nHere is your free download of ${name}. We hope you enjoy! \n${link} \nIf you find our resource helpful, please consider donating to our ministry.`, // plain text body
+      html: downloadHTML, // html body
+    }
+    this.mg.messages().send(data, function (error, body) {
+      common.log(body);
+    });
+  }
+  async subscribe(email, firstName, lastName) {
+    const listId = "2458faf7dd";
+    const subscribingUser = {
+      email: email,
+      firstName: null,
+      lastName: null
+    };
+
+    const response = await mailchimp.lists.addListMember(listId, {
+      email_address: subscribingUser.email,
+      status: "subscribed",
+      merge_fields: {
+        FNAME: subscribingUser.firstName,
+        LNAME: subscribingUser.lastName
+      }
+    }
+    common.log(response)
+  }
+
+  async unsubscribe(email) {
+
   }
 }
 
 
 
-module.exports = Mailer;
+module.exports = Mailer

@@ -1,8 +1,7 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const fs = require('fs');
 const path = require('path');
-const Logger = require('./Logger.js');
-const logger = new Logger();
+const common = require('./common.js');
 
 function SheetLoader(sheetID, creds, updateInterval) {
   this.sheetID = sheetID;
@@ -19,7 +18,7 @@ SheetLoader.prototype.init = function () {
     () => _this.loadSheetData(),
     this.updateInterval * 60 * 60 * 1000
   );
-  logger.log(`Google sheets will be updated every ${this.updateInterval} hrs`);
+  common.log(`Google sheets will be updated every ${this.updateInterval} hrs`);
 }
 
 // updates sheet data and stores it in a json file
@@ -35,30 +34,19 @@ SheetLoader.prototype.loadSheetData = async function () {
   const cpt = doc.sheetsById[378376827];
   await cpt.loadCells();
 
-  // gets a formatted string version of the current date and time
-  let ts = Date.now();
-  let date = new Date(ts);
-  let dateString = "" + date.getHours() + ":" + date.getMinutes() + " " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-
   let cptObject = {
-    "lastUpdated": dateString,
-    "partners": {}
+    "lastUpdated": common.getDate(),
+    "partners": []
   };
 
-  let allLanguages = [];
-
   let cptStartRow;
-  let cptLanguagColumn = 10000;
+  let cptLanguagColumn;
   for (let i = 0; i < cpt.rowCount; i ++) {
     if (cpt.getCell(i, 0).value == 'partner info') {
       cptStartRow = i;
       for (j = 0; j < cpt.columnCount; j ++) {
         if (cpt.getCell(i, j).value == 'languages') {
           cptLanguagColumn = j;
-        }
-        let language = cpt.getCell(i + 1, j).value;
-        if ((j >= cptLanguagColumn) && language) {
-          allLanguages.push(language);
         }
       }
       break;
@@ -69,9 +57,10 @@ SheetLoader.prototype.loadSheetData = async function () {
     let pic = cpt.getCell(i, 0).value;
     if (pic) {
       let partner = {
-        "emailAddress": cpt.getCell(i, 1).value,
-        "emailSubject": cpt.getCell(i, 2).value,
-        "languages": []
+        pic: pic,
+        emailAddress: cpt.getCell(i, 1).value,
+        emailSubject: cpt.getCell(i, 2).value,
+        languages: []
       }
       for (let j = cptLanguagColumn; j < cpt.columnCount; j ++) {
         let language = cpt.getCell(cptStartRow + 1, j).value;
@@ -81,20 +70,17 @@ SheetLoader.prototype.loadSheetData = async function () {
           }
         }
       }
-      if (partner.languages.length == 0) {
-        partner.languages = partner.languages.concat(allLanguages);
-      }
-      cptObject.partners[pic] = partner;
+      cptObject.partners.push(partner);
     }
   }
 
 
-  await fs.writeFile("cpt.json", JSON.stringify(cptObject), 'utf8', function (err) {
+  await fs.writeFile("lib/cpts.json", JSON.stringify(cptObject), 'utf8', function (err) {
     if (err) {
-        logger.log("An error occured while writing cptObject to File.");
-        return logger.log(err);
+        common.log("An error occured while writing cptObject to File.");
+        return common.log(err);
     }
-    logger.log("JSON file containing cpt has been saved.");
+    common.log("JSON file containing cpt has been saved.");
   });
 
   const sheet = doc.sheetsById[1548340038];
@@ -102,7 +88,7 @@ SheetLoader.prototype.loadSheetData = async function () {
 
   // initialize the json file that will be sent
   let links = {
-    lastUpdated: dateString,
+    lastUpdated: common.getDate(),
     languages: [],
     channels: [],
     resources: []
@@ -188,10 +174,10 @@ SheetLoader.prototype.loadSheetData = async function () {
   // save json file to serve to client
   await fs.writeFile(path.dirname(__dirname) + "/public/links.json", JSON.stringify(links), 'utf8', function (err) {
     if (err) {
-        logger.log("An error occured while writing links to File.");
-        return logger.log(err);
+        common.log("An error occured while writing links to File.");
+        return common.log(err);
     }
-    logger.log("JSON file containing links has been saved.");
+    common.log("JSON file containing links has been saved.");
   });
   //process.stdout.write("Done.\n");
 }
