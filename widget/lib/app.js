@@ -15,7 +15,7 @@ const cpts = require('./cpts.json')
 const links = require('./links.json')
 
 // global variables
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 3000
 
 // instanciate modules
 const mailer = new Mailer(apis)
