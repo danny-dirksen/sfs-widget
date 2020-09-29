@@ -137,10 +137,6 @@ body {
   height: 0;
 }
 
-.dropdown:last-child {
-  margin-bottom: 5vh;
-}
-
 .dropdown-option {
   background: white;
   margin-bottom: 2vh;
@@ -163,6 +159,10 @@ body {
 .dropdown-option:active {
   background-color: #EEE;
   transform: scale(0.97);
+}
+
+.dropdown-option:last-child {
+  margin-bottom: 5vmax;
 }
 
 .dropdown-text {

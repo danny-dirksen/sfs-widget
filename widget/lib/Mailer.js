@@ -4,13 +4,26 @@ const mailgun = require("mailgun-js")
 var http = require('http')
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 
+
 const common = require('./common.js')
 const shareEmailTemplate = fs.readFileSync(common.root + '/lib/shareEmailTemplate.html', 'utf8')
 const downloadEmailTemplate = fs.readFileSync(common.root + '/lib/downloadEmailTemplate.html', 'utf8')
 
 class Mailer {
-  constructor (api) {
-    this.mg = mailgun({apiKey: api.key, domain: api.domain})
+
+  constructor (apis) {
+    this.mg = mailgun({apiKey: apis.mailgun.key, domain: apis.mailgun.domain})
+    mailchimp.setConfig({
+      apiKey: apis.mailchimp.key,
+      server: apis.mailchimp.prefix,
+    });
+
+    mailchimp.ping.get().then((response, err) => {
+      if (err) {
+        common.log(err)
+      }
+        common.log(response.health_status)
+    })
   }
 
   async share (from, to, message, link, name) {
@@ -22,7 +35,7 @@ class Mailer {
       .replace("{link}", link)
       .replace("{name}", name)
     // send mail
-    const data = {
+    let data = {
       from: '"Songs for Saplings" <info@songsforsaplings.com>', // sender address
       to: to, // list of receivers
       subject: `A Note From "${from}"`, // Subject line
@@ -30,49 +43,51 @@ class Mailer {
       html: shareHTML, // html body
     }
     this.mg.messages().send(data, function (error, body) {
-      common.log(body)
+      //common.log(body)
     })
   }
 
-  async download (to, name, link) {
+  async download (fields) {
     // replace certain tags with request-specific info
     let downloadHTML = downloadEmailTemplate
-      .replace("{albumname}", name)
-      .replace("{downloadlink}", link)
-      .replace("{unsubscribelink}", "unsubscribe.test")
+      .replace("{resourceName}", fields.resourceName)
+      .replace("{downloadLink}", fields.downloadLink)
+      .replace("{firstName}", fields.firstName)
+      .replace("{lastName}", fields.lastName)
+      .replace("{unsubscribeLink}", "https://songsforsaplings.us14.list-manage.com/unsubscribe?u=09c372bf98b7d30635bd0cb5c&id=2458faf7dd")
+      .replace("{moreResourcees}", "https://songsforsaplings.com/resources/free-guitar-chords-lyrics-and-sheet-music/#content")
 
     const data = {
       from: '"Songs for Saplings" <info@songsforsaplings.com>', // sender address
-      to: to, // list of receivers
+      to: fields.email, // list of receivers
       subject: "Your Free Download", // Subject line
-      text: `Hi there, \nHere is your free download of ${name}. We hope you enjoy! \n${link} \nIf you find our resource helpful, please consider donating to our ministry.`, // plain text body
+      text: `Hi there, \nHere is your free download of ${fields.resourceName}. We hope you enjoy! \n${fields.downloadLink} \nIf you find our resource helpful, please consider donating to our ministry.`, // plain text body
       html: downloadHTML, // html body
     }
-    this.mg.messages().send(data, function (error, body) {
-      common.log(body);
-    });
+    this.subscribe(fields.email, fields.firstName, fields.lastName)
+    this.mg.messages().send(data, function (err, body) {
+      if (err) {
+        common.log(err)
+      }
+    })
   }
+
+  // subscribe through mailchimp api
   async subscribe(email, firstName, lastName) {
-    const listId = "2458faf7dd";
-    const subscribingUser = {
-      email: email,
-      firstName: null,
-      lastName: null
-    };
+    const listId = "2458faf7dd"
 
     const response = await mailchimp.lists.addListMember(listId, {
-      email_address: subscribingUser.email,
+      email_address: email,
       status: "subscribed",
       merge_fields: {
-        FNAME: subscribingUser.firstName,
-        LNAME: subscribingUser.lastName
+        FNAME: firstName,
+        LNAME: lastName
       }
-    }
-    common.log(response)
-  }
-
-  async unsubscribe(email) {
-
+    }).catch((err) => {
+      if (err.response.body.title != 'Member Exists') {
+        common.log(err)
+      }
+    })
   }
 }
 
