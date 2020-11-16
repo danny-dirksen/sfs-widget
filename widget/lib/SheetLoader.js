@@ -75,7 +75,7 @@ SheetLoader.prototype.loadSheetData = async function () {
   }
 
 
-  await fs.writeFile("lib/cpts.json", JSON.stringify(cptObject), 'utf8', function (err) {
+  await fs.writeFile("./cpts.json", JSON.stringify(cptObject), 'utf8', function (err) {
     if (err) {
         common.log("An error occured while writing cptObject to File.");
         return common.log(err);

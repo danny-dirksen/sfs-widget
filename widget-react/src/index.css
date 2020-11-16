@@ -20,7 +20,7 @@ html {
   height: 100%;
   //background-color: #48c275;
   //background: linear-gradient(#48c275, #0f9748);
-  background-color: #48c275;
+  background-color: #0f9748;
   background: linear-gradient(#48c275, #0f9748);
   background-size: cover;
 }
@@ -353,7 +353,7 @@ h1.pop-up-header {
   font-size: 1em;
   margin-top: 0;
   color: #3fa660;
-  font-family: "renner-medium";
+  font-family: "renner-light";
   padding: 0;
   margin-bottom: 1.5vmax;
 }
@@ -392,8 +392,7 @@ input {
 
 .pop-up-text > a {
   color: #3fa660;
-  text-decoration: none;
-  font-family: "renner-medium";
+  font-family: "renner-light";
 }
 
 .pop-up-text > a:hover {

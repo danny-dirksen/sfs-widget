@@ -42,8 +42,10 @@ class Mailer {
       text: `Someone shared one of our resources with you! They left a note: \n\n  ${message} \n\n${name} \n${link} \nWe hope you enjoy! If you find our resource helpful, please consider donating to our ministry.`, // plain text body
       html: shareHTML, // html body
     }
-    this.mg.messages().send(data, function (error, body) {
-      //common.log(body)
+    this.mg.messages().send(data, function (err, body) {
+      if (err) {
+        common.log(err)
+      }
     })
   }
 
@@ -58,7 +60,7 @@ class Mailer {
       .replace("{moreResourcees}", "https://songsforsaplings.com/resources/free-guitar-chords-lyrics-and-sheet-music/#content")
 
     const data = {
-      from: '"Songs for Saplings" <info@songsforsaplings.com>', // sender address
+      from: '"Songs for Saplings Widget" <info@widget.songsforsaplings.com>', // sender address
       to: fields.email, // list of receivers
       subject: "Your Free Download", // Subject line
       text: `Hi there, \nHere is your free download of ${fields.resourceName}. We hope you enjoy! \n${fields.downloadLink} \nIf you find our resource helpful, please consider donating to our ministry.`, // plain text body
