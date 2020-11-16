@@ -2,6 +2,9 @@
   "name": "daniel",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "^7.10.0"
+  },
   "description": "I don't know what to put here",
   "main": "lib/app.js",
   "dependencies": {
