@@ -28,7 +28,7 @@ function PopupDownload(props) {
         <div className="first-last-container">
           <input
             type="text"
-            className="text-input"
+            className="text-input name-input"
             name="firstName"
             placeholder="First Name"
             value={firstName}
@@ -38,7 +38,7 @@ function PopupDownload(props) {
           />
           <input
             type="text"
-            className="text-input"
+            className="text-input name-input"
             name="lastName"
             placeholder="Last Name"
             value={lastName}

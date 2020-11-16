@@ -413,6 +413,10 @@ input {
   border: 1px solid #3fa660;
 }
 
+.name-input {
+  width: 35%;
+}
+
 .form-button {
   border: none;
   background: #3fa660;
