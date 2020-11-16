@@ -172,7 +172,7 @@ SheetLoader.prototype.loadSheetData = async function () {
     }
   }
   // save json file to serve to client
-  await fs.writeFile(path.dirname(__dirname) + "/public/links.json", JSON.stringify(links), 'utf8', function (err) {
+  await fs.writeFile(path.dirname(__dirname) + "/lib/links.json", JSON.stringify(links), 'utf8', function (err) {
     if (err) {
         common.log("An error occured while writing links to File.");
         return common.log(err);

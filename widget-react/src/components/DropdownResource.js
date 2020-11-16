@@ -26,39 +26,41 @@ function DropdownResource(props) {
       language.resources.forEach((resource, index) => {
         // finds description and info about the resource. independent of the channel selected.
         let resourceData = languageData.resources.find(recData => {
-          return recData.id === resource.id
+          return (recData.id === resource.id)
         })
-        cards.push(
-          <div className="dropdown-option" key={index}>
-            { props.client.channel.toLowerCase() === "download" ?
-              <div
-                className="dropdown-text"
-                onClick={() => props.handlers.downloadScreen(resource.id)}
-                role="button"
-                tabIndex="0"
-                disabled={props.client.page !== 3 ? true : ""}
-              >
-                <div>{resourceData.line1}</div>
-                <div className="big-green">{resourceData.line2}</div>
-              </div> :
-              <a
-                className="dropdown-text"
-                href={resource.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => props.handlers.selectResource(resource.id)}
-                tabIndex="0"
-              >
-                <div>{resourceData.line1}</div>
-                <div className="big-green">{resourceData.line2}</div>
-              </a>
-            }
-            <div className="resource-option-buttons">
-              <img src={infoIcon} alt="Info" onClick={() => props.handlers.infoScreen(resource.id)}></img>
-              <img src={shareIcon} alt="Share" onClick={() => props.handlers.shareScreen(resource.id)}></img>
+        if (resourceData) {
+          cards.push(
+            <div className="dropdown-option" key={index}>
+              { props.client.channel.toLowerCase() === "download" ?
+                <div
+                  className="dropdown-text"
+                  onClick={() => props.handlers.downloadScreen(resource.id)}
+                  role="button"
+                  tabIndex="0"
+                  disabled={props.client.page !== 3 ? true : ""}
+                >
+                  <div>{resourceData.line1}</div>
+                  <div className="big-green">{resourceData.line2}</div>
+                </div> :
+                <a
+                  className="dropdown-text"
+                  href={resource.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => props.handlers.selectResource(resource.id)}
+                  tabIndex="0"
+                >
+                  <div>{resourceData.line1}</div>
+                  <div className="big-green">{resourceData.line2}</div>
+                </a>
+              }
+              <div className="resource-option-buttons">
+                <img src={infoIcon} alt="Info" onClick={() => props.handlers.infoScreen(resource.id)}></img>
+                <img src={shareIcon} alt="Share" onClick={() => props.handlers.shareScreen(resource.id)}></img>
+              </div>
             </div>
-          </div>
-        )
+          )
+        }
       })
     }
   } else {
