@@ -112,3 +112,4 @@ dist
 # Mac-specific
 .DS_Store
 widget/var/usageData.json
+widget/var/usageData.json
