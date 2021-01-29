@@ -57,7 +57,8 @@ class Mailer {
       .replace("{firstName}", fields.firstName)
       .replace("{lastName}", fields.lastName)
       .replace("{unsubscribeLink}", "https://songsforsaplings.us14.list-manage.com/unsubscribe?u=09c372bf98b7d30635bd0cb5c&id=2458faf7dd")
-      .replace("{moreResourcees}", "https://songsforsaplings.com/resources/free-guitar-chords-lyrics-and-sheet-music/#content")
+      .replace("{techSupportLink}", "https://songsforsaplings.com/listenfree/")
+      .replace("{resourcesLink}", "https://songsforsaplings.com/resources/free-guitar-chords-lyrics-and-sheet-music/#content")
 
     const data = {
       from: '"Songs for Saplings Widget" <info@widget.songsforsaplings.com>', // sender address
