@@ -102,6 +102,7 @@ SheetLoader.prototype.loadSheetData = async function () {
   }
   for (let i = startRow + 1; i < sheet.rowCount; i ++) {
     let languageName = sheet.getCell(i, 0).value;
+    console.log(languageName);
     if (languageName) {
       let language = {
         name: languageName,
@@ -115,7 +116,7 @@ SheetLoader.prototype.loadSheetData = async function () {
         if (sheet.getCell(j, 0).value && j != i) {
           language.nextRow = j;
           // skip the main reader to the next song
-          i = j
+          i = language.nextRow - 1;
           break;
         } else {
           let resource = {

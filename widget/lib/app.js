@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000
 // instanciate modules
 const mailer = new Mailer(apis)
 // updates every 24 hours
-const sheetLoader = new SheetLoader('1ae0nTowaSivDqV6CHlac59VW-6jGwPB8qcillwafMiU', apis.sheets, 24)
+const sheetLoader = new SheetLoader('1ae0nTowaSivDqV6CHlac59VW-6jGwPB8qcillwafMiU', apis.sheets, 1)
 
 // main app
 var app = express()
