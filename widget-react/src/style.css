@@ -10,6 +10,7 @@ button {padding: 0; border: none}
     font-family: "renner-light";
     src: url("resources/fonts/renner-light.otf");
 }
+
 @font-face {
     font-family: "renner-medium";
     src: url("resources/fonts/renner-medium.otf");
@@ -19,9 +20,9 @@ html {
   -webkit-overflow-scrolling: touch;
   height: 100%;
   //background-color: #48c275;
+  //background-color: #0f9748;
+  background-color: #2fb257;
   //background: linear-gradient(#48c275, #0f9748);
-  background-color: #0f9748;
-  background: linear-gradient(#48c275, #0f9748);
   background-size: cover;
 }
 
@@ -36,11 +37,19 @@ body {
   //transition: opacity 0.2s, visibility 0.2s;
 }
 
+#root {
+  display: flex;
+  height: 100%;
+}
+
 #main {
   margin: auto;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  max-width: 600px;
+  max-height: 800px;
 }
 
 .pane {
@@ -50,27 +59,29 @@ body {
 .left-pane {
   text-align: center;
   overflow: hidden;
-  flex: 1;
   letter-spacing: 0.1em;
+  line-height: 1.2;
   align-self: center;
   display: flex;
   align-items: center;
   flex-flow: column;
   justify-content: center;
+  width: 20em;
+  margin: 0.5em 0;
 }
 
 .left-pane > * {
-  margin-bottom: 2vmax;
+  margin-bottom: 5pt;
 }
 
 #prompt {
-  font-size: 5vmax;
+  font-size: 2em;
   white-space: nowrap;
 }
 
 .selected {
-  color: black;
-  font-size: 2vmax;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1em;
   font-family: "renner-medium", SANS-SERIF, ARIAL, HELVETICA;
 }
 
@@ -78,14 +89,16 @@ body {
 }
 
 #hint {
-  font-size: 3vmax;
-  margin: 0 1vmax;
+  font-size: 1em;
   line-height: 1;
 }
 
 .arrow {
-  width: 2.5vmax;
+  width: 1em;
   transform: rotate(90deg);
+  display: inline;
+  position: relative;
+  top: 0.1em;
 }
 
 
@@ -95,15 +108,16 @@ body {
 }
 
 #bottom-logo {
-  height: 5vmax;
+  height: 2.5em;
   margin: 2px;
 }
 
 .right-pane {
   //background: linear-gradient(#4ba76d, #5b9b74);
-  box-shadow: 0px 0px 20px #00000026;
+  //box-shadow: 0px 0px 20px #00000026;
+  border-top: 1px solid rgba(0,0,0,0.1);
   overflow-x: hidden;
-  flex: 2;
+  flex: 1;
 }
 
 #back-container {
@@ -127,15 +141,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5vmax;
-  width: 5vmax;
+  height: 2em;
+  width: 2em;
 
 }
 
 .back > span {
   color: white;
-  font-size: 2.5vmax;
-  //transition: transform 0.1s;
+  font-size: 1em;
+  transform: translateY(.15em);
 }
 
 .back:hover, .back:focus {
@@ -166,19 +180,21 @@ body {
 
 .dropdown {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   overflow: visible;
-  display: inline-block;
   vertical-align: top;
-  padding: 2vmax;
-  padding-top: 7vmax;
+  padding: 1em;
+  padding-top: 3em;
   box-sizing: border-box;
   transition: visibility 0.2s;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center
 }
 
 .dropdown-option {
   background: white;
-  margin-bottom: 2vmax;
+  margin-bottom: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -186,12 +202,12 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   overflow: hidden;
-  height: 7vmax;
   width: 100%;
+  padding: 0.5em;
 }
 
 .dropdown-option:last-child {
-  margin-bottom: 7vmax;
+  margin-bottom: 0;
 }
 
 .dropdown-option:hover, .dropdown-option:focus {
@@ -210,45 +226,40 @@ body {
 .dropdown-text {
   text-decoration: none;
   color: #222;
-  font-size: 3vmax;
+  font-size: 1.5em;
   margin: 0;
   height: fit-content;
 }
 
 .dropdown-logo {
   color: black;
-  height: 5vmax;
+  height: 1.5em;
 }
 
 #dropdown-channel > .dropdown-option > .dropdown-text {
   font-weight: 600;
-  line-height: 0;
 }
 
 #dropdown-language > .dropdown-option {
-  height: 6vmax;
+
 }
 
 #dropdown-resource > .dropdown-option {
   height: fit-content;
-  padding: 0;
-  align-items: stretch;
+  padding: 0 0.5em 0 1em;
 }
 
 #dropdown-resource > .dropdown-option > .dropdown-text {
-  padding: 2vmax;
-  padding-right: 0;
-  font-size: 2.2vmax;
+  font-size: 1.2em;
   flex: 1;
-  margin: auto;
+  margin: 0.6em 0;
   white-space: normal;
   color: #444
 }
 
-.big-green {
+.green-text {
   color: #3fa660;
   font-weight: 500;
-  font-size: 1.2em;
 }
 
 .resource-option-buttons {
@@ -260,8 +271,8 @@ body {
 }
 
 .resource-option-buttons > img {
-  height: 3vmax;
-  padding: 0.6vmax;
+  height: 2em;
+  padding: 4px;
   //transition: background-color 0.1s;
 }
 
@@ -285,9 +296,9 @@ body {
   height: fit-content;
   max-height: 95vh;
   overflow-y: scroll;
-  width: 95vw;
-  margin: 3vw;
-  max-width: 100vh;
+  width: 30em;
+  margin: 1.5em;
+  max-width: 100vw;
   background: white;
   box-sizing: border-box;
   box-shadow: 0 0 4vh rgba(0, 0, 0, 0.3);
@@ -296,43 +307,41 @@ body {
 .x-container {
   display: flex;
   justify-content: flex-end;
-  height: 3vmax;
+  height: 1.5em;
 }
 
 .x {
-  width: 4vmax;
-  height: 4vmax;
-  padding: 0.5vmax;
+  width: 2.5em;
+  height: 2.5em;
+  padding: .5em;
   box-sizing: border-box;
 }
+
 .x:hover, .x:focus {
   background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .pop-up-content {
-  padding: 3vmax 3vmax;
+  padding: 1.5em;
   padding-top:0;
   height: 100%;
-}
-
-.pop-up-content {
   color: black;
-  font-size: 2.7vmax;
+  font-size: 1em;
 }
 
 #share-buttons {
-  display: flex;
-  flex-flow: wrap;
-  justify-content: center;
+  display: grid;
   margin: auto;
-  max-width: 35vmax;
+  max-width: 80%;
   line-height: 0;
+  justify-content: center;
+  grid-template-columns: auto auto auto auto;
 }
 
 #share-buttons img {
-  width: 4vmax;
-  padding: 0.5vmax;
+  width: 3em;
+  padding: 0.3em;
   border: 0;
   display: inline;
 }
@@ -349,23 +358,23 @@ body {
   cursor: pointer;
 }
 
-h1.pop-up-header {
+.pop-up-header {
   font-size: 1em;
   margin-top: 0;
   color: #3fa660;
   font-family: "renner-light";
   padding: 0;
-  margin-bottom: 1.5vmax;
+  margin-bottom: 1em;
 }
 
 p.info {
-  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 form {
   box-sizing: border-box;
   height: 100%;
-  font-size: 2.3vmax;
+  font-size: 1em;
   font-family: "renner-medium", SANS-SERIF, ARIAL, HELVETICA;
 }
 
@@ -388,6 +397,14 @@ input {
   font-family: "renner-light", SANS-SERIF, ARIAL, HELVETICA;
   padding: 0;
   line-height: 1.5;
+}
+
+p.pop-up-text {
+  margin-bottom: 1em;
+}
+
+p.pop-up-text:last-child {
+  margin-bottom: 0;
 }
 
 .pop-up-text > a {
@@ -441,14 +458,15 @@ input {
   //transform: scale(0.97);
 }
 
-@media (min-aspect-ratio: 1/1) {
+@media (min-aspect-ratio: 3/2) {
   #main {
     flex-direction: row;
-    max-width: none;
+    max-width: 1000px;
   }
   .right-pane {
-    width: 50vw;
     flex: 1;
+    border-top: none;
+    border-left: 1px solid rgba(0,0,0,0.1);
   }
 
   .arrow {

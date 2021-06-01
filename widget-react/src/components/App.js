@@ -155,11 +155,11 @@ class App extends React.Component {
       screen: this.state.screen
     }
     return (
-      <div>
+      <React.Fragment>
         <Header handleWebsite={this.handlers.website} />
         <Content links={this.props.links} handlers={this.handlers} client={client} />
         <Popup links={this.props.links} handlers={this.handlers} client={client} />
-      </div>
+      </React.Fragment>
     );
   }
 }

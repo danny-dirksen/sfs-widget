@@ -50,8 +50,8 @@ function DropdownResource(props) {
                   onClick={() => props.handlers.selectResource(resource.id)}
                   tabIndex="0"
                 >
-                  <div>{resourceData.line1}</div>
-                  <div className="big-green">{resourceData.line2}</div>
+                  <div><small>{resourceData.line1}</small></div>
+                  <div className="green-text">{resourceData.line2}</div>
                 </a>
               }
               <div className="resource-option-buttons">

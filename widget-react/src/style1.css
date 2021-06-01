@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "renner-light";
+    src: url("resources/fonts/renner-light.otf");
+}
+@font-face {
+    font-family: "renner-medium";
+    src: url("resources/fonts/renner-medium.otf");
+}
+
+html {
+  --sfs-green: #48c275;
+  background: var(--sfs-green);
+}
+
+#root {
+}
+
+#bottom-logo-container {
+}
+
+#main {
+  display: grid;
+}

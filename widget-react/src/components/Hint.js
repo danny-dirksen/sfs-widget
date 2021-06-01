@@ -7,13 +7,13 @@ function Hint(props) {
     props.page === 1 ?
       <>
         <img id="left-side-arrow" className="arrow hint-arrow" src={arrow} alt="->" />
-        <span id="hint">SELECT A SOURCE</span>
+        <span id="hint"> SELECT A SOURCE </span>
         <img className="arrow hint-arrow" src={arrow} alt="->" />
       </>
     : props.page === 2 ?
       <>
         <img id="left-side-arrow" className="arrow hint-arrow" src={arrow} alt="->" />
-        <span id="hint">CHOOSE A LANGUAGE</span>
+        <span id="hint"> CHOOSE A LANGUAGE </span>
         <img className="arrow hint-arrow" src={arrow} alt="->" />
       </>
     : <span id="hint">CHOOSE YOUR MUSIC<br/>AND THAT'S IT!</span>
