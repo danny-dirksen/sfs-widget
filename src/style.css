@@ -271,7 +271,7 @@ body {
 }
 
 .resource-option-buttons > img {
-  height: 2em;
+  height: 1.5em;
   padding: 4px;
   //transition: background-color 0.1s;
 }

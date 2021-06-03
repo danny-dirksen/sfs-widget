@@ -1,7 +1,8 @@
 # Songs for Saplings Webapp "Wildfire"
 
 Notes
-- Node.js dependencies must be installed in the `widget` directory in order to run this node server. Simply run `npm install` while in the `widget` directory.
-- To build the server, go to the widget-react directory and use the command 'npm build'. Then paste the contents of the 'widget-react/build' folder into the 'widget-server/public' directory, overwriting its contents.
-- To run the server for production, go to the repo root directory and use the command `node widget-server/lib/app.js`.
-- To run the server for testing, go to the repo root directory and use the command `PORT=4000 node widget/lib/app.js`.
+- Node.js dependencies must be installed in order to run this node server. Simply go to the root directory and type `npm install` while in the root directory. If you do not have npm, you can learn more about it [Here](https://www.npmjs.com/)
+- For full list of reactJS commands, see `REACT-README.md`.
+- To build the static server, go to the root directory and use the command `npm run-script build`.
+- To run the server in production, go to the repo root directory and use the command `node lib/app.js`.
+- To run the server while using a dev build of the react server, go to the repo root directory and use the command `PORT=4000 node lib/app.js`. In another terminal, use the command `npm start`.
