@@ -33,6 +33,10 @@ body {
   font-family: "renner-light", SANS-SERIF, ARIAL, HELVETICA;
 }
 
+.center-text {
+  text-align: center;
+}
+
 #prompt, .selected, #hint-container, #back-container, .dropdown {
   //transition: opacity 0.2s, visibility 0.2s;
 }

@@ -12,6 +12,29 @@ class App extends React.Component {
     let language = channel ? common.getQueryVariable("language") || "" : ""
     let resource = language ? common.getQueryVariable("resource") || "" : ""
 
+    // validate channel name, skip back if invalid
+    if (channel && !props.links.channels.some(chan => {
+      return (channel.toLowerCase() === chan.name.toLowerCase());
+    })) {
+      channel = "";
+    }
+
+    // validate language name, skip back if invalid
+    if (language && !props.links.languages.some(lang => {
+      return (language.toLowerCase() === lang.name.toLowerCase());
+    })) {
+      language = "";
+    }
+
+    // validate resource id, skip back if invalid
+    if (resource && !props.links.languages.find(lang => {
+      return (language.toLowerCase() === lang.name.toLowerCase());
+    }).resources.some(rec => {
+      return (resource.toLowerCase() === rec.id.toLowerCase());
+    })) {
+      resource = "";
+    }
+
     this.state = {
       channel: channel,
       language: language,

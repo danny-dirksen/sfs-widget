@@ -17,7 +17,8 @@ let platforms = [
   {name: 'tumblr', alt: 'Tumblr', href: `http://www.tumblr.com/share/link?url=${url}&title=${title}`},
   {name: 'twitter', alt: 'Twitter', href: `https://twitter.com/share?url=${url}&text=${url}&hashtags=${hashtag}`},
   {name: 'vk', alt: 'VK', href: `http://vkontakte.ru/share.php?url=${url}`},
-  {name: 'yummly', alt: 'Yummly', href: `http://www.yummly.com/urb/verify?url=${url}&title=${title}`}
+  {name: 'yummly', alt: 'Yummly', href: `http://www.yummly.com/urb/verify?url=${url}&title=${title}`},
+  {name: 'message', alt: 'Message', href: `sms:?&body=${header}`}
 ]
 
 platforms.forEach(platform => {

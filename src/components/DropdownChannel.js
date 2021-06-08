@@ -14,7 +14,7 @@ function DropdownChannel(props) {
         <button
           className="dropdown-option"
           key={index}
-          onClick={() => props.selectChannel(channel.name)}
+          onClick={() => props.handlers.selectChannel(channel.name)}
           tabIndex="0"
           disabled={props.client.page !== 1 ? true : ""}
         >

@@ -18,6 +18,9 @@ function PopupShare(props) {
           </a>
         ))}
       </div>
+      <p className="pop-up-text center-text">
+        Message and data rates may apply.
+      </p>
     </div>
   )
 }

@@ -19,7 +19,7 @@ function DropdownLanguage(props) {
           <button
             className="dropdown-option"
             key={index}
-            onClick={() => props.selectLanguage(language.name)}
+            onClick={() => props.handlers.selectLanguage(language.name)}
             tabIndex="0"
           >
             <p className="dropdown-text">{autonym}</p>
@@ -31,6 +31,8 @@ function DropdownLanguage(props) {
   return (
     <div className="dropdown" id="dropdown-language" style={{visibility: visible ? "visible" : "hidden"}}>{cards}</div>
   )
+
+
 }
 
 export default DropdownLanguage

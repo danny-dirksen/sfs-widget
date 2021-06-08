@@ -10,8 +10,8 @@ class RightPaneInner extends React.Component {
     let handlers = this.props.handlers
     return (
       <div className="right-pane-inner" style={{transform: "translateX(" + 100 * (1 - this.props.client.page) + "%)"}}>
-        <DropdownChannel client={this.props.client} links={this.props.links} selectChannel={handlers.selectChannel} />
-        <DropdownLanguage client={this.props.client} links={this.props.links} selectLanguage={handlers.selectLanguage} />
+        <DropdownChannel client={this.props.client} links={this.props.links} handlers={handlers} />
+        <DropdownLanguage client={this.props.client} links={this.props.links} handlers={handlers} />
         <DropdownResource client={this.props.client} links={this.props.links} handlers={handlers} />
       </div>
     )
