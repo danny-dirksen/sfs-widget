@@ -7,7 +7,7 @@ function DropdownChannel(props) {
   let visible = (props.client.page === 1)
 
   if (visible) {
-    cards = []
+    cards = [];
     props.links.channels.forEach((channel, index) => {
       let nameCaps = channel.name.toUpperCase()
       cards.push(
