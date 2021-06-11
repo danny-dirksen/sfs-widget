@@ -29,6 +29,12 @@ function DropdownResource(props) {
           return (recData.id === resource.id)
         })
         if (resourceData) {
+          let innerText = (
+            <React.Fragment>
+              <div><small>{resourceData.line1}</small></div>
+              <div className="green-text">{resourceData.line2}</div>
+            </React.Fragment>
+          );
           cards.push(
             <div className="dropdown-option" key={index}>
               { props.client.channel.toLowerCase() === "download" ?
@@ -39,8 +45,7 @@ function DropdownResource(props) {
                   tabIndex="0"
                   disabled={props.client.page !== 3 ? true : ""}
                 >
-                  <div>{resourceData.line1}</div>
-                  <div className="big-green">{resourceData.line2}</div>
+                  {innerText}
                 </div> :
                 <a
                   className="dropdown-text"
@@ -50,8 +55,7 @@ function DropdownResource(props) {
                   onClick={() => props.handlers.selectResource(resource.id)}
                   tabIndex="0"
                 >
-                  <div><small>{resourceData.line1}</small></div>
-                  <div className="green-text">{resourceData.line2}</div>
+                  {innerText}
                 </a>
               }
               <div className="resource-option-buttons">

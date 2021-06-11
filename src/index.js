@@ -4,6 +4,9 @@ import './style.css';
 import App from './components/App.js';
 import * as serviceWorker from './serviceWorker';
 import common from './common.js';
+import mixpanel from 'mixpanel-browser';
+
+mixpanel.init("f5bc3bc9c0cc47bd7ad99b2531bdd827");
 
 let pic = common.getQueryVariable("pic")
 fetch('api/links' + (pic ? "?pic=" + pic : ''))

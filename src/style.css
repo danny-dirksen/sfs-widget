@@ -193,7 +193,6 @@ body {
   transition: visibility 0.2s;
   display: inline-flex;
   flex-direction: column;
-  justify-content: center
 }
 
 .dropdown-option {
@@ -340,7 +339,7 @@ body {
   max-width: 80%;
   line-height: 0;
   justify-content: center;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
 }
 
 #share-buttons img {
@@ -462,6 +461,33 @@ p.pop-up-text:last-child {
   //transform: scale(0.97);
 }
 
+.notification-container {
+  position: absolute;
+  bottom: 2em;
+  width: 100vw;
+}
+
+.notification {
+  width: fit-content;
+  background: white;
+  padding: 0.5em;
+  color: black;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  max-width: 20em;
+  text-align: center;
+}
+
+.notification-button {
+  text-decoration: underline;
+  background: none;
+  padding: 0.5em;
+}
+
+.notification-button:hover {
+  background: #00000020;
+}
+
 @media (min-aspect-ratio: 3/2) {
   #main {
     flex-direction: row;
@@ -471,6 +497,9 @@ p.pop-up-text:last-child {
     flex: 1;
     border-top: none;
     border-left: 1px solid rgba(0,0,0,0.1);
+  }
+  .dropdown {
+    justify-content: center;
   }
 
   .arrow {

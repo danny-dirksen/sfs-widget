@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header.js'
 import Content from './Content.js'
 import Popup from './Popup.js'
+import CookieNotice from './CookieNotice.js'
 import common from '../common.js'
 
 class App extends React.Component {
@@ -35,13 +36,16 @@ class App extends React.Component {
       resource = "";
     }
 
+    let allowCookies = common.getCookie("allowCookies") || null;
+
     this.state = {
       channel: channel,
       language: language,
       resource: resource,
       screen: "",
       pic: props.pic,
-      cookie: common.ensureCookieID()
+      cookie: allowCookies ? common.ensureCookieID() : null,
+      allowCookies: allowCookies
     }
 
     this.handlers = {
@@ -142,6 +146,20 @@ class App extends React.Component {
 
       website: () => {
         this.sendAction("website")
+      },
+
+      setCookies: (allowed) => {
+        this.setState({
+          cookie: allowed ? common.ensureCookieID() : null,
+          allowCookies: allowed
+        });
+        if (allowed) {
+          common.setCookie("allowCookies", true);
+
+        } else {
+          common.clearCookies();
+        }
+        this.sendAction("setCookiePermission", allowed);
       }
 
     }
@@ -182,6 +200,7 @@ class App extends React.Component {
         <Header handleWebsite={this.handlers.website} />
         <Content links={this.props.links} handlers={this.handlers} client={client} />
         <Popup links={this.props.links} handlers={this.handlers} client={client} />
+        <CookieNotice handlers={this.handlers} allowCookies={this.state.allowCookies} />
       </React.Fragment>
     );
   }
