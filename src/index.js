@@ -13,7 +13,7 @@ function isDevMode(){
     return '_self' in React.createElement('div');
 }
 
-let mixpanelKey = isDevMode() ? "f5bc3bc9c0cc47bd7ad99b2531bdd827" : "";
+let mixpanelKey = isDevMode() ? "f5bc3bc9c0cc47bd7ad99b2531bdd827" : "d936c15a486ca0d48bff9391150dfdff";
 
 mixpanel.init(mixpanelKey);
 

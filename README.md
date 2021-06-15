@@ -7,7 +7,8 @@ Notes on using this repo:
 - Node.js dependencies must be installed in order to run this node server. Simply go to the root directory and type `npm install` while in the root directory. If you do not have npm, you can learn more about it [Here](https://www.npmjs.com/)
 - For full list of ReactJS commands, see `REACT-README.md`.
 - To build the static server, go to the root directory and use the command `npm run-script build`. The resulting build file will be used directly by the backend.
-- To run the server in production, go to the repo root directory and use the command `npm run backend-prod`.
+- To run the server in production, go to the repo root directory and use the command `npm install; npm run build; pm2 restart`
+- The pm2 daemon was created to run the command `npm run backend-prod` in the background.
 - The front end relies on the backend, even when using a dev build. To run the frontend and backend simultaneously during development, go to the repository's root (`sfs-widget`) directory and use the command `npm run backend-dev`. In another terminal, use the command `npm start`.
 
 Created by Daniel Dirksen with help from Andrew Dirksen and guidance from James Dirksen, serving music and resources created by Dana Dirksen
