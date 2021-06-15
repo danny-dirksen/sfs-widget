@@ -9,6 +9,9 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
+
+    this.mixpanel = props.mixpanel;
+
     let channel = common.getQueryVariable("channel") || ""
     let language = channel ? common.getQueryVariable("language") || "" : ""
     let resource = language ? common.getQueryVariable("resource") || "" : ""
@@ -154,12 +157,14 @@ class App extends React.Component {
           allowCookies: allowed
         });
         if (allowed) {
+          this.mixpanel.opt_in_tracking();
           common.setCookie("allowCookies", true);
 
         } else {
+          this.mixpanel.opt_out_tracking();
           common.clearCookies();
         }
-        this.sendAction("setCookiePermission", allowed);
+        this.sendAction("setCookiePermission", allowed ? "enabled" : "disabled");
       }
 
     }
@@ -167,7 +172,7 @@ class App extends React.Component {
 
   sendAction(action, data) {
     let d = new Date();
-    common.ajax("POST", "/analytics/", {
+    let sendData = {
       ...data,
       unixTime: d.getTime(),
       pic: this.state.pic,
@@ -176,12 +181,14 @@ class App extends React.Component {
       resource: this.state.resource,
       screen: this.state.screen,
       cookieID: common.getCookie("cookieID"),
-      action: action,
-    })
+      action: action
+    };
+    common.ajax("POST", "/analytics/", sendData);
+    this.mixpanel.track(action, sendData);
   }
 
   componenetDidMount() {
-    this.sendAction("loadPage")
+    this.sendAction("loadPage");
   }
 
   componentDidUpdate() {
@@ -194,7 +201,7 @@ class App extends React.Component {
       language: this.state.language,
       resource: this.state.resource,
       screen: this.state.screen
-    }
+    };
     return (
       <React.Fragment>
         <Header handleWebsite={this.handlers.website} />
