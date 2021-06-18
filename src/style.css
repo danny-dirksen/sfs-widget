@@ -105,15 +105,25 @@ body {
   top: 0.1em;
 }
 
-
-#bottom-logo-container {
+.branding-container {
+  text-decoration: none;
   position: absolute;
+  color: white;
+}
+
+#sfs-logo {
   top: 0;
 }
 
-#bottom-logo {
+#partner-branding {
+  right: 0;
+}
+
+.branding {
   height: 2.5em;
+  max-width: 7em;
   margin: 2px;
+  text-align: center;
 }
 
 .right-pane {
@@ -137,7 +147,6 @@ body {
   align-items: center;
   width: fit-content;
   line-height: 1;
-  padding-right: 1.125vmax;
   user-select: none;
 }
 
@@ -304,7 +313,7 @@ body {
   max-width: 100vw;
   background: white;
   box-sizing: border-box;
-  box-shadow: 0 0 4vh rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
 }
 
 .x-container {
@@ -390,7 +399,7 @@ input {
   -webkit-appearance: none;
   -webkit-border-radius:0;
   border-radius:0;
-  padding: 1.5vmax;
+  padding: 1em;
   outline: none !important;
   font-family: inherit;
   font-size: 1em;
@@ -508,5 +517,10 @@ p.pop-up-text:last-child {
 
   #left-side-arrow {
     display: none;
+  }
+
+  #partner-branding {
+    right: unset;
+    bottom: 0;
   }
 }

@@ -1,10 +1,20 @@
 import React from 'react'
-import logo from '../resources/ui/sfsLogoWhite.svg'
 
 function Header(props) {
   return (
-    <a id="bottom-logo-container" href="https://songsforsaplings.com/" target="_blank" rel="noopener noreferrer" onClick={() => props.handleWebsite()}>
-      <img id="bottom-logo" alt="Songs for Saplings" src={logo} />
+    <a
+      id={props.data.id}
+      className="branding-container"
+      href={props.data.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => props.handleWebsite()}
+    >
+      {props.data.src ?
+        <img className="branding" alt={props.data.alt} src={props.data.src} /> :
+        <div className="branding">{props.data.alt}</div>
+      }
+
     </a>
   )
 }

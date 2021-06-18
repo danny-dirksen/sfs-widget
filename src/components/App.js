@@ -4,11 +4,12 @@ import Content from './Content.js'
 import Popup from './Popup.js'
 import CookieNotice from './CookieNotice.js'
 import common from '../common.js'
+import sfsLogo from '../resources/ui/sfsLogoWhite.svg'
 
 class App extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.mixpanel = props.mixpanel;
 
@@ -187,8 +188,24 @@ class App extends React.Component {
     this.mixpanel.track(action, sendData);
   }
 
-  componenetDidMount() {
+  componentDidMount() {
+    // get cpt info for this partner
     this.sendAction("loadPage");
+    fetch("api/partnerinfo" + (this.state.pic ? "?pic=" + this.state.pic : ''))
+    .then(r => r.json())
+    .then(cpt => {
+      this.setState({cpt: cpt});
+    });
+
+    // get partner's branding, if they have any.
+    fetch("api/partnerbranding" + (this.state.pic ? "?pic=" + this.state.pic : ''))
+    .then(r => r.arrayBuffer())
+    .then(buffer => { // note this is already an ArrayBuffer
+      // there is no buffer.data here
+      const blob = new Blob([buffer]);
+      const url = URL.createObjectURL(blob);
+      this.setState({partnerBranding: url});
+    });
   }
 
   componentDidUpdate() {
@@ -204,7 +221,23 @@ class App extends React.Component {
     };
     return (
       <React.Fragment>
-        <Header handleWebsite={this.handlers.website} />
+        <Header handleWebsite={this.handlers.website} data={{
+          id: "sfs-logo",
+          alt: "Songs for Saplings",
+          href: "https://songsforsaplings.com/",
+          src: sfsLogo,
+          corner: 1
+        }}/>
+        {this.state.cpt && (
+          <Header handleWebsite={this.handlers.website} data={{
+            id: "partner-branding",
+            alt: this.state.cpt.name || this.state.cpt.url,
+            href: this.state.cpt.url,
+            src: this.state.partnerBranding,
+            corner: 1
+          }} />
+        )}
+
         <Content links={this.props.links} handlers={this.handlers} client={client} />
         <Popup links={this.props.links} handlers={this.handlers} client={client} />
         <CookieNotice handlers={this.handlers} allowCookies={this.state.allowCookies} />
