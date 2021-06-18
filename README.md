@@ -11,6 +11,18 @@ Notes on using this repo:
 - The pm2 daemon was created to run the command `npm run backend-prod` in the background.
 - The front end relies on the backend, even when using a dev build. To run the frontend and backend simultaneously during development, go to the repository's root (`sfs-widget`) directory and use the command `npm run backend-dev`. In another terminal, use the command `npm start`.
 
+Notes on the backend:
+- A workflow for deploying the backend is still evolving, but this is the current process:
+`git checkout HEAD
+git stash save --keep-index --include-untracked
+git reset HEAD
+git pull
+git stash drop
+npm run build
+pm2 restart app`
+- if build script or app are not working, make sure npm dependencies are installed with `npm install`
+- [This Stack overflow thread](https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git) has come in handy for git-related issues.
+
 Created by Daniel Dirksen with help from Andrew Dirksen and guidance from James Dirksen, serving music and resources created by Dana Dirksen
 
 Copywrite Songs for Saplings 2021. All rights reserved.
