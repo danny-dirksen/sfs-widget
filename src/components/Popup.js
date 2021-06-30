@@ -4,8 +4,6 @@ import PopupInfo from './PopupInfo.js'
 import PopupShare from './PopupShare.js'
 import PopupDownload from './PopupDownload.js'
 
-
-
 function Popup (props) {
 
   let [client, setClient] = React.useState({...props.client})
@@ -16,11 +14,29 @@ function Popup (props) {
       setClient({...props.client})
     }
     setLastScreen(props.client.screen)
-  }, [props.client, lastScreen])
+  }, [props.client, lastScreen]);
 
-  let resourceInfo
-  if (client.screen) {
-    resourceInfo = props.links.languages.find(language => language.name === client.language).resources
+  let popup = null;
+  if (client.focused && client.focused.length > 0) {
+    if (client.screen === "info") {
+
+      if (client.channel) { // if client is on page 2 or later (has already selected channel)
+
+        if (client.language) { // if client is on page 3 (has already selected language)
+
+          let language = props.links.languages.find(lang => lang.name === client.language);
+          let resource = language.resources.find(res => res.id === client.focused);
+          popup = <PopupInfo client={client} data={{title: resource.line2, body: resource.info}} />;
+        } else {
+          let language = props.links.languages.find(language => language.name === client.focused);
+          popup = <PopupInfo client={client} data={{title: language.autonym, body: language.info}} />;
+        }
+      }
+    } else if (client.screen === "share") {
+      popup = <PopupShare client={client} handlers={props.handlers} />;
+    } else if (client.screen === "download") {
+      popup = <PopupDownload client={client} handlers={props.handlers} />;
+    }
   }
 
 
@@ -28,17 +44,14 @@ function Popup (props) {
     visibility: props.client.screen ? "visible" : "hidden",
     opacity: props.client.screen ? "1" : "0"
   }
+
   return (
     <div className="pop-up-screen" style={style}>
       <div className="pop-up-container">
         <div className="x-container">
           <img className="x" alt="X" src={x} onClick={() => props.handlers.exitScreen()} />
         </div>
-        {
-          client.screen === "info" ? <PopupInfo client={client} resourceInfo={resourceInfo} />
-          : client.screen === "share" ? <PopupShare client={client} handlers={props.handlers} />
-          : client.screen === "download" ? <PopupDownload client={client} handlers={props.handlers} /> : null
-        }
+        {popup}
       </div>
     </div>
   )

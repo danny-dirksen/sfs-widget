@@ -18,12 +18,14 @@ function DropdownChannel(props) {
           tabIndex="0"
           disabled={props.client.page !== 1 ? true : ""}
         >
+          <div /> {/* this empty tag causes the language autonym to be centered} */}
           <p className="dropdown-text">
             {channel.image ?
               <img className="dropdown-logo" src={process.env.PUBLIC_URL + channel.image} alt={nameCaps}></img>
               : nameCaps
             }
           </p>
+          <div /> {/* this empty tag causes the language autonym to be centered} */}
         </button>
       )
     })

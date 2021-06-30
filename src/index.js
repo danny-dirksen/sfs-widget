@@ -17,8 +17,8 @@ let mixpanelKey = isDevMode() ? "f5bc3bc9c0cc47bd7ad99b2531bdd827" : "d936c15a48
 
 mixpanel.init(mixpanelKey);
 
-let pic = common.getQueryVariable("pic")
-fetch('api/links' + (pic ? "?pic=" + pic : ''))
+let pic = common.getQueryVariable("p")
+fetch('api/links' + (pic ? "?p=" + pic : ''))
   .then(r => r.json())
   .then(links => {
     ReactDOM.render(

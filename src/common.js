@@ -25,31 +25,36 @@ common.getQueryVariable = (variable) => {
 // updates query based on the state of the client, ommitting the fields that don't yet have a set value
 common.queryFromState = (client) => {
   let args = [];
-  let newSearch = ""
+  //let newSearch = ""
   if (client.pic) {
-    args.push(["pic", client.pic]);
+    args.push(["p", client.pic]);
   }
   if (client.channel) {
-    args.push(["channel", client.channel]);
+    args.push(["c", client.channel]);
   }
   if (client.language) {
-    args.push(["language", client.language]);
+    args.push(["l", client.language]);
   }
   if (client.resource) {
-    args.push(["resource", client.resource]);
+    args.push(["r", client.resource]);
   }
-  if (args.length > 0) {
-    newSearch = "?"
-    for (let i = 0; i < args.length; i ++) {
-      newSearch += args[i][0] + '=' + args[i][1];
-      if (args[i + 1]) {
-        newSearch += '&';
-      }
-    }
-  } else {
-    newSearch = "";
+  if (client.focused) {
+    args.push(["f", client.focused]);
   }
-  return newSearch;
+  let query = args.map(arg => arg[0] + '=' + arg[1]).join('&');
+  return query ? "?" + query : "";
+  // if (args.length > 0) {
+  //   newSearch = "?"
+  //   for (let i = 0; i < args.length; i ++) {
+  //     newSearch += args[i][0] + '=' + args[i][1];
+  //     if (args[i + 1]) {
+  //       newSearch += '&';
+  //     }
+  //   }
+  // } else {
+  //   newSearch = "";
+  // }
+  //return newSearch;
 }
 
 common.setCookie = (cname, cvalue, exdays) => {

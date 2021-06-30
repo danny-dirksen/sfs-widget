@@ -13,9 +13,10 @@ class App extends React.Component {
 
     this.mixpanel = props.mixpanel;
 
-    let channel = common.getQueryVariable("channel") || ""
-    let language = channel ? common.getQueryVariable("language") || "" : ""
-    let resource = language ? common.getQueryVariable("resource") || "" : ""
+    let channel = common.getQueryVariable("c") || "";
+    let language = channel ? common.getQueryVariable("l") || "" : "";
+    let resource = language ? common.getQueryVariable("r") || "" : "";
+    let focused = common.getQueryVariable("f") || "";
 
     // validate channel name, skip back if invalid
     if (channel && !props.links.channels.some(chan => {
@@ -46,6 +47,7 @@ class App extends React.Component {
       channel: channel,
       language: language,
       resource: resource,
+      focused: focused,
       screen: "",
       pic: props.pic,
       cookie: allowCookies ? common.ensureCookieID() : null,
@@ -55,6 +57,7 @@ class App extends React.Component {
     this.handlers = {
 
       back: () => {
+        this.setState({focused: null});
         if (this.state.album) {
           this.setState({album: "", resource: ""})
         } else if (this.state.language) {
@@ -71,6 +74,7 @@ class App extends React.Component {
       },
 
       selectChannel: channel => {
+        this.setState({focused: null});
         let channelObj = props.links.channels.find(chan => chan.name.toLowerCase() === channel.toLowerCase())
         if (channelObj.languages.length > 1) {
           this.setState({channel: channel})
@@ -81,6 +85,8 @@ class App extends React.Component {
       },
 
       selectLanguage: language => {
+        console.log("Lang selected")
+        this.setState({focused: null});
         if (this.state.channel) {
           this.setState({language: language})
           this.sendAction("selectLanguage")
@@ -98,20 +104,20 @@ class App extends React.Component {
         }
       },
 
-      infoScreen: resource => {
+      infoScreen: id => {
         this.setState({
-          resource: resource,
-          screen: "info"
-        })
-        this.sendAction("infoScreen")
+          screen: "info",
+          focused: id
+        });
+        this.sendAction("infoScreen");
       },
 
-      shareScreen: resource => {
+      shareScreen: id => {
         this.setState({
-          resource: resource,
-          screen: "share"
+          screen: "share",
+          focused: id
         })
-        this.sendAction("shareScreen")
+        this.sendAction("shareScreen");
       },
 
       downloadScreen: resource => {
@@ -123,11 +129,11 @@ class App extends React.Component {
       },
 
       exitScreen: () => {
-        this.setState({screen: ""})
+        this.setState({screen: "", focused: ""})
         this.sendAction("exitScreen")
       },
 
-      share: platform => {
+      share: (platform) => {
         this.sendAction("share", {
           platform: platform
         })
@@ -181,6 +187,7 @@ class App extends React.Component {
       language: this.state.language,
       resource: this.state.resource,
       screen: this.state.screen,
+      focused: this.state.focused,
       cookieID: common.getCookie("cookieID"),
       action: action
     };
@@ -217,7 +224,8 @@ class App extends React.Component {
       channel: this.state.channel,
       language: this.state.language,
       resource: this.state.resource,
-      screen: this.state.screen
+      screen: this.state.screen,
+      focused: this.state.focused
     };
     return (
       <React.Fragment>

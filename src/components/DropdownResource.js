@@ -1,6 +1,5 @@
 import React from 'react'
-import infoIcon from '../resources/ui/info.svg'
-import shareIcon from '../resources/ui/share.svg'
+import OptionButtons from './OptionButtons.js';
 
 let cards = []
 
@@ -58,10 +57,9 @@ function DropdownResource(props) {
                   {innerText}
                 </a>
               }
-              <div className="resource-option-buttons">
-                <img src={infoIcon} alt="Info" onClick={() => props.handlers.infoScreen(resource.id)}></img>
-                <img src={shareIcon} alt="Share" onClick={() => props.handlers.shareScreen(resource.id)}></img>
-              </div>
+              { !resource.shared &&
+                <OptionButtons data={{id: resource.id}} handlers={props.handlers} />
+              }
             </div>
           )
         }
