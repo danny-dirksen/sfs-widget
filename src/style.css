@@ -221,6 +221,10 @@ body {
   min-height: 4em;
 }
 
+.dropdown-option.focused {
+  border: 1px solid black;
+}
+
 .dropdown-option:last-child {
   margin-bottom: 0;
 }
@@ -238,11 +242,18 @@ body {
   transform: scale(1.04);
 }
 
+.dropdown-text-centerer {
+  flex: 1;
+  textAlign: "center";
+  align-self: stretch;
+  display: flex;
+}
+
 .dropdown-text {
   text-decoration: none;
   color: #222;
   font-size: 1.5em;
-  margin: 0;
+  margin: auto;
   height: fit-content;
 }
 
@@ -463,8 +474,8 @@ p.pop-up-text:last-child {
   text-align: center;
 }
 
-.form-button:disabled, .form-button[disabled] {
-  opacity: 0.5;
+.sent {
+  background: #86d729
 }
 
 .form-button:hover {

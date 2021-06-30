@@ -12,7 +12,7 @@ function DropdownChannel(props) {
       let nameCaps = channel.name.toUpperCase()
       cards.push(
         <button
-          className="dropdown-option"
+          className={`dropdown-option${props.client.focused === channel.name ? " focused" : ""}`}
           key={index}
           onClick={() => props.handlers.selectChannel(channel.name)}
           tabIndex="0"

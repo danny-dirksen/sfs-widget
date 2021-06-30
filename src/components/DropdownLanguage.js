@@ -17,14 +17,14 @@ function DropdownLanguage(props) {
       channel.languages.forEach((language, index) => {
         let autonym = props.links.languages.find(lang => lang.name === language.name).autonym
         cards.push(
-          <div className="dropdown-option" key={index}>
-            <div style={{flex: 1, textAlign: "center", height: "100%"}}>
-              <p
-                role="button"
-                className="dropdown-text"
-                onClick={() => props.handlers.selectLanguage(language.name)}
-                tabIndex="0"
-              >{autonym}</p>
+          <div
+            className={`dropdown-option${props.client.focused === language.name ? " focused" : ""}`}
+            key={index}>
+            <div className="dropdown-text-centerer"
+              role="button"
+              onClick={() => props.handlers.selectLanguage(language.name)}
+              tabIndex="0">
+              <span className="dropdown-text">{autonym}</span>
             </div>
             <OptionButtons data={{id: language.name}} handlers={props.handlers} />
           </div>

@@ -8,7 +8,6 @@ function PopupShare(props) {
   const [copied, setCopied] = React.useState(false);
 
   function handleShare(platform) {
-    //console.log("share")
     props.handlers.share(platform.name, platform.name === "copy");
     if (platform.name === "copy") {
       navigator.clipboard.writeText(window.location.href);

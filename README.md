@@ -12,7 +12,7 @@ Notes on using this repo:
 - The front end relies on the backend, even when using a dev build. To run the frontend and backend simultaneously during development, go to the repository's root (`sfs-widget`) directory and use the command `npm run backend-dev`. In another terminal, use the command `npm start`.
 
 Notes on the backend:
-- A workflow for deploying the backend is still evolving, but this is the current process:
+- A workflow for deploying the backend on the current production server is still evolving, but this is the current process:
 `git checkout HEAD
 git stash save --keep-index --include-untracked
 git reset HEAD

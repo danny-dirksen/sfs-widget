@@ -16,9 +16,12 @@ function PopupDownload(props) {
       email: email
     })
     setClickable(false)
+    setFirstName("");
+    setLastName("");
+    setEmail("");
   }
 
-  let enabled = common.validEmail(email) && clickable
+  let enabled = email && common.validEmail(email) && clickable
 
   return (
     <div className="pop-up-content">
@@ -60,9 +63,9 @@ function PopupDownload(props) {
         />
         <input
           type="submit"
-          className="form-button"
+          className={`form-button${clickable ? "" : " sent"}`}
           disabled={!enabled}
-          value={clickable ? "SEND DOWNLOAD LINK" : "SENT!"}
+          value={clickable ? "SEND DOWNLOAD LINK" : "SENT! Check your email!"}
         />
       </form>
     </div>

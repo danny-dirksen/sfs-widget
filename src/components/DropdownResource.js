@@ -35,7 +35,10 @@ function DropdownResource(props) {
             </React.Fragment>
           );
           cards.push(
-            <div className="dropdown-option" key={index}>
+            <div
+              className={`dropdown-option${props.client.focused === resource.id ? " focused" : ""}`}
+              key={index}
+            >
               { props.client.channel.toLowerCase() === "download" ?
                 <div
                   className="dropdown-text"

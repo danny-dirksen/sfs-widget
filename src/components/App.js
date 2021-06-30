@@ -85,7 +85,6 @@ class App extends React.Component {
       },
 
       selectLanguage: language => {
-        console.log("Lang selected")
         this.setState({focused: null});
         if (this.state.channel) {
           this.setState({language: language})
@@ -123,7 +122,8 @@ class App extends React.Component {
       downloadScreen: resource => {
         this.setState({
           resource: resource,
-          screen: "download"
+          screen: "download",
+          focused: resource
         })
         this.sendAction("downloadScreen")
       },
