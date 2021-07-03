@@ -144,13 +144,13 @@ class App extends React.Component {
       },
 
       downloadEmail: (data) => {
-        // common.ajax("POST", "/email/download/", {
-        //   language: this.state.language,
-        //   resource: this.state.resource,
-        //   firstName: data.firstName,
-        //   lastName: data.lastName,
-        //   email: data.email
-        // });
+        common.ajax("POST", "/email/download/", {
+          language: this.state.language,
+          resource: this.state.resource,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email
+        });
         this.sendAction("download", {
           firstName: data.firstName,
           lastName: data.lastName,
