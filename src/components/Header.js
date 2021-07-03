@@ -4,7 +4,7 @@ function Header(props) {
   return (
     <a
       id={props.data.id}
-      className="branding-container"
+      className={`branding-container corner-${props.data.order}`}
       href={props.data.href}
       target="_blank"
       rel="noopener noreferrer"

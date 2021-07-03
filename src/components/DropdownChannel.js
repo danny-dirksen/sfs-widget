@@ -39,7 +39,21 @@ function DropdownChannel(props) {
   }
 
   return (
-    <div className="dropdown" id="dropdown-channel" style={{visibility: visible ? "visible" : "hidden"}}>{cards}</div>
+    <div className="dropdown" id="dropdown-channel" style={{visibility: visible ? "visible" : "hidden"}}>
+      {cards}
+      <a  className="dropdown-option"
+          onClick={() => props.handlers.cdOrder()}
+          tabIndex="0"
+          disabled={props.client.page !== 1 ? true : ""}
+          href="https://store.songsforsaplings.com/collections/music"
+          target="_blank"
+          rel="noopener noreferrer" >
+          
+        <p className="dropdown-text">
+          Order CDs
+        </p>
+      </a>
+    </div>
   )
 }
 

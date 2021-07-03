@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^7.2.1",
     "express": "^4.17.1",
     "google-spreadsheet": "^3.1.15",
+    "heml": "^1.1.3",
+    "html-to-text": "^8.0.0",
     "mailgun-js": "^0.22.0",
     "mixpanel-browser": "^2.41.0",
     "react": "^17.0.2",

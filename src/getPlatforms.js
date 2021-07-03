@@ -12,7 +12,7 @@ function getPlatforms() {
     {name: 'email', alt: 'Email', href: `mailto:?Subject=${title}&Body=${header}%0D%0A%0D%0A${url}`},
     {name: 'facebook', alt: 'Facebook', href: `http://www.facebook.com/sharer.php?u=${url}`},
     {name: 'instagram', alt: 'Instagram', href: `https://www.instagram.com/songs_for_saplings/`},
-    {name: 'twitter', alt: 'Twitter', href: `https://twitter.com/share?url=${url}&text=${url}&hashtags=${hashtag}`},
+    {name: 'twitter', alt: 'Twitter', href: `https://twitter.com/share?url=${url}&text=${title}&hashtags=${hashtag}`},
     {name: 'message', alt: 'Message', href: `sms:?&body=${header}%0D%0A${url}`},
     {name: 'copy', alt: 'Copy', href: null}
     //{name: 'diggit', alt: 'Digg', href: `https://digg.com/news/submit-link`},

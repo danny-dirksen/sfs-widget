@@ -4,10 +4,18 @@ import PopupInfo from './PopupInfo.js'
 import PopupShare from './PopupShare.js'
 import PopupDownload from './PopupDownload.js'
 
+
+
 function Popup (props) {
 
-  let [client, setClient] = React.useState({...props.client})
-  let [lastScreen, setLastScreen] = React.useState(props.client.screen)
+  let [client, setClient] = React.useState({...props.client});
+  let [lastScreen, setLastScreen] = React.useState(props.client.screen);
+  let [emailSent, setEmailSent] = React.useState(false);
+
+  let handleEmailSent = function (data) {
+    props.handlers.downloadEmail(data);
+    setEmailSent(true);
+  }
 
   React.useEffect(() => {
     if ((props.client.screen) && !(lastScreen)) {
@@ -35,7 +43,7 @@ function Popup (props) {
     } else if (client.screen === "share") {
       popup = <PopupShare client={client} handlers={props.handlers} />;
     } else if (client.screen === "download") {
-      popup = <PopupDownload client={client} handlers={props.handlers} />;
+      popup = <PopupDownload client={client} handler={handleEmailSent} sent={emailSent} />;
     }
   }
 
@@ -49,7 +57,12 @@ function Popup (props) {
     <div className="pop-up-screen" style={style}>
       <div className="pop-up-container">
         <div className="x-container">
-          <img className="x" alt="X" src={x} onClick={() => props.handlers.exitScreen()} />
+          <img className="x"
+               alt="X" src={x}
+               onClick={() => {
+                 props.handlers.exitScreen();
+                 setTimeout(() => setEmailSent(false), 500);
+               }} />
         </div>
         {popup}
       </div>

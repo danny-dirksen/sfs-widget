@@ -83,6 +83,10 @@ class App extends React.Component {
         }
         this.sendAction("selectChannel")
       },
+      cdOrder: channel => {
+        this.setState({focused: null});
+        this.sendAction("cdOrder");
+      },
 
       selectLanguage: language => {
         this.setState({focused: null});
@@ -140,18 +144,18 @@ class App extends React.Component {
       },
 
       downloadEmail: (data) => {
-        common.ajax("POST", "/email/download/", {
-          language: this.state.language,
-          resource: this.state.resource,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email
-        })
+        // common.ajax("POST", "/email/download/", {
+        //   language: this.state.language,
+        //   resource: this.state.resource,
+        //   firstName: data.firstName,
+        //   lastName: data.lastName,
+        //   email: data.email
+        // });
         this.sendAction("download", {
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email
-        })
+        });
       },
 
       website: () => {
@@ -198,14 +202,14 @@ class App extends React.Component {
   componentDidMount() {
     // get cpt info for this partner
     this.sendAction("loadPage");
-    fetch("api/partnerinfo" + (this.state.pic ? "?pic=" + this.state.pic : ''))
+    fetch("api/partnerinfo" + (this.state.pic ? "?p=" + this.state.pic : ''))
     .then(r => r.json())
     .then(cpt => {
       this.setState({cpt: cpt});
     });
 
     // get partner's branding, if they have any.
-    fetch("api/partnerbranding" + (this.state.pic ? "?pic=" + this.state.pic : ''))
+    fetch("api/partnerbranding" + (this.state.pic ? "?p=" + this.state.pic : ''))
     .then(r => r.arrayBuffer())
     .then(buffer => { // note this is already an ArrayBuffer
       // there is no buffer.data here
@@ -229,22 +233,22 @@ class App extends React.Component {
     };
     return (
       <React.Fragment>
-        <Header handleWebsite={this.handlers.website} data={{
-          id: "sfs-logo",
-          alt: "Songs for Saplings",
-          href: "https://songsforsaplings.com/",
-          src: sfsLogo,
-          corner: 1
-        }}/>
         {this.state.cpt && (
           <Header handleWebsite={this.handlers.website} data={{
             id: "partner-branding",
             alt: this.state.cpt.name || this.state.cpt.url,
             href: this.state.cpt.url,
             src: this.state.partnerBranding,
-            corner: 1
+            order: 1
           }} />
         )}
+        <Header handleWebsite={this.handlers.website} data={{
+          id: "sfs-logo",
+          alt: "Songs for Saplings",
+          href: "https://songsforsaplings.com/",
+          src: sfsLogo,
+          order: 2
+        }}/>
 
         <Content links={this.props.links} handlers={this.handlers} client={client} />
         <Popup links={this.props.links} handlers={this.handlers} client={client} />

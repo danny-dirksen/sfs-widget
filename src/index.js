@@ -17,7 +17,7 @@ let mixpanelKey = isDevMode() ? "f5bc3bc9c0cc47bd7ad99b2531bdd827" : "d936c15a48
 
 mixpanel.init(mixpanelKey);
 
-let pic = common.getQueryVariable("p")
+let pic = common.getQueryVariable("p");
 fetch('api/links' + (pic ? "?p=" + pic : ''))
   .then(r => r.json())
   .then(links => {
@@ -26,7 +26,7 @@ fetch('api/links' + (pic ? "?p=" + pic : ''))
         <App links={links} pic={pic} mixpanel={mixpanel}/>
       </React.StrictMode>,
       document.getElementById('root')
-    )
+    );
   });
 
 // If you want your app to work offline and load faster, you can change
