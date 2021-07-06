@@ -3,19 +3,18 @@ import RightPaneInner from './RightPaneInner.js'
 import Prompt from './Prompt.js'
 import Selected from './Selected.js'
 import Hint from './Hint.js'
-import Back from './Back.js'
 
 class Content extends React.Component {
   constructor(props) {
     super(props)
-    this.rightPaneRef = React.createRef()
+    this.rightPaneRef = React.createRef();
   }
 
   render() {
     if (this.rightPaneRef.current) {
       this.rightPaneRef.current.scrollTo({top: 0, behavior: "smooth"})
     }
-    let page = this.props.client.language ? 3 : (this.props.client.channel ? 2 : 1)
+    let page = this.props.client.language ? 3 : (this.props.client.channel ? 2 : 1);
     return (
       <div id="main">
         <div className="pane left-pane">
@@ -33,7 +32,7 @@ class Content extends React.Component {
             }}
             handlers={this.props.handlers}
           />
-          <Back page={page} handleBack={this.props.handlers.back}/>
+
         </div>
       </div>
     )

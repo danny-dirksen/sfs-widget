@@ -25,7 +25,7 @@ function PopupDownload(props) {
         <React.Fragment>
           <div style={{textAlign: "center"}}>
             <h1 className="pop-up-header">Sent!</h1>
-            <img style={{width: "3rem"}} src={mailIcon}></img>
+            <img alt="Email Sent" style={{width: "3rem"}} src={mailIcon}></img>
             <p className="pop-up-text download-instructions">
               Your download link has been sent to "{email}". Check your email!
             </p>

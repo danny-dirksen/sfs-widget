@@ -1,18 +1,19 @@
 import React from 'react'
 import OptionButtons from './OptionButtons.js';
+import Back from './Back.js'
 
 let cards = []
 
 function DropdownResource(props) {
 
-  let visible = (props.client.page === 3)
+  let visible = (props.client.page === 3);
 
   if (visible) {
-    cards = []
+    cards = [];
     // the attributes of the selected language which depend on the channel
     let channel = props.links.channels.find(channel => {
       return channel.name.toLowerCase() === props.client.channel.toLowerCase()
-    })
+    });
     if (channel) {
       let language = channel.languages.find(language => {
         return language.name.toLowerCase() === props.client.language.toLowerCase()
@@ -68,14 +69,15 @@ function DropdownResource(props) {
         }
       })
     }
-  } else {
-    setTimeout(
-      () => {cards = []},
-      300
-    );
   }
+  let style = {
+    visibility: visible ? "visible" : "hidden"
+  };
   return (
-    <div className="dropdown" id="dropdown-resource" style={{visibility: visible ? "visible" : "hidden"}}>{cards}</div>
+    <div className="dropdown" id="dropdown-resource" style={style}>
+      <Back handleBack={props.handlers.back} />
+      {cards}
+    </div>
   )
 }
 
