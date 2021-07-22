@@ -30,22 +30,24 @@
             <a href="{{shareLink}}">here</a>
             and send them an email with details.
           </p>
-          <p>Finally, we'd love to hear from you. Please drop us a note here and let us know what you think of the music and how we can serve you in the future.</p>
+          <p>
+            Finally, we'd love to hear from you. Please drop us a note
+            <a href="{{contactLink}}">here</a>
+            and let us know what you think of the music and how we can serve you in the future.
+          </p>
           <p>If you would like to recommend the music or any of the resources to a friend, please just click here and send them an email with details.</p>
           <p>God bless!</p>
           <p>Songs for Saplings</p>
-          <block align="center">
-            <img src="{{logo}}" alt="Songs for Saplings Logo" align="center" width="100" />
-          </block>
+          <p></p>
+          <img src="{{logo}}" alt="Songs for Saplings Logo" align="center" width="100" />
+          <p></p>
           <p>P.S. If you find our resource helpful, please consider <a href="{{donateLink}}">donating to our ministry.</a></p>
         </block>
         <p class="bottom" align="center">
-          Songs for Saplings is a non-profit ministry. For more information,
-          <a href="{{websiteLink}}">visit our website.</a><br></br>
-          Don't like these emails?
-          <a href="{{unsubscribeLink}}">Unsubscribe.</a>
+          Songs for Saplings is a non-profit ministry. For more information, <a href="{{websiteLink}}">visit our website</a>.
+          <br></br>
+          Don't like these emails? <a href="{{unsubscribeLink}}">Unsubscribe.</a>
         </p>
-
       </block>
     </container>
   </body>
