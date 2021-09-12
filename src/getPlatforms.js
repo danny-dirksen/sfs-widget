@@ -4,12 +4,13 @@ let header = encodeURI("Hey, thought you would enjoy this great kid's music that
 //let image = encodeURI("https://songsforsaplings.com/workspace/uploads/images/saplings-music-banner.jpg");
 //let description = encodeURI("Free Music and More from Songs for Saplings");
 let hashtag = encodeURI("Songs4Saplings");
+let cc = encodeURI("music-widget@songsforsaplings.com");
 
 let platforms;
 
 function getPlatforms() {
   platforms = [
-    {name: 'email', alt: 'Email', href: `mailto:?Subject=${title}&Body=${header}%0D%0A%0D%0A${url}`},
+    {name: 'email', alt: 'Email', href: `mailto:?Subject=${title}&cc=${cc}&Body=${header}%0D%0A%0D%0A${url}`},
     {name: 'facebook', alt: 'Facebook', href: `http://www.facebook.com/sharer.php?u=${url}`},
     {name: 'instagram', alt: 'Instagram', href: `https://www.instagram.com/songs_for_saplings/`},
     {name: 'twitter', alt: 'Twitter', href: `https://twitter.com/share?url=${url}&text=${title}&hashtags=${hashtag}`},
