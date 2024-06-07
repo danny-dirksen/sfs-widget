@@ -1,41 +1,46 @@
 # Project "Wildfire": a Songs for Saplings Webapp
 
-Most artists have relatively simple discographies. For some, however, it is more complicated. The non-profit organization "Songs for Saplings" produces content in several languages, in several albums, available through several channels, and distributes it through many partners, each with different ideas of what content to include. Eventually, the artist behind this nightmarish n-dimensional discography found it hard to manage the content that had accumulated, let alone add more, and fans could not find the content they were looking for. To solve this problem, I built and deployed an iframe-embeddable, cloud-hosted web app from scratch. I was given general UX specifications and some mockups in the form of screenshots. The rest was up to me.
+![Video showing off the main features of the Wildfire webapp](doc/demo.gif)
 
-I built the entire stack: a ReactJS frontend hosted on a Linux machine in the cloud running NodeJS. To save the artist from learning SQL, the discography data was read from a large google sheet. Finally, I implemented the usual opt-in cookies, usage-logging, and automated mailing.
+## What is Project "Wildfire"?
 
-Now, listeners can access the content they want easily without being overwhelmed, partners can distribute the artist's content using our widget, and the artist can manage their content from one place.
+Most artists have relatively simple discographies. For some, however, it is more complicated. The non-profit organization "Songs for Saplings" produces content in several languages, in several albums, available through several channels, and distributes it through many partners. This makes it difficult for listerners all over the world to find the content they are looking for. To solve this problem, Project Wildfire is an iframe-embeddable, cloud-hosted web app. It was based on visual and functional UX specifications, combined with plenty of back-and-forth with stakeholders on what was needed. and some mockups in the form of screenshots.
 
----
+The stack has a React/Express frontend hosted on a cloud Ubuntu machine. To allow non-technical people to manage the discography efficiently, an integrated Google sheet defines the content that the app will display. Opt-in cookies, Mixpanel integration, and automated mailing integrate the app with the rest of the Songs for Saplings ecosystem.
 
-Project "Wildfire" is a service that makes it easy to find all Songs for Saplings resources. It is primarily intended as an iframe-embeddable widget to be easily added to people's sites. However, it is also a [standalone site](music.songsforsaplings.com).
-The frontend is built with ReactJS and served statically, with a backend api handling requests and supplying live data about what resources are available.
-The backend uses nodeJS through a PM2 daemon on a linux Digitalocean droplet running NGINX with encryption enabled through Certbot.
+With project Wildfire, listeners can access the content they want quickly and easily. Songs for Saplings can distribute the content they want to new listeners more easily.Finally, Songs for Saplings can now manage their discography and other content all from one place.
 
----
+This webapp is primarily intended as an iframe-embeddable widget to be easily added to people's sites. However, it is also a standalone site: [music.songsforsaplings.com](https://music.songsforsaplings.com).
 
-Notes on using this repo:
-- Node.js dependencies must be installed in order to run this node server. Simply go to the root directory and type `npm install` while in the root directory. If you do not have npm, you can learn more about it [Here](https://www.npmjs.com/)
-- For full list of ReactJS commands, see `REACT-README.md`.
-- To build the static server, go to the root directory and use the command `npm run-script build`. The resulting build file will be used directly by the backend.
-- To run the server in production, go to the repo root directory and use the command `npm install; npm run build; pm2 restart`
-- The pm2 daemon was created to run the command `npm run backend-prod` in the background.
-- The front end relies on the backend, even when using a dev build. To run the frontend and backend simultaneously during development, go to the repository's root (`sfs-widget`) directory and use the command `npm run backend-dev`. In another terminal, use the command `npm start`.
+## How to use Project "Wildfire"
 
-Notes on the backend:
-- A workflow for deploying the backend on the current production server is still evolving, but this is the current process:
-`git checkout HEAD
+### Setup
+
+1. Clone the repository to your local machine.
+2. Install the necessary dependencies by running `npm install` in the root directory.
+3. To start the development server, run `npm run backend-dev` in the root directory. Then, in another terminal, run `npm start` in the root directory.
+
+### Deployment
+
+The basic deployment process is as follows:
+
+1. To build the static server, run `npm run build` in the root directory.
+2. To run the server in production, run `npm install; npm run build; pm2 restart` in the root directory. The pm2 daemon will run the server in the background. Currently, it is set to run the command `npm run backend-prod`.
+
+A workflow for deploying the backend on the current production server is still evolving, but this is the current process:
+
+```
+git checkout HEAD
 git stash save --keep-index --include-untracked
 git reset HEAD
 git pull
 git stash drop
 npm run build
-pm2 restart app`
-- if build script or app are not working, make sure npm dependencies are installed with `npm install`
-- [This Stack overflow thread](https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git) has come in handy for git-related issues.
+pm2 restart app
+```
 
----
+### Credits
 
-Created by Daniel Dirksen with help from Andrew Dirksen and guidance from James Dirksen, serving music and resources created by Dana Dirksen.
+Created by Daniel Dirksen.
 
-Copywrite Songs for Saplings 2021. All rights reserved.
+© Songs for Saplings 2021. All rights reserved.

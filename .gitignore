@@ -1,10 +1,6 @@
 # static site build directory
 /build
 
-# dynamic json files
-links.json
-cpts.json
-
 # accumulates as server runs
 /var/
 
