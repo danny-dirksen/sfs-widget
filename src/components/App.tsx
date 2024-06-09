@@ -1,10 +1,20 @@
-import React from 'react'
-import Header from './Header.js'
-import Content from './Content.js'
-import Popup from './Popup.js'
-import CookieNotice from './CookieNotice.js'
-import common from '../common.js'
-import sfsLogo from '../resources/ui/sfsLogoWhite.svg'
+import React from 'react';
+import Header from './Header.jsx';
+import Content from './Content.jsx';
+import Popup from './Popup.jsx';
+import CookieNotice from './CookieNotice.jsx';
+import common from '@/utils/common.js';
+import sfsLogo from '../resources/ui/sfsLogoWhite.svg';
+
+interface AppProps {
+  data: {
+    mixpanel:
+  }
+};
+
+export function App(props: AppProps): JSX.Element {
+
+}
 
 class App extends React.Component {
 
@@ -258,4 +268,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export App

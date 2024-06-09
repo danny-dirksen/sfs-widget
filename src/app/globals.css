@@ -1,4 +1,8 @@
-// Copy-pasted styles that normalize accross browsers
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Copy-pasted styles that normalize accross browsers */
 button, input, optgroup, select, textarea {font-family: inherit; font-size: 100%; line-height: 1.15; margin: 0;}
 button, input {overflow: visible;}
 button, select {text-transform: none;}
@@ -8,12 +12,12 @@ button {padding: 0; border: none}
 
 @font-face {
     font-family: "renner-light";
-    src: url("resources/fonts/renner-light.otf");
+    src: url("/fonts/renner-light.otf");
 }
 
 @font-face {
     font-family: "renner-medium";
-    src: url("resources/fonts/renner-medium.otf");
+    src: url("/fonts/renner-medium.otf");
 }
 
 ::-webkit-scrollbar {
@@ -28,10 +32,10 @@ button {padding: 0; border: none}
 html {
   -webkit-overflow-scrolling: touch;
   height: 100%;
-  //background-color: #48c275;
-  //background-color: #0f9748;
+  /* background-color: #48c275; */
+  /* background-color: #0f9748; */
   background-color: #2fb257;
-  //background: linear-gradient(#48c275, #0f9748);
+  /* background: linear-gradient(#48c275, #0f9748); */
   background-size: cover;
 }
 
@@ -51,7 +55,7 @@ a {
 }
 
 #prompt, .selected, #hint-container, #back-container, .dropdown {
-  //transition: opacity 0.2s, visibility 0.2s;
+  /* transition: opacity 0.2s, visibility 0.2s; */
 }
 
 #root {
@@ -105,7 +109,7 @@ a {
 #hint {
   font-size: 1rem;
   line-height: 1;
-  height: ;
+  /* height: ; */
 }
 
 .arrow {
@@ -189,7 +193,7 @@ img.branding {
 .back {
   user-select: none;
   letter-spacing: 0.1rem;
-  //align-self: flex-start;
+  /* align-self: flex-start; */
   max-width: 24rem;
   width: 100%;
   margin-top: -0.5rem;
@@ -238,14 +242,14 @@ img.branding {
 }
 
 .dropdown-option:last-child {
-  //margin-bottom: 0;
+  /* margin-bottom: 0; */
 }
 
 .dropdown-option:hover, .dropdown-option:focus-within {
   cursor: pointer;
   background-color: #F8F8F8;
   transform: scale(1.02);
-  //transform: translateX(-1%);
+  /* transform: translateX(-1%); */
   transition: transform 0.1s ease-out;
 }
 
@@ -316,7 +320,7 @@ img.branding {
 .resource-option-buttons img {
   height: 1.3rem;
   padding: 0.2rem;
-  //transition: background-color 0.1s;
+  /* transition: background-color 0.1s; */
 }
 
 .pop-up-screen {
@@ -492,12 +496,12 @@ p.pop-up-text:last-child {
 
 .form-button:hover {
   cursor: pointer;
-  //transform: scale(0.99);
+  /* transform: scale(0.99); */
 }
 
 .form-button:focus {
   outline: none !important;
-  //transform: scale(0.97);
+  /* transform: scale(0.97); */
 }
 
 .notification-container {
@@ -542,8 +546,9 @@ p.pop-up-text:last-child {
     border-top: none;
     border-left: 1px solid rgba(0,0,0,0.1);
   }
+  
   .dropdown {
-    //justify-content: center;
+    /* justify-content: center; */
   }
 
   .arrow {
@@ -557,5 +562,11 @@ p.pop-up-text:last-child {
   .corner-2 {
     right: unset;
     bottom: 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

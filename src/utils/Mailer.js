@@ -8,6 +8,16 @@ const heml = require('heml');
 const html2string = require('html-to-text');
 
 
+// "mailgun": {
+//   "key": process.env.MAILGUN_key,
+//   "domain": process.env.MAILGUN_domain,
+// },
+
+// "mailchimp": {
+//   "key": process.env.MAILCHIMP_key,
+//   "prefix": process.env.MAILCHIMP_prefix,
+// }
+// }
 
 
 const common = require('./common.js')

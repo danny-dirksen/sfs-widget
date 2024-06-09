@@ -1,8 +1,8 @@
 import React from 'react'
 import x from '../resources/ui/x.svg'
-import PopupInfo from './PopupInfo.js'
-import PopupShare from './PopupShare.js'
-import PopupDownload from './PopupDownload.js'
+import PopupInfo from './PopupInfo.jsx'
+import PopupShare from './PopupShare.jsx'
+import PopupDownload from './PopupDownload.jsx'
 
 
 

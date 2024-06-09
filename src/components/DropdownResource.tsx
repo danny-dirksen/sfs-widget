@@ -1,6 +1,6 @@
 import React from 'react'
-import OptionButtons from './OptionButtons.js';
-import Back from './Back.js'
+import OptionButtons from './OptionButtons.jsx';
+import Back from './Back.jsx'
 
 let cards = []
 

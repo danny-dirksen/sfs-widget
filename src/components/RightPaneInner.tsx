@@ -1,7 +1,7 @@
 import React from 'react'
-import DropdownChannel from './DropdownChannel.js'
-import DropdownLanguage from './DropdownLanguage.js'
-import DropdownResource from './DropdownResource.js'
+import DropdownChannel from './DropdownChannel.jsx'
+import DropdownLanguage from './DropdownLanguage.jsx'
+import DropdownResource from './DropdownResource.jsx'
 
 class RightPaneInner extends React.Component {
   constructor(props) {
