@@ -1,19 +1,6 @@
-import { getLinks } from "@/utils/links";
+import { getContent } from '@/utils/sheets';
 import { App } from "@/components/App";
-import './style.css';
 import common from '@/utils/common';
-
-import mixpanel from 'mixpanel-browser';
-
-// Initialize Mixpanel.
-const devMode = process.env.NODE_ENV === "development";
-const mixpanelKey = devMode ? (
-  process.env.NEXT_PUBLIC_MIXPANEL_key_dev
-) : (
-  process.env.NEXT_PUBLIC_MIXPANEL_key_prod
-)
-if (!mixpanelKey) throw new Error("Mixpanel key is not defined.");
-mixpanel.init(mixpanelKey);
 
 // let pic = common.getQueryVariable("p");
 // fetch('api/links' + (pic ? "?p=" + pic : ''))
@@ -28,15 +15,25 @@ mixpanel.init(mixpanelKey);
 //   });
 
 interface Props {
-  params?: {
+  searchParams?: {
     p?: string
   }
 };
 
-export default async function Home(props: Props) {
-  const pic = props.params?.p || null;
-  const links = getLinks(pic);
+const errorScreen = (
+  <div className='h-full text-center flex flex-col justify-center'>
+    <div>
+      We're having trouble right now. Please try again later.<br/>
+      For now, you can check out <a className='underline' href='https://songsforsaplings.com'>our website</a> to find resources.
+    </div>
+  </div>
+);
+
+export default async function(props: Props) {
+  const pic = props.searchParams?.p || null;
+  const content = await getContent(pic);
+  if (!content) return errorScreen;
   return (
-    <App data={{mixpanel}} />
+    <App data={{content}} />
   );
 }

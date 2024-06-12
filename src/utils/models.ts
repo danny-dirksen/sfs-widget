@@ -1,6 +1,6 @@
 export interface Channel {
   channelId: string;
-  image: string | null;
+  name: string;
 };
 
 export interface Language {
@@ -13,7 +13,7 @@ export interface Resource {
   resouceId: string;
 };
 
-export interface ResourceInLanguage {
+export interface ResourceTranslation {
   resourceId: string;
   languageId: string;
   line1: string | null;
@@ -24,7 +24,9 @@ export interface ResourceInLanguage {
 export interface Link {
   resourceId: string;
   languageId: string;
-  channelId: string;
+  /** If ommitted, the link shows up regardless of channel. */
+  channelId: string | null;
+  url: string;
 }
 
 export interface Content {
@@ -32,6 +34,7 @@ export interface Content {
   channels: Channel[];
   languages: Language[];
   resources: Resource[];
+  resourceTranslations: ResourceTranslation[];
   links: Link[];
 };
 
@@ -48,3 +51,11 @@ export interface ContentProfileTable {
   lastUpdated: number;
   partners: ContentProfile[];
 };
+
+export interface DownloadRequestBody {
+  email: string,
+  languageId: string,
+  resourceId: string,
+  firstName: string,
+  lastName: string,
+}

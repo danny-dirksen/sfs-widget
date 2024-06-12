@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import winston from 'winston';
 
-const varDir = path.join(__dirname, '..', '..', 'var');
+const varDir = path.resolve(__dirname, '../../../var');
 
 // Logging
 export const logger = winston.createLogger({
@@ -24,16 +24,16 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * Saves a json file to [projectroot]/var/[filename]
  * @param filename e.g. `data.json`
- * @returns the data if successful, null otherwise.
+ * @returns the data if successful, Error otherwise.
  */
-export async function varReadJSON(filename: string): Promise<object | null> {
+export async function varReadJSON(filename: string): Promise<object | Error> {
   const filePath = path.join(varDir, filename);
+  if (!fs.existsSync(filePath)) return new Error("File does not exist.");
   return new Promise<any>((resolve: (value: object | null) => void) => {
     fs.readFile(path.join(filePath), "utf-8", (err, data) => {
       if (err) {
         logger.error("An error occured while reading " + filePath);
-        logger.error(err);
-        resolve(null);
+        resolve(new Error("Could not read " + filePath + "\n\n" + err));
       } else {
         logger.info(filename + " has been read.");
         resolve(JSON.parse(data));

@@ -1,10 +1,18 @@
 import React from 'react'
-import RightPaneInner from './RightPaneInner.jsx'
-import Prompt from './Prompt.jsx'
-import Selected from './Selected.jsx'
-import Hint from './Hint.jsx'
+import RightPaneInner from './RightPaneInner.js'
+import Prompt from './Prompt.js'
+import Selected from './Selected.js'
+import Hint from './Hint.js'
 
-class Content extends React.Component {
+interface MainContentProps {
+  
+};
+
+export function MainContent(props): JSX.Element {
+
+}
+
+export class MainContent extends React.Component {
   constructor(props) {
     super(props)
     this.rightPaneRef = React.createRef();
@@ -38,5 +46,3 @@ class Content extends React.Component {
     )
   }
 }
-
-export default Content

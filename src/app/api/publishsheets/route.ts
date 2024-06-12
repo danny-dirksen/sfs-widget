@@ -1,16 +1,33 @@
+import { reloadSheet } from "@/utils/sheets";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  const { searchParams } = new URL(req.url);
-  throw new Error("Not Implemented");
+  const result = await throttle(
+    async () => reloadSheet(),
+    async () => new Error(`Daily upload cap of ${REQS_PER_DAY} exceeded`));
+  return (result instanceof Error) ? (
+    new NextResponse(`Error: ${result.message}`, { status: 400 })
+  ) : (
+    new NextResponse('Success.', { status: 200 })
+  );
 }
 
-// app.get('/api/updatelinks', async (req, res) => {
-//   try {
-//     await sheetLoader.loadFromSheets();
-//     res.sendStatus(200);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).send("An error occured while parsing the sheet.")
-//   }
-// });
+// This code is used to cap requests to no more than REQS_PER_DAY requests per day.
+const REQS_PER_DAY: number = 5;
+let reqsRemaining: number = REQS_PER_DAY;
+let lastReq: number = Date.now(); // ms
+
+function throttle<T>(allow: () => Promise<T>, block: () => Promise<T>): Promise<T> {
+  const thisReq = Date.now(); // ms
+  const daysSinceLast = (thisReq - lastReq) / 1000 / 60 / 60 / 24;
+  // Allowance regenerates linearly until it hits cap.
+  reqsRemaining = Math.min(reqsRemaining + (REQS_PER_DAY * daysSinceLast), REQS_PER_DAY);
+  if (reqsRemaining >= 1) {
+    reqsRemaining -= 1;
+    lastReq = thisReq;
+    return allow();
+  } else {
+    return block();
+  }
+
+}

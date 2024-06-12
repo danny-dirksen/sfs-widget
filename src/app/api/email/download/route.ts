@@ -1,34 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getContent } from "@/utils/sheets";
+import { DownloadRequestBody, ResourceTranslation } from '@/utils/models';
+import { logger } from "@/utils/varUtils";
+import { sendDownloadLink } from '@/utils/mail';
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  const { searchParams } = new URL(req.url);
-  throw new Error("Not Implemented");
-}
+  // Parse request body
+  const { email, firstName, lastName, languageId, resourceId } = await req.json() as DownloadRequestBody;
 
-// // for when the user submits a form to recieve a download link
-// app.post('/email/download/', (req, res) => {
-//   let links = sheetLoader.links;
-//   let email = req.body.email;
-//   let resourceInfo = links.languages
-//     .find(language => language.name === req.body.language).resources
-//     .find(resource => resource.id === req.body.resource);
-//   let resourceName = (resourceInfo.line1 || "Songs for Saplings") + " - " + (resourceInfo.line2 || "Listen Now");
-//   let downloadLink = links.channels
-//     .find(channel => channel.name.toLowerCase() === "download").languages
-//     .find(language => language.name.toLowerCase() === req.body.language).resources
-//     .find(resource => resource.id === req.body.resource).link;
-//   try {
-//     common.log(`${common.getDate()}, ${email}`, common.root + '/var/mailingList.txt');
-//     mailer.download({
-//       firstName: req.body.firstName,
-//       lastName: req.body.lastName,
-//       email: email,
-//       resourceName: resourceName,
-//       downloadLink: downloadLink
-//     })
-//     res.status(200).end();
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).end();
-//   }
-// })
+  // Find the url and other info about the download link.
+  const content = await getContent();
+  if (!content) return new NextResponse("Failed to get content.", { status: 500 });
+  const { resourceTranslations, links } = content;
+  const resource = resourceTranslations.find(
+    t => t.languageId === languageId && t.resourceId === resourceId
+  );
+  if (!resource) return new NextResponse("Could not find that resource.", { status: 404 });
+  const resourceName = `${resource.line1 || "Songs for Saplings"} - ${resource.line2}`;
+  const downloadLink = links.find(
+    l => l.languageId === languageId && l.resourceId === resourceId && l.channelId === 'download'
+    );
+  if (!downloadLink) return new NextResponse("Could not find that link.", { status: 404 });
+  const downloadUrl = downloadLink.url;
+
+  // Try to send them an email.
+  try {
+    sendDownloadLink({ firstName, lastName, email, resourceName, downloadUrl });
+    return new NextResponse(undefined, { status: 200 });
+  } catch (err) {
+    logger.error('Error sending mail: ' + err);
+    return new NextResponse("There was an error sending this email.", { status: 500 });
+  }
+}
