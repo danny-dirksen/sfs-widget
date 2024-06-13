@@ -22,7 +22,7 @@ function DropdownResource(props) {
       let languageData = props.links.languages.find(langData => {
         return langData.name.toLowerCase() === props.client.language.toLowerCase()
       })
-      // for each resource, or "album"
+      // for each resource, or 'album'
       language.resources.forEach((resource, index) => {
         // finds description and info about the resource. independent of the channel selected.
         let resourceData = languageData.resources.find(recData => {
@@ -32,31 +32,31 @@ function DropdownResource(props) {
           let innerText = (
             <React.Fragment>
               <div><small>{resourceData.line1}</small></div>
-              <div className="green-text">{resourceData.line2}</div>
+              <div className='green-text'>{resourceData.line2}</div>
             </React.Fragment>
           );
           cards.push(
             <div
-              className={`dropdown-option${props.client.focused === resource.id ? " focused" : ""}`}
+              className={`dropdown-option${props.client.focused === resource.id ? ' focused' : ''}`}
               key={index}
             >
-              { props.client.channel.toLowerCase() === "download" ?
+              { props.client.channel.toLowerCase() === 'download' ?
                 <div
-                  className="dropdown-text"
+                  className='dropdown-text'
                   onClick={() => props.handlers.downloadScreen(resource.id)}
-                  role="button"
-                  tabIndex="0"
-                  disabled={props.client.page !== 3 ? true : ""}
+                  role='button'
+                  tabIndex='0'
+                  disabled={props.client.page !== 3 ? true : ''}
                 >
                   {innerText}
                 </div> :
                 <a
-                  className="dropdown-text"
+                  className='dropdown-text'
                   href={resource.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target='_blank'
+                  rel='noopener noreferrer'
                   onClick={() => props.handlers.selectResource(resource.id)}
-                  tabIndex="0"
+                  tabIndex='0'
                 >
                   {innerText}
                 </a>
@@ -71,10 +71,10 @@ function DropdownResource(props) {
     }
   }
   let style = {
-    visibility: visible ? "visible" : "hidden"
+    visibility: visible ? 'visible' : 'hidden'
   };
   return (
-    <div className="dropdown" id="dropdown-resource" style={style}>
+    <div className='dropdown' id='dropdown-resource' style={style}>
       <Back handleBack={props.handlers.back} />
       {cards}
     </div>

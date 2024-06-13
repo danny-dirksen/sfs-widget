@@ -10,7 +10,7 @@ export interface Language {
 };
 
 export interface Resource {
-  resouceId: string;
+  resourceId: string;
 };
 
 export interface ResourceTranslation {

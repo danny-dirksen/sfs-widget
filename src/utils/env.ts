@@ -1,3 +1,5 @@
+// This module ensures that all of the essential environment variables have been set.
+
 type Env = {
   'MAILGUN_KEY': string;
   'MAILGUN_DOMAIN': string;
@@ -27,10 +29,12 @@ const required = [
   'NEXT_PUBLIC_MIXPANEL_KEY_PROD',
 ] as const;
 
-const missing = required.filter(key => !(key in process.env));
+const missing = required.filter(
+  key => !(key in process.env) || process.env[key] === 'Placeholder'
+);
 
 if (missing.length > 0) {
-  throw new Error("Environment is missing the fields " + missing);
+  throw new Error('Environment is missing the fields ' + missing);
 }
 
 export const env = process.env as unknown as Env;

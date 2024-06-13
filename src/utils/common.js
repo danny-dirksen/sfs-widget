@@ -12,9 +12,9 @@ common.getQueryVariable = (variable) => {
     return null
   }
   var query = window.location.search.substring(1);
-  var vars = query.split("&")
+  var vars = query.split('&')
   for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split("=")
+    var pair = vars[i].split('=')
     if(pair[0] === variable){
       return decodeURI(pair[1])
     }
@@ -25,26 +25,26 @@ common.getQueryVariable = (variable) => {
 // updates query based on the state of the client, ommitting the fields that don't yet have a set value
 common.queryFromState = (client) => {
   let args = [];
-  //let newSearch = ""
+  //let newSearch = ''
   if (client.pic) {
-    args.push(["p", client.pic]);
+    args.push(['p', client.pic]);
   }
   if (client.channel) {
-    args.push(["c", client.channel]);
+    args.push(['c', client.channel]);
   }
   if (client.language) {
-    args.push(["l", client.language]);
+    args.push(['l', client.language]);
   }
   if (client.resource) {
-    args.push(["r", client.resource]);
+    args.push(['r', client.resource]);
   }
   if (client.focused) {
-    args.push(["f", client.focused]);
+    args.push(['f', client.focused]);
   }
   let query = args.map(arg => arg[0] + '=' + arg[1]).join('&');
-  return query ? "?" + query : "";
+  return query ? '?' + query : '';
   // if (args.length > 0) {
-  //   newSearch = "?"
+  //   newSearch = '?'
   //   for (let i = 0; i < args.length; i ++) {
   //     newSearch += args[i][0] + '=' + args[i][1];
   //     if (args[i + 1]) {
@@ -52,7 +52,7 @@ common.queryFromState = (client) => {
   //     }
   //   }
   // } else {
-  //   newSearch = "";
+  //   newSearch = '';
   // }
   //return newSearch;
 }
@@ -60,47 +60,47 @@ common.queryFromState = (client) => {
 common.setCookie = (cname, cvalue, exdays) => {
   let d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  let expires = "expires="+d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  let expires = 'expires='+d.toUTCString();
+  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
 }
 
 common.getCookie = (cname) => {
-  let name = cname + "=";
-  let ca = document.cookie.split(";");
+  let name = cname + '=';
+  let ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) === " ") {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return '';
 }
 
 common.ensureCookieID = () => { // cookie expires in a year
-  if (common.getCookie("cookieID") === "") {
+  if (common.getCookie('cookieID') === '') {
     let newID = Math.floor(10000000000000000*Math.random());
-    common.setCookie("cookieID", newID.toString(), 365);
+    common.setCookie('cookieID', newID.toString(), 365);
   }
-  return common.getCookie("cookieID");
+  return common.getCookie('cookieID');
 }
 
 common.clearCookies = () => {
-  var cookies = document.cookie.split(";");
+  var cookies = document.cookie.split(';');
   for (var i = 0; i < cookies.length; i++) {
-    var spcook =  cookies[i].split("=");
+    var spcook =  cookies[i].split('=');
     deleteCookie(spcook[0]);
   }
   function deleteCookie(cookiename) {
     var d = new Date();
     d.setDate(d.getDate() - 1);
-    var expires = ";expires="+d;
+    var expires = ';expires='+d;
     var name=cookiename;
     //alert(name);
-    var value="";
-    document.cookie = name + "=" + value + expires + ";";
+    var value='';
+    document.cookie = name + '=' + value + expires + ';';
   }
 }
 

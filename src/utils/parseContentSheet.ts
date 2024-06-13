@@ -59,7 +59,7 @@ export async function parseContentSheet(sheetsDoc: GoogleSpreadsheet): Promise<C
   // Ensure that required labels are present.
   const missingFields = Object.keys(labels).filter(l => labels[l] === null);
   if (missingFields.length > 0) {
-    throw new Error("Missing fields: " + JSON.stringify(missingFields));
+    throw new Error('Missing fields: ' + JSON.stringify(missingFields));
   }
 
   /** Start and end index of language section: [start, end) */
@@ -71,14 +71,14 @@ export async function parseContentSheet(sheetsDoc: GoogleSpreadsheet): Promise<C
   const links: Link[] = [];
 
   // Load channel info.
-  const chanStartCol = labels['resource.channels']! + 1; // Skip the "all" column.
+  const chanStartCol = labels['resource.channels']! + 1; // Skip the 'all' column.
   const chanIdRow = headerRow + 1;
   const chanNameRow = headerRow + 2;
   for (let c = chanStartCol; c < sheet.columnCount; c ++) {
     const channelId = at(chanIdRow, c);
     const name = at(chanNameRow, c);
     if (!channelId) continue; // Skip rows without id.
-    if (!name) return new Error("Channel " + channelId + " has id but no display name.");
+    if (!name) return new Error('Channel ' + channelId + ' has id but no display name.');
     channels.push({channelId, name});
   }
   
@@ -91,7 +91,7 @@ export async function parseContentSheet(sheetsDoc: GoogleSpreadsheet): Promise<C
     const autonym = at(start, labels['language.autonym']!);
     const info = at(start, labels['language.info']!);
     if (!languageId || !autonym) {
-      return new Error("Language is missing autonym (display name)");
+      return new Error('Language is missing autonym (display name)');
     }
     languages.push({ languageId, autonym, info });
     // Find index of next language (or the end of the sheet).
@@ -110,6 +110,9 @@ export async function parseContentSheet(sheetsDoc: GoogleSpreadsheet): Promise<C
       if (!resourceId || !line2) continue;
       const line1 = at(r, labels['resource.line1']!);
       const info = at(r, labels['resource.info']!);
+      if (!resources.find(r => r.resourceId === resourceId)) {
+        resources.push({ resourceId });
+      }
       resourceTranslations.push({ languageId, resourceId, line1, line2, info });
 
       // Scan right, adding any links for this resource translation.
@@ -118,7 +121,7 @@ export async function parseContentSheet(sheetsDoc: GoogleSpreadsheet): Promise<C
         const url = at(r, c);
         if (!url) continue;
         if (!channelId) {
-          return new Error("Link " + url + " is not attached to a resource id or 'all'");
+          return new Error('Link ' + url + ' is not attached to a resource id or "all"');
         }
         const allChannels = c === labels['resource.channels']!;
         links.push({
@@ -160,7 +163,7 @@ export function removeStubs(content: Content, enabledLinks: Link[]): Content {
     lang => (enabledTranslations.some(tran => tran.languageId === lang.languageId))
   );
   const enabledResources = resources.filter(
-    res => (enabledTranslations.some(tran => tran.resourceId === res.resouceId))
+    res => (enabledTranslations.some(tran => tran.resourceId === res.resourceId))
   );
   // Return the enabled content.
   return {

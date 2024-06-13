@@ -1,10 +1,10 @@
 let url = encodeURIComponent(window.location.href); // encodeURIComponent escapes more characters and is good for encoding query strings.
-let title = encodeURI("Free Music and More from Songs for Saplings");
-let header = encodeURI("Hey, thought you would enjoy this great kid's music that teaches the Bible!");
-//let image = encodeURI("https://songsforsaplings.com/workspace/uploads/images/saplings-music-banner.jpg");
-//let description = encodeURI("Free Music and More from Songs for Saplings");
-let hashtag = encodeURI("Songs4Saplings");
-let cc = encodeURI("music-widget@songsforsaplings.com");
+let title = encodeURI('Free Music and More from Songs for Saplings');
+let header = encodeURI(`Hey, thought you would enjoy this great kid's music that teaches the Bible!`);
+//let image = encodeURI('https://songsforsaplings.com/workspace/uploads/images/saplings-music-banner.jpg');
+//let description = encodeURI('Free Music and More from Songs for Saplings');
+let hashtag = encodeURI('Songs4Saplings');
+let cc = encodeURI('music-widget@songsforsaplings.com');
 
 let platforms;
 

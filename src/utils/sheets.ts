@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-import { Content, ContentProfile, ContentProfileTable, Link } from "./models";
+import { Content, ContentProfile, ContentProfileTable, Link } from './models';
 import { parseContentSheet, removeStubs } from './parseContentSheet';
 import { parseCptSheet } from './parseCptSheet';
 import { varReadJSON, logger, varWriteJSON } from './varUtils';
@@ -41,13 +41,13 @@ async function loadContent() {
   const sheetsDoc = await getSheet();
 
   // Load content
-  let newContent = await varReadJSON("content.json") as Content | Error;
+  let newContent = await varReadJSON('content.json') as Content | Error;
   if (newContent instanceof Error) {
-    logger.error("Could not load content from json: " + newContent.message);
-    logger.info("Trying sheet...");
+    logger.error('Could not load content from json: ' + newContent.message);
+    logger.info('Trying sheet...');
     newContent = await parseContentSheet(sheetsDoc);
     if (newContent instanceof Error) {
-      logger.error("Could not parse content from sheet: " + newContent.message);
+      logger.error('Could not parse content from sheet: ' + newContent.message);
       return;
     }
     // This is async, but we don't need to wait for it to return.
@@ -55,13 +55,13 @@ async function loadContent() {
   }
 
   // Load content profile table
-  let newCpt = await varReadJSON("cpt.json") as ContentProfileTable | Error;
+  let newCpt = await varReadJSON('cpt.json') as ContentProfileTable | Error;
   if (newCpt instanceof Error) {
-    logger.error("Could not load cpt from json: " + newCpt.message)
-    logger.info("Trying sheet...");
+    logger.error('Could not load cpt from json: ' + newCpt.message)
+    logger.info('Trying sheet...');
     newCpt = await parseCptSheet(sheetsDoc);
     if (newCpt instanceof Error) {
-      logger.error("Could not parse cpt from sheet: " + newCpt.message)
+      logger.error('Could not parse cpt from sheet: ' + newCpt.message)
       return;
     }
     // This is async, but we don't need to wait for it to return.
@@ -71,7 +71,7 @@ async function loadContent() {
   // If both parse successfully, update static variables.
   content = newContent;
   cpt = newCpt;
-  logger.info("Sheets data is loaded.");
+  logger.info('Sheets data is loaded.');
 }
 
 /**

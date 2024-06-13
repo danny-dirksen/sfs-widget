@@ -19,13 +19,13 @@ function DropdownLanguage(props) {
         let autonym = props.links.languages.find(lang => lang.name === language.name).autonym
         cards.push(
           <div
-            className={`dropdown-option${props.client.focused === language.name ? " focused" : ""}`}
+            className={`dropdown-option${props.client.focused === language.name ? ' focused' : ''}`}
             key={index}>
-            <div className="dropdown-text-centerer"
-              role="button"
+            <div className='dropdown-text-centerer'
+              role='button'
               onClick={() => props.handlers.selectLanguage(language.name)}
-              tabIndex="0">
-              <span className="dropdown-text">{autonym}</span>
+              tabIndex='0'>
+              <span className='dropdown-text'>{autonym}</span>
             </div>
             <OptionButtons data={{id: language.name}} handlers={props.handlers} />
           </div>
@@ -34,7 +34,7 @@ function DropdownLanguage(props) {
     }
   }
   return (
-    <div className="dropdown" id="dropdown-language" style={{visibility: visible ? "visible" : "hidden"}}>
+    <div className='dropdown' id='dropdown-language' style={{visibility: visible ? 'visible' : 'hidden'}}>
       <Back handleBack={props.handlers.back} />
       {cards}
     </div>

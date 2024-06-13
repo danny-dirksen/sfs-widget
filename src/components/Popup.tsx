@@ -26,7 +26,7 @@ function Popup (props) {
 
   let popup = null;
   if (client.focused && client.focused.length > 0) {
-    if (client.screen === "info") {
+    if (client.screen === 'info') {
 
       if (client.channel) { // if client is on page 2 or later (has already selected channel)
 
@@ -40,25 +40,25 @@ function Popup (props) {
           popup = <PopupInfo client={client} data={{title: language.autonym, body: language.info}} />;
         }
       }
-    } else if (client.screen === "share") {
+    } else if (client.screen === 'share') {
       popup = <PopupShare client={client} handlers={props.handlers} />;
-    } else if (client.screen === "download") {
+    } else if (client.screen === 'download') {
       popup = <PopupDownload client={client} handler={handleEmailSent} sent={emailSent} />;
     }
   }
 
 
   let style = {
-    visibility: props.client.screen ? "visible" : "hidden",
-    opacity: props.client.screen ? "1" : "0"
+    visibility: props.client.screen ? 'visible' : 'hidden',
+    opacity: props.client.screen ? '1' : '0'
   }
 
   return (
-    <div className="pop-up-screen" style={style}>
-      <div className="pop-up-container">
-        <div className="x-container">
-          <img className="x"
-               alt="X" src={x}
+    <div className='pop-up-screen' style={style}>
+      <div className='pop-up-container'>
+        <div className='x-container'>
+          <img className='x'
+               alt='X' src={x}
                onClick={() => {
                  props.handlers.exitScreen();
                  setTimeout(() => setEmailSent(false), 500);

@@ -20,18 +20,18 @@ export class MainContent extends React.Component {
 
   render() {
     if (this.rightPaneRef.current) {
-      this.rightPaneRef.current.scrollTo({top: 0, behavior: "smooth"})
+      this.rightPaneRef.current.scrollTo({top: 0, behavior: 'smooth'})
     }
     let page = this.props.client.language ? 3 : (this.props.client.channel ? 2 : 1);
     return (
-      <div id="main">
-        <div className="pane left-pane">
+      <div id='main'>
+        <div className='pane left-pane'>
           <Prompt page={page}/>
           <Selected value={this.props.client.channel} />
           <Selected value={this.props.client.language} />
           <Hint page={page} />
         </div>
-        <div className="pane right-pane" ref={this.rightPaneRef}>
+        <div className='pane right-pane' ref={this.rightPaneRef}>
           <RightPaneInner
             links={this.props.links}
             client={{

@@ -28,14 +28,14 @@ if (process.env.NODE_ENV !== 'production') {
  */
 export async function varReadJSON(filename: string): Promise<object | Error> {
   const filePath = path.join(varDir, filename);
-  if (!fs.existsSync(filePath)) return new Error("File does not exist.");
+  if (!fs.existsSync(filePath)) return new Error('File does not exist.');
   return new Promise<any>((resolve: (value: object | null) => void) => {
-    fs.readFile(path.join(filePath), "utf-8", (err, data) => {
+    fs.readFile(path.join(filePath), 'utf-8', (err, data) => {
       if (err) {
-        logger.error("An error occured while reading " + filePath);
-        resolve(new Error("Could not read " + filePath + "\n\n" + err));
+        logger.error('An error occured while reading ' + filePath);
+        resolve(new Error('Could not read ' + filePath + '\n\n' + err));
       } else {
-        logger.info(filename + " has been read.");
+        logger.info(filename + ' has been read.');
         resolve(JSON.parse(data));
       }
     });
@@ -55,11 +55,11 @@ export async function varWriteJSON(filename: string, data: object): Promise<bool
   return new Promise<any>((resolve: (value: any) => void) => {
     fs.writeFile(filePath, JSON.stringify(data), 'utf8', function (err) {
       if (err) {
-        logger.error("An error occured while saving to " + filePath);
+        logger.error('An error occured while saving to ' + filePath);
         logger.error(err);
         resolve(false);
       } else {
-        logger.info(filename + " has been saved to a JSON file.");
+        logger.info(filename + ' has been saved to a JSON file.');
         resolve(true);
       }
     });

@@ -12,16 +12,16 @@ function DropdownChannel(props) {
       let nameCaps = channel.name.toUpperCase()
       cards.push(
         <button
-          className={`dropdown-option${props.client.focused === channel.name ? " focused" : ""}`}
+          className={`dropdown-option${props.client.focused === channel.name ? ' focused' : ''}`}
           key={index}
           onClick={() => props.handlers.selectChannel(channel.name)}
-          tabIndex="0"
-          disabled={props.client.page !== 1 ? true : ""}
+          tabIndex='0'
+          disabled={props.client.page !== 1 ? true : ''}
         >
           <div /> {/* this empty tag causes the language autonym to be centered} */}
-          <p className="dropdown-text">
+          <p className='dropdown-text'>
             {channel.image ?
-              <img className="dropdown-logo" src={process.env.PUBLIC_URL + channel.image} alt={nameCaps}></img>
+              <img className='dropdown-logo' src={process.env.PUBLIC_URL + channel.image} alt={nameCaps}></img>
               : nameCaps
             }
           </p>
@@ -39,17 +39,17 @@ function DropdownChannel(props) {
   }
 
   return (
-    <div className="dropdown" id="dropdown-channel" style={{visibility: visible ? "visible" : "hidden"}}>
+    <div className='dropdown' id='dropdown-channel' style={{visibility: visible ? 'visible' : 'hidden'}}>
       {cards}
-      <a  className="dropdown-option"
+      <a  className='dropdown-option'
           onClick={() => props.handlers.cdOrder()}
-          tabIndex="0"
-          disabled={props.client.page !== 1 ? true : ""}
-          href="https://store.songsforsaplings.com/collections/music"
-          target="_blank"
-          rel="noopener noreferrer" >
+          tabIndex='0'
+          disabled={props.client.page !== 1 ? true : ''}
+          href='https://store.songsforsaplings.com/collections/music'
+          target='_blank'
+          rel='noopener noreferrer' >
           
-        <p className="dropdown-text">
+        <p className='dropdown-text'>
           Order CDs
         </p>
       </a>

@@ -1,9 +1,9 @@
 import { getPartner } from '@/utils/sheets'
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
-  throw new Error("Not Implemented");
+  throw new Error('Not Implemented');
 }
 
 // // get info about the specific partner indentified in the query string by PIC
@@ -23,9 +23,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 //     // look to see if the partner has any image branding in our filesystem
 //     let found = false; // whether file has been found yet
 //     let failedAttempts = 0; // how many fs.access requests failed
-//     const imageFormats = [".png", ".jpg", ".jpeg", ".svg", ".gif"]; // list of image extentions to search for
+//     const imageFormats = ['.png', '.jpg', '.jpeg', '.svg', '.gif']; // list of image extentions to search for
 //     imageFormats.forEach(format => {
-//       fs.access(path.join(common.root, "public", "partner-branding", pic + format), fs.F_OK, (err) => {
+//       fs.access(path.join(common.root, 'public', 'partner-branding', pic + format), fs.F_OK, (err) => {
 //         if (err) {
 //           failedAttempts ++;
 //           if (failedAttempts >= imageFormats.length) {
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 //           found = true; // if images hasn't already been found in another format
 //           res.sendFile(
 //             pic + format,
-//             {root: path.join(common.root, "public", "partner-branding")},
+//             {root: path.join(common.root, 'public', 'partner-branding')},
 //             function(err) {
 //               if (err) res.status(err.status).end();
 //             }

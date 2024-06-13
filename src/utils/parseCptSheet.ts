@@ -1,11 +1,11 @@
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ContentProfile, ContentProfileTable } from "./models";
-import { env } from "./env";
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { ContentProfile, ContentProfileTable } from './models';
+import { env } from './env';
 import assert from 'assert';
-import { logger } from "./varUtils";
+import { logger } from './varUtils';
 
 const cptSheetId = parseInt(env.GOOGLE_SHEETS_CPT_ID || '0');
-assert(cptSheetId, "Missing cptSheetId");
+assert(cptSheetId, 'Missing cptSheetId');
 
 export async function parseCptSheet(sheetsDoc: GoogleSpreadsheet): Promise<ContentProfileTable | Error> {
 
@@ -38,7 +38,7 @@ export async function parseCptSheet(sheetsDoc: GoogleSpreadsheet): Promise<Conte
     }
     const missing = required.filter(header => !(header in headers));
     if (missing.length > 0) {
-      return "Could not find headers " + JSON.stringify(missing);
+      return 'Could not find headers ' + JSON.stringify(missing);
     }
     return headers;
   }
@@ -57,7 +57,7 @@ export async function parseCptSheet(sheetsDoc: GoogleSpreadsheet): Promise<Conte
     }
   }
   if (!l1HeaderRow || !l2HeaderRow) {
-    return new Error("Could not find 'pic' header.");
+    return new Error('Could not find "pic" header.');
   }
 
   // Find the indices of all header fields and ensure that required headers are present.
@@ -74,7 +74,7 @@ export async function parseCptSheet(sheetsDoc: GoogleSpreadsheet): Promise<Conte
     const emailAddress = at(r, l1Headers['emailAddress']);
     const emailSubject = at(r, l1Headers['emailSubject']);
     if (!name || !url || !emailAddress || !emailSubject) {
-      return new Error(pic + " missing some fields.");
+      return new Error(pic + ' missing some fields.');
     }
 
     // Find out which languages they have enabled.

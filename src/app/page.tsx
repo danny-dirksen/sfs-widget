@@ -1,9 +1,9 @@
 import { getContent } from '@/utils/sheets';
-import { App } from "@/components/App";
+import { App } from '@/components/App';
 import common from '@/utils/common';
 
-// let pic = common.getQueryVariable("p");
-// fetch('api/links' + (pic ? "?p=" + pic : ''))
+// let pic = common.getQueryVariable('p');
+// fetch('api/links' + (pic ? '?p=' + pic : ''))
 //   .then(r => r.json())
 //   .then(links => {
 //     ReactDOM.render(

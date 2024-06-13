@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Header from './Header.jsx';
 import { MainContent } from './MainContent';
@@ -5,8 +7,10 @@ import Popup from './Popup.jsx';
 import CookieNotice from './CookieNotice.jsx';
 import common from '@/utils/common.js';
 import sfsLogo from '../resources/ui/sfsLogoWhite.svg';
-import { mp } from '@/utils/mixpanel.js';
+import { useMixpanel } from '@/utils/mixpanelClient';
 import { Content } from '@/utils/models.js';
+import { useSearchParams } from 'next/navigation.js';
+
 
 interface AppProps {
   data: {
@@ -14,9 +18,43 @@ interface AppProps {
   }
 };
 
+/** Parse and validate query string params. */
+const useValidParams = function(content: Content) {
+  const { channels, languages, resources } = content;
+
+  const params = useSearchParams();
+  let paramPic = params.get('p')?.toLowerCase();
+  let paramChannel = params.get('c')?.toLowerCase();
+  if (!channels.some(c => c.channelId === paramChannel)) {
+    paramChannel = undefined;
+  }
+
+  let paramLanguage = paramChannel && params.get('l')?.toLowerCase();
+  if (!languages.some(l => l.languageId === paramLanguage)) {
+    paramLanguage = undefined;
+  }
+
+  let paramResource = paramLanguage && params.get('r')?.toLowerCase();
+  if (!resources.some(r => r.resourceId === paramResource)) {
+    paramResource = undefined;
+  }
+
+  return { paramPic, paramChannel, paramLanguage, paramResource };
+}
+
 export const App: React.FC<AppProps> = (props) => {
   const { content } = props.data;
-  return <pre>{JSON.stringify(content, undefined, 2)}</pre>;
+  const { channels, languages, resources } = content;
+  const { paramPic, paramChannel, paramLanguage, paramResource } = useValidParams(content);
+
+  const { trackingChoice, setTrackingChoice, track } = useMixpanel();
+
+  return <div className='flex flex-col gap-4 items-start'>
+    <span>trackingChoice: {trackingChoice}</span>
+    <button onClick={() => setTrackingChoice('optin')}>Opt In</button>
+    <button onClick={() => setTrackingChoice('optout')}>Opt Out</button>
+    <button onClick={() => track('generic', { 'test': true })}>Track</button>
+  </div>
 }
 
 // class App extends React.Component {
@@ -24,42 +62,14 @@ export const App: React.FC<AppProps> = (props) => {
 //   constructor(props) {
 //     super(props);
 
-//     let channel = common.getQueryVariable("c") || "";
-//     let language = channel ? common.getQueryVariable("l") || "" : "";
-//     let resource = language ? common.getQueryVariable("r") || "" : "";
-//     let focused = common.getQueryVariable("f") || "";
-
-//     // validate channel name, skip back if invalid
-//     if (channel && !props.links.channels.some(chan => {
-//       return (channel.toLowerCase() === chan.name.toLowerCase());
-//     })) {
-//       channel = "";
-//     }
-
-//     // validate language name, skip back if invalid
-//     if (language && !props.links.languages.some(lang => {
-//       return (language.toLowerCase() === lang.name.toLowerCase());
-//     })) {
-//       language = "";
-//     }
-
-//     // validate resource id, skip back if invalid
-//     if (resource && !props.links.languages.find(lang => {
-//       return (language.toLowerCase() === lang.name.toLowerCase());
-//     }).resources.some(rec => {
-//       return (resource.toLowerCase() === rec.id.toLowerCase());
-//     })) {
-//       resource = "";
-//     }
-
-//     let allowCookies = common.getCookie("allowCookies") || null;
+//     let allowCookies = common.getCookie('allowCookies') || null;
 
 //     this.state = {
 //       channel: channel,
 //       language: language,
 //       resource: resource,
 //       focused: focused,
-//       screen: "",
+//       screen: '',
 //       pic: props.pic,
 //       cookie: allowCookies ? common.ensureCookieID() : null,
 //       allowCookies: allowCookies
@@ -70,18 +80,18 @@ export const App: React.FC<AppProps> = (props) => {
 //       back: () => {
 //         this.setState({focused: null});
 //         if (this.state.album) {
-//           this.setState({album: "", resource: ""})
+//           this.setState({album: '', resource: ''})
 //         } else if (this.state.language) {
 //           let channelObj = props.links.channels.find(chan => chan.name.toLowerCase() === this.state.channel.toLowerCase())
 //           if (channelObj.languages.length > 1) {
-//             this.setState({language: "", resource: ""})
+//             this.setState({language: '', resource: ''})
 //           } else {
-//             this.setState({language: "", channel: "", resource: ""})
+//             this.setState({language: '', channel: '', resource: ''})
 //           }
 //         } else if (this.state.channel) {
-//           this.setState({channel: "", language: "", resource: ""})
+//           this.setState({channel: '', language: '', resource: ''})
 //         }
-//         this.sendAction("back")
+//         this.sendAction('back')
 //       },
 
 //       selectChannel: channel => {
@@ -92,18 +102,18 @@ export const App: React.FC<AppProps> = (props) => {
 //         } else {
 //           this.setState({channel: channel, language: channelObj.languages[0].name})
 //         }
-//         this.sendAction("selectChannel")
+//         this.sendAction('selectChannel')
 //       },
 //       cdOrder: channel => {
 //         this.setState({focused: null});
-//         this.sendAction("cdOrder");
+//         this.sendAction('cdOrder');
 //       },
 
 //       selectLanguage: language => {
 //         this.setState({focused: null});
 //         if (this.state.channel) {
 //           this.setState({language: language})
-//           this.sendAction("selectLanguage")
+//           this.sendAction('selectLanguage')
 //         } else {
 //           this.handlers.back()
 //         }
@@ -112,7 +122,7 @@ export const App: React.FC<AppProps> = (props) => {
 //       selectResource: resource => {
 //         if (this.state.channel && this.state.language) {
 //           this.setState({resource: resource})
-//           this.sendAction("selectResource")
+//           this.sendAction('selectResource')
 //         } else {
 //           this.handlers.back()
 //         }
@@ -120,49 +130,49 @@ export const App: React.FC<AppProps> = (props) => {
 
 //       infoScreen: id => {
 //         this.setState({
-//           screen: "info",
+//           screen: 'info',
 //           focused: id
 //         });
-//         this.sendAction("infoScreen");
+//         this.sendAction('infoScreen');
 //       },
 
 //       shareScreen: id => {
 //         this.setState({
-//           screen: "share",
+//           screen: 'share',
 //           focused: id
 //         })
-//         this.sendAction("shareScreen");
+//         this.sendAction('shareScreen');
 //       },
 
 //       downloadScreen: resource => {
 //         this.setState({
 //           resource: resource,
-//           screen: "download",
+//           screen: 'download',
 //           focused: resource
 //         })
-//         this.sendAction("downloadScreen")
+//         this.sendAction('downloadScreen')
 //       },
 
 //       exitScreen: () => {
-//         this.setState({screen: "", focused: ""})
-//         this.sendAction("exitScreen")
+//         this.setState({screen: '', focused: ''})
+//         this.sendAction('exitScreen')
 //       },
 
 //       share: (platform) => {
-//         this.sendAction("share", {
+//         this.sendAction('share', {
 //           platform: platform
 //         })
 //       },
 
 //       downloadEmail: (data) => {
-//         common.ajax("POST", "/email/download/", {
+//         common.ajax('POST', '/email/download/', {
 //           language: this.state.language,
 //           resource: this.state.resource,
 //           firstName: data.firstName,
 //           lastName: data.lastName,
 //           email: data.email
 //         });
-//         this.sendAction("download", {
+//         this.sendAction('download', {
 //           firstName: data.firstName,
 //           lastName: data.lastName,
 //           email: data.email
@@ -170,7 +180,7 @@ export const App: React.FC<AppProps> = (props) => {
 //       },
 
 //       website: () => {
-//         this.sendAction("website")
+//         this.sendAction('website')
 //       },
 
 //       setCookies: (allowed) => {
@@ -180,13 +190,13 @@ export const App: React.FC<AppProps> = (props) => {
 //         });
 //         if (allowed) {
 //           mp.opt_in_tracking();
-//           common.setCookie("allowCookies", true);
+//           common.setCookie('allowCookies', true);
 
 //         } else {
 //           mp.opt_out_tracking();
 //           common.clearCookies();
 //         }
-//         this.sendAction("setCookiePermission", allowed ? "enabled" : "disabled");
+//         this.sendAction('setCookiePermission', allowed ? 'enabled' : 'disabled');
 //       }
 
 //     }
@@ -203,24 +213,24 @@ export const App: React.FC<AppProps> = (props) => {
 //       resource: this.state.resource,
 //       screen: this.state.screen,
 //       focused: this.state.focused,
-//       cookieID: common.getCookie("cookieID"),
+//       cookieID: common.getCookie('cookieID'),
 //       action: action
 //     };
-//     common.ajax("POST", "/analytics/", sendData);
+//     common.ajax('POST', '/analytics/', sendData);
 //     mp.track(action, sendData);
 //   }
 
 //   componentDidMount() {
 //     // get cpt info for this partner
-//     this.sendAction("loadPage");
-//     fetch("api/partnerinfo" + (this.state.pic ? "?p=" + this.state.pic : ''))
+//     this.sendAction('loadPage');
+//     fetch('api/partnerinfo' + (this.state.pic ? '?p=' + this.state.pic : ''))
 //     .then(r => r.json())
 //     .then(cpt => {
 //       this.setState({cpt: cpt});
 //     });
 
 //     // get partner's branding, if they have any.
-//     fetch("api/partnerbranding" + (this.state.pic ? "?p=" + this.state.pic : ''))
+//     fetch('api/partnerbranding' + (this.state.pic ? '?p=' + this.state.pic : ''))
 //     .then(r => r.arrayBuffer())
 //     .then(buffer => { // note this is already an ArrayBuffer
 //       // there is no buffer.data here
@@ -231,7 +241,7 @@ export const App: React.FC<AppProps> = (props) => {
 //   }
 
 //   componentDidUpdate() {
-//     window.history.pushState({}, null, common.queryFromState(this.state) || "/");
+//     window.history.pushState({}, null, common.queryFromState(this.state) || '/');
 //   }
 
 //   render() {
@@ -246,7 +256,7 @@ export const App: React.FC<AppProps> = (props) => {
 //       <React.Fragment>
 //         {this.state.cpt && (
 //           <Header handleWebsite={this.handlers.website} data={{
-//             id: "partner-branding",
+//             id: 'partner-branding',
 //             alt: this.state.cpt.name || this.state.cpt.url,
 //             href: this.state.cpt.url,
 //             src: this.state.partnerBranding,
@@ -254,9 +264,9 @@ export const App: React.FC<AppProps> = (props) => {
 //           }} />
 //         )}
 //         <Header handleWebsite={this.handlers.website} data={{
-//           id: "sfs-logo",
-//           alt: "Songs for Saplings",
-//           href: "https://songsforsaplings.com/",
+//           id: 'sfs-logo',
+//           alt: 'Songs for Saplings',
+//           href: 'https://songsforsaplings.com/',
 //           src: sfsLogo,
 //           order: 2
 //         }}/>

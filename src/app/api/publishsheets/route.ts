@@ -1,5 +1,5 @@
-import { reloadSheet } from "@/utils/sheets";
-import { NextRequest, NextResponse } from "next/server";
+import { reloadSheet } from '@/utils/sheets';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const result = await throttle(
