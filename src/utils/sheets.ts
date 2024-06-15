@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-import { Content, ContentProfile, ContentProfileTable, Link } from './models';
+import { Content, ContentProfile, ContentProfileTable, Link, PartnerInfo } from './models';
 import { parseContentSheet, removeStubs } from './parseContentSheet';
 import { parseCptSheet } from './parseCptSheet';
 import { varReadJSON, logger, varWriteJSON } from './varUtils';
@@ -102,12 +102,20 @@ export async function getContentProfileTable(): Promise<ContentProfileTable | nu
 };
 
 
-export async function getPartner(pic: string | null): Promise<ContentProfile | null> {
+export async function getContentProfile(pic: string | null): Promise<ContentProfile | null> {
   if (!cpt) await loadContent();
   if (!cpt) return null;
   if (!pic) return null;
   const partner = cpt.partners.find(p => p.pic == pic) || null;
   return partner;
+}
+
+export async function getPartnerInfo(pic: string | null): Promise<PartnerInfo | null> {
+  if (!pic) return null;
+  const partner = await getContentProfile(pic);
+  if (!partner) return null;
+  const { name, url } = partner;
+  return { pic, name, url };
 }
 
 export async function getContent(pic: string | null = null): Promise<Content | null> {
@@ -116,7 +124,7 @@ export async function getContent(pic: string | null = null): Promise<Content | n
   if (!content) return null;
 
   // Find partner, send the whole thing if partner not found.
-  const partner = await getPartner(pic);
+  const partner = await getContentProfile(pic);
   if (!partner) return content;
   
   

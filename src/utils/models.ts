@@ -38,10 +38,13 @@ export interface Content {
   links: Link[];
 };
 
-export interface ContentProfile {
+export interface PartnerInfo {
   pic: string;
   name: string;
   url: string;
+};
+
+export interface ContentProfile extends PartnerInfo {
   emailAddress: string;
   emailSubject: string;
   languages: string[];
@@ -59,3 +62,24 @@ export interface DownloadRequestBody {
   firstName: string,
   lastName: string,
 }
+
+export interface TrackingEvent {
+  userId: string;
+  eventName: string;
+  properties: object;
+}
+
+export interface Navigation {
+  pic: string | null;
+  channel: string | null;
+  language: string | null;
+  resource: string | null;
+}
+
+export type PopupComponent = (props: any) => JSX.Element;
+
+export interface Popup {
+  name: string;
+  Component: PopupComponent;
+  props: any;
+};

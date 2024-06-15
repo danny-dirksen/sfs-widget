@@ -1,48 +1,30 @@
-import React from 'react'
-import RightPaneInner from './RightPaneInner.js'
-import Prompt from './Prompt.js'
-import Selected from './Selected.js'
-import Hint from './Hint.js'
+import React, { ReactNode } from 'react';
+import { useNavigation } from '@/hooks/useNavigation';
+import { Content, Navigation } from '@/utils/models';
+import { LeftPane } from './LeftPane';
+import { RightPane } from './RightPane';
 
 interface MainContentProps {
-  
+  data: {
+    content: Content;
+  }
 };
 
-export function MainContent(props): JSX.Element {
+export function MainContent(props: MainContentProps): JSX.Element {
+  const { content } = props.data;
+  const { navigation, setNavigation, back } = useNavigation(content);
+  const { pic, channel, language, resource } = navigation;
+  // this.rightPaneRef = React.createRef();
+  // if (this.rightPaneRef.current) {
+  //   this.rightPaneRef.current.scrollTo({top: 0, behavior: 'smooth'})
+  // }
 
-}
+  const pageNum = !channel ? 1 : !language ? 2 : 3;
 
-export class MainContent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.rightPaneRef = React.createRef();
-  }
-
-  render() {
-    if (this.rightPaneRef.current) {
-      this.rightPaneRef.current.scrollTo({top: 0, behavior: 'smooth'})
-    }
-    let page = this.props.client.language ? 3 : (this.props.client.channel ? 2 : 1);
-    return (
-      <div id='main'>
-        <div className='pane left-pane'>
-          <Prompt page={page}/>
-          <Selected value={this.props.client.channel} />
-          <Selected value={this.props.client.language} />
-          <Hint page={page} />
-        </div>
-        <div className='pane right-pane' ref={this.rightPaneRef}>
-          <RightPaneInner
-            links={this.props.links}
-            client={{
-              ...this.props.client,
-              page: page,
-            }}
-            handlers={this.props.handlers}
-          />
-
-        </div>
-      </div>
-    )
-  }
+  return (
+    <div id='main'>
+      <LeftPane data={{ content, navigation }} />
+      <RightPane data={{ content, navigation, setNavigation, pageNum }} />
+    </div>
+  );
 }

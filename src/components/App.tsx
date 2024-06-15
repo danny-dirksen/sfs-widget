@@ -1,61 +1,42 @@
 'use client';
 
-import React from 'react';
-import Header from './Header.jsx';
+import React, { Suspense, useState } from 'react';
+import { BrandingLayer } from './Branding';
 import { MainContent } from './MainContent';
-import Popup from './Popup.jsx';
-import CookieNotice from './CookieNotice.jsx';
-import common from '@/utils/common.js';
-import sfsLogo from '../resources/ui/sfsLogoWhite.svg';
-import { useMixpanel } from '@/utils/mixpanelClient';
-import { Content } from '@/utils/models.js';
-import { useSearchParams } from 'next/navigation.js';
+import { AnalyticsNotice } from './AnalyticsNotice';
+import { useAnalytics } from '@/hooks/useAnalytics';
+import { Content, PartnerInfo, Navigation } from '@/utils/models';
+import { usePopups } from '@/hooks/usePopups';
+import { PopupLayer } from './PopupLayer';
 
 
 interface AppProps {
   data: {
-    content: Content
+    content: Content;
+    partner: PartnerInfo | null;
   }
 };
 
-/** Parse and validate query string params. */
-const useValidParams = function(content: Content) {
-  const { channels, languages, resources } = content;
-
-  const params = useSearchParams();
-  let paramPic = params.get('p')?.toLowerCase();
-  let paramChannel = params.get('c')?.toLowerCase();
-  if (!channels.some(c => c.channelId === paramChannel)) {
-    paramChannel = undefined;
-  }
-
-  let paramLanguage = paramChannel && params.get('l')?.toLowerCase();
-  if (!languages.some(l => l.languageId === paramLanguage)) {
-    paramLanguage = undefined;
-  }
-
-  let paramResource = paramLanguage && params.get('r')?.toLowerCase();
-  if (!resources.some(r => r.resourceId === paramResource)) {
-    paramResource = undefined;
-  }
-
-  return { paramPic, paramChannel, paramLanguage, paramResource };
-}
-
 export const App: React.FC<AppProps> = (props) => {
-  const { content } = props.data;
-  const { channels, languages, resources } = content;
-  const { paramPic, paramChannel, paramLanguage, paramResource } = useValidParams(content);
+  const { content, partner } = props.data;
+  const analyticsCtx = useAnalytics();
+  const { popups, openPopup, closePopup } = usePopups();
 
-  const { trackingChoice, setTrackingChoice, track } = useMixpanel();
+  return (
+    <>
+      <BrandingLayer data={{ partner }} />
+      <MainContent data={{ content }}/>
+      <PopupLayer data={{
+        popups,
+        onClose: (name) => closePopup(name)
+      }} />
+      <AnalyticsNotice data={{ context: analyticsCtx }} />
 
-  return <div className='flex flex-col gap-4 items-start'>
-    <span>trackingChoice: {trackingChoice}</span>
-    <button onClick={() => setTrackingChoice('optin')}>Opt In</button>
-    <button onClick={() => setTrackingChoice('optout')}>Opt Out</button>
-    <button onClick={() => track('generic', { 'test': true })}>Track</button>
-  </div>
+    </>
+  );
 }
+
+// window.history.pushState({}, null, common.queryFromState(this.state) || '/');
 
 // class App extends React.Component {
 
@@ -245,36 +226,6 @@ export const App: React.FC<AppProps> = (props) => {
 //   }
 
 //   render() {
-//     let client = {
-//       channel: this.state.channel,
-//       language: this.state.language,
-//       resource: this.state.resource,
-//       screen: this.state.screen,
-//       focused: this.state.focused
-//     };
-//     return (
-//       <React.Fragment>
-//         {this.state.cpt && (
-//           <Header handleWebsite={this.handlers.website} data={{
-//             id: 'partner-branding',
-//             alt: this.state.cpt.name || this.state.cpt.url,
-//             href: this.state.cpt.url,
-//             src: this.state.partnerBranding,
-//             order: 1
-//           }} />
-//         )}
-//         <Header handleWebsite={this.handlers.website} data={{
-//           id: 'sfs-logo',
-//           alt: 'Songs for Saplings',
-//           href: 'https://songsforsaplings.com/',
-//           src: sfsLogo,
-//           order: 2
-//         }}/>
-
-//         <MainContent links={this.props.links} handlers={this.handlers} client={client} />
-//         <Popup links={this.props.links} handlers={this.handlers} client={client} />
-//         <CookieNotice handlers={this.handlers} allowCookies={this.state.allowCookies} />
-//       </React.Fragment>
 //     );
 //   }
 // }

@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer")
 const fs = require('fs')
 const path = require('path')
 
-const common = require('./common.js')
+const common = require('./common')
 const rootPath = path.dirname(__dirname)
 const shareEmailTemplate = fs.readFileSync(rootPath + '/lib/shareEmailTemplate.html', 'utf8')
 const downloadEmailTemplate = fs.readFileSync(rootPath + '/lib/downloadEmailTemplate.html', 'utf8')

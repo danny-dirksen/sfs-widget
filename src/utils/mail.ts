@@ -30,7 +30,7 @@ export function sendDownloadLink(info: DownloadEmailInfo) {
 // // const mailchimp = require('@mailchimp/mailchimp_marketing');
 // // const heml = require('heml');
 
-// import common from './common.js';
+// import common from './common';
 // //const shareEmailTemplate = fs.readFileSync(common.root + '/lib/shareEmailTemplate.html', 'utf8')
 // const downloadHEML = fs.readFileSync(common.root + '/lib/email-templates/download.heml', 'utf8');
 // let downloadTemplate;

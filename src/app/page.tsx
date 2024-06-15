@@ -1,18 +1,5 @@
-import { getContent } from '@/utils/sheets';
+import { getContent, getPartnerInfo } from '@/utils/sheets';
 import { App } from '@/components/App';
-import common from '@/utils/common';
-
-// let pic = common.getQueryVariable('p');
-// fetch('api/links' + (pic ? '?p=' + pic : ''))
-//   .then(r => r.json())
-//   .then(links => {
-//     ReactDOM.render(
-//       <React.StrictMode>
-//         <App links={links} pic={pic} mixpanel={mixpanel}/>
-//       </React.StrictMode>,
-//       document.getElementById('root')
-//     );
-//   });
 
 interface Props {
   searchParams?: {
@@ -32,8 +19,9 @@ const errorScreen = (
 export default async function(props: Props) {
   const pic = props.searchParams?.p || null;
   const content = await getContent(pic);
+  const partner = pic ? await getPartnerInfo(pic) : null;
   if (!content) return errorScreen;
   return (
-    <App data={{content}} />
+    <App data={{content, partner}} />
   );
 }
