@@ -24,11 +24,11 @@ export function BrandingLayer(props: BrandingLayerProps) {
     }} />
   ) : null;
   return (
-    <div className='absolute top-0 left-0 h-full w-fit flex flex-col justify-between'>
+    <div className='absolute top-0 flex left-0 h-fit w-full flex-row md:h-full md:w-fit md:flex-col justify-between'>
       {partnerBranding}
       <Branding data={{
         name: 'Songs for Saplings',
-        image: sfsLogo,
+        image: '/branding/sfsLogoWhite.svg',
         href: 'https://songsforsaplings.com/',
         onClick: () => track('website', {})
       }}/>
@@ -39,7 +39,7 @@ export function BrandingLayer(props: BrandingLayerProps) {
 interface BrandingProps {
   data: {
     name: string;
-    image: StaticImport | string | null;
+    image: string | null;
     href: string;
     onClick: () => void;
   }
@@ -51,10 +51,50 @@ export function Branding(props: BrandingProps) {
   return (
     <a className='branding-container'
         href={href} target='_blank' rel='noopener noreferrer' onClick={onClick} >
-      {image ? 
-        <Image className='branding' alt={name} src={image} priority={typeof image !== 'string'} /> :
-        <div className='branding'>{name}</div>
-      }
+      { image ? (
+        <img className='h-12 p-2 w-max' alt={name} src={image} />
+      ) : (
+        <div className='w-max'>{name}</div>
+      ) }
     </a>
   )
 }
+
+
+
+// const mimeTypes = {
+//   'svg': 'image/svg+xml',
+//   'png': 'image/png',
+//   'jpg': 'image/jpeg',
+//   'gif': 'image/gif',
+// };
+// type Format = keyof (typeof mimeTypes);
+// const defaultFormats = Object.keys(mimeTypes) as Format[];
+
+
+// interface ImgAndBackupProps {
+//   data: {
+//     alt: string;
+//     formats?: Format[]
+//     path: string;
+//   },
+//   className?: string;
+//   children: ReactNode;
+// };
+
+// function ImgAndBackup(props: ImgAndBackupProps) {
+//   const { data, className, children } = props;
+//   const { alt, formats, path } = data;
+//   const pathWithoutExt = path.split('.')[0];
+//   const [ toTry, setToTry ] = useState<Format[] | null>(null);
+//   useEffect(() => {
+//     setToTry(formats || defaultFormats);
+//   }, []);
+//   const format = (toTry && toTry.length > 0) ? toTry[0] : null;
+//   if (!format) return children;
+
+//   const onError = () => {
+//     if (toTry) setToTry(toTry.slice(1));
+//   };
+//   return <img className={className} src={`${pathWithoutExt}.${format}`} onError={onError} alt={alt}></img>
+// }

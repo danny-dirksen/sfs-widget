@@ -1,5 +1,6 @@
 import { Language, PopupComponent, Resource, ResourceTranslation } from '@/utils/models';
 import React from 'react';
+import { Header, Anchor, Paragraph } from '@/components/BasicStyles';
 
 export interface PopupInfoLanguageProps {
   data: {
@@ -7,10 +8,10 @@ export interface PopupInfoLanguageProps {
   }
 };
 
-export const PopupInfoLanguage: PopupComponent = (props) => {
-  const { autonym, info } = (props as PopupInfoLanguageProps).data.language;
+export const PopupInfoLanguage: PopupComponent<PopupInfoLanguageProps> = (props) => {
+  const { autonym, info } = props.data.language;
   const data = {
-    title: autonym,
+    title: `SONGS FOR SAPLINGS - ${autonym}`,
     body: info ? info.split('\n\n') : []
   };
   return <PopupInfo data={data} />
@@ -22,8 +23,8 @@ export interface PopupInfoResourceProps {
   }
 };
 
-export const PopupInfoResource: PopupComponent = (props) => {
-  const { translation } = (props as PopupInfoResourceProps).data;
+export const PopupInfoResource: PopupComponent<PopupInfoResourceProps> = (props) => {
+  const { translation } = props.data;
   const { info, line1, line2 } = translation;
   const data = {
     title: line1 ? `${line1} - ${line2}` : line2,
@@ -43,9 +44,9 @@ function PopupInfo(props: PopupInfoProps) {
   const { title, body } = props.data;
   return (
     <>
-      <h1 className='pop-up-header'>{title}</h1>
+      <Header>{title}</Header>
       {[...body, genericParagraph].map((paragraph, i) => (
-        <p key={i} className='pop-up-text'>{paragraph}</p>
+        <Paragraph key={i} >{paragraph}</Paragraph>
       ))}
     </>
   );
@@ -53,11 +54,11 @@ function PopupInfo(props: PopupInfoProps) {
 
 const genericParagraph = (
   <>
-    Thank you for your interest in our music. Using these links, you can learn about
-    <a href='https://songsforsaplings.com/resources/' target='_blank' rel='noopener noreferrer'>our other free resources</a>,
-    how to <a href='https://songsforsaplings.com/freemusic/' target='_blank' rel='noopener noreferrer'>share this music</a>
-    with your friends and church for free, or how to
-    <a href='https://songsforsaplings.com/contact/' target='_blank' rel='noopener noreferrer'>get in touch</a>
-    with Songs for Saplings.
+    Thank you for your interest in our music. Using these links, you can learn
+    about <Anchor href='https://songsforsaplings.com/resources/'>our other free resources</Anchor>,
+    how to <Anchor href='https://songsforsaplings.com/freemusic/'>share this music</Anchor> with
+    your friends and church for free, or how
+    to <Anchor href='https://songsforsaplings.com/contact/'>get in touch</Anchor> with
+    Songs for Saplings.
   </>
 );

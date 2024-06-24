@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Popup } from '@/utils/models';
 
 export function usePopups() {
-  const [ popups, setPopups ] = useState<Popup[]>([]);
+  const [ popups, setPopups ] = useState<Popup<any>[]>([]);
 
   /** Opens a new popup on the front, replacing any open popups of the same name. */
-  function openPopup(newPopup: Popup) {
+  function openPopup(newPopup: Popup<any>) {
     const newPopups = popups.filter(p => p.name !== newPopup.name);
     newPopups.push(newPopup);
     setPopups(newPopups);

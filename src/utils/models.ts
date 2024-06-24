@@ -76,10 +76,10 @@ export interface Navigation {
   resource: string | null;
 }
 
-export type PopupComponent = (props: any) => JSX.Element;
+export type PopupComponent<T> = (props: T) => JSX.Element;
 
-export interface Popup {
+export interface Popup<T> {
   name: string;
-  Component: PopupComponent;
-  props: any;
+  Component: PopupComponent<T>;
+  props: T;
 };

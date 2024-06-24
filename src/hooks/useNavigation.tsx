@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Content, Navigation } from '@/utils/models';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ const useValidParams = function (content: Content): Navigation {
   const { channels, languages, resources } = content;
 
   const params = useSearchParams();
+
   let pic = params.get('p')?.toLowerCase() || null;
   let channel = params.get('c')?.toLowerCase() || null;
   if (!channels.some(c => c.channelId === channel)) {
@@ -46,14 +47,5 @@ export function useNavigation(content: Content) {
     _setNavigation(newNav);
   }
 
-  function back() {
-    const { channel, language } = navigation;
-    if (language) {
-      setNavigation({ ...navigation, resource: null, language: null });
-    } else if (channel) {
-      setNavigation({ ...navigation, channel: null, resource: null, language: null });
-    }
-  }
-
-  return { navigation, setNavigation, back };
+  return { navigation, setNavigation };
 }

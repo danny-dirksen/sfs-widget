@@ -1,6 +1,5 @@
 import { Content, Navigation } from '@/utils/models';
-import arrow from '@/resources/ui/arrow.svg';
-import Image from 'next/image';
+import { Arrow } from './Arrow';
 
 interface LeftPaneProps {
   data: {
@@ -12,38 +11,35 @@ interface LeftPaneProps {
 export function LeftPane(props: LeftPaneProps) {
   const { content, navigation } = props.data;
   const { channel, language } = navigation;
+  const channelName = content.channels.find(ch => ch.channelId === channel)?.name || null;
+  const languageName = content.languages.find(l => l.languageId === language)?.autonym || null;
 
   let pageNum = language ? 3 : (channel ? 2 : 1);
 
   return (
-    <div className='pane left-pane'>
-      <Prompt data={{ navigation }}/>
-      <Selected>{channel}</Selected>
-      <Selected>{language}</Selected>
+    <div className={'flex-shrink-0 md:flex-[2] p-4 flex flex-col justify-center text-center gap-2 md:gap-6 '
+        + 'border-black border-opacity-10 border-b md:border-b-0 md:border-r '}>
+      <div className='text-3xl'>
+        { (!channel) ? (
+          <>How do you<br/>listen to music?</>
+        ) : (!language) ? (
+          <>What language<br/>do you speak?</>
+        ) : (
+          <>What Volume<br/>would you like?</>
+        ) }
+      </div>
+      <Selected>{channelName}</Selected>
+      <Selected>{languageName}</Selected>
       <Hint data={{ pageNum }} />
     </div>
   );
 }
 
-interface PromptProps {
-  data: {
-    navigation: Navigation;
-  }
-};
-
-function Prompt(props: PromptProps) {
-  const { channel, language } = props.data.navigation;
-
-  if (!channel) return <div id='prompt'>How do you<br/>listen to music?</div>;
-  else if (!language) return <div id='prompt'>What language<br/>do you speak?</div>;
-  else return <div id='prompt'>What Volume<br/>would you like?</div>;
-}
-
 function Selected(props: {children: string | null}) {
   const { children } = props;
-  if (!children) return <></>;
+  if (!children) return <div>&nbsp;</div>;
   return (
-    <div className='selected'>
+    <div className='text-green-900 font-[renner-medium]'>
       SELECTED: {children.toUpperCase()}
     </div>
   );
@@ -57,19 +53,17 @@ interface HintProps {
 
 function Hint(props: HintProps) {
   const { pageNum } = props.data;
+
+  const arrowOnLeft = <Arrow className='rotate-90 md:hidden' />;
+  const arrowOnRight = <Arrow className='rotate-90 md:rotate-0' />;
   
   if (pageNum === 1) {
-    var inner = <><Arrow leftSide />SELECT A SOURCE<Arrow /></>
+    var inner = <>{ arrowOnLeft }SELECT A SOURCE{ arrowOnRight }</>
   } else if (pageNum === 2) {
-    var inner = <><Arrow leftSide />CHOOSE A LANGUAGE<Arrow /></>
+    var inner = <>{ arrowOnLeft }CHOOSE A LANGUAGE{ arrowOnRight }</>
   } else {
-    var inner = <>CHOOSE YOUR MUSIC<br/>AND THAT'S IT!</>
+    var inner = <><div>CHOOSE YOUR MUSIC<br/>AND THAT'S IT!</div></>
   }
   return <div className='flex flex-row justify-center items-center gap-2'>{inner}</div>;
 }
 
-function Arrow(props: { leftSide?: true}) {
-  const { leftSide } = props;
-  const hideLeft = leftSide ? ' md:hidden' : '';
-  return <Image className={'h-[1em] w-[1em] rotate-90 md:rotate-0' + hideLeft} src={arrow} alt='->' />
-}

@@ -7,7 +7,7 @@ import { AnalyticsNotice } from './AnalyticsNotice';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { Content, PartnerInfo, Navigation } from '@/utils/models';
 import { usePopups } from '@/hooks/usePopups';
-import { PopupLayer } from './PopupLayer';
+import { PopupLayer } from './popups/PopupLayer';
 
 
 interface AppProps {
@@ -23,16 +23,16 @@ export const App: React.FC<AppProps> = (props) => {
   const { popups, openPopup, closePopup } = usePopups();
 
   return (
-    <>
+    <div className='h-screen relative bg-sfs-bg text-white'>
       <BrandingLayer data={{ partner }} />
-      <MainContent data={{ content }}/>
+      <MainContent data={{ content, openPopup }}/>
       <PopupLayer data={{
         popups,
         onClose: (name) => closePopup(name)
       }} />
       <AnalyticsNotice data={{ context: analyticsCtx }} />
 
-    </>
+    </div>
   );
 }
 

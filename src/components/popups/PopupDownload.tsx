@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import mailIcon from '../resources/ui/mail.svg';
-import { Popup } from '@/components/PopupLayer';
+import { Popup } from '@/components/popups/PopupLayer';
 
 /** True if email looks valid. */
 const validEmail = (email: string) => {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
   return emailRegex.test(email);
 }
+
+interface PopupDownloadProps {
+
+};
   
 // make sure that the email address at least looks valid. otherwise, hides the download button
-export const PopupDownload: Popup = (props) => {
+export const PopupDownload: Popup = (props: PopupDownloadProps) => {
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
   const [ email, setEmail ] = useState('');
