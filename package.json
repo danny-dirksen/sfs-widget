@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@types/mixpanel-browser": "^2.49.0",
     "google-auth-library": "^9.10.0",
     "google-spreadsheet": "^4.1.2",
     "html-to-text": "^9.0.5",
+    "mailgun.js": "^10.2.1",
     "mixpanel": "^0.18.0",
     "next": "^14.2.3",
     "react": "^18.3.1",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@types/html-to-text": "^9.0.4",
+    "@types/mailchimp__mailchimp_marketing": "^3.0.20",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

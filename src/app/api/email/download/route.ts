@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getContent } from '@/utils/sheets';
-import { DownloadRequestBody, ResourceTranslation } from '@/utils/models';
+import { DownloadRequestBody } from '@/utils/models';
 import { logger } from '@/utils/varUtils';
-import { sendDownloadLink } from '@/utils/mail';
+import { sendDownloadLink } from '@/utils/email/sendDownloadLink';
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  // Parse request body
-  const { email, firstName, lastName, languageId, resourceId } = await req.json() as DownloadRequestBody;
+  // Parse and validate request body
+  const body = await req.json();
+  const requiredStrings = ['email', 'firstName', 'lastName', 'languageId', 'resourceId'];
+  if (requiredStrings.some(key => !body[key] || typeof body[key] !== 'string')) {
+    return new NextResponse('Malformed request.', { status: 400 });
+  }
+  const { email, firstName, lastName, languageId, resourceId } = body as DownloadRequestBody;
 
   // Find the url and other info about the download link.
   const content = await getContent();
@@ -25,7 +30,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   // Try to send them an email.
   try {
-    sendDownloadLink({ firstName, lastName, email, resourceName, downloadUrl });
+    sendDownloadLink({ firstName, lastName, downloadUrl, email, resourceName });
     return new NextResponse(undefined, { status: 200 });
   } catch (err) {
     logger.error('Error sending mail: ' + err);

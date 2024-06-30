@@ -23,13 +23,17 @@ const creds = {
  * Gets a freshly authenticated google spreadsheet context
  * @returns
  */
-async function getSheet(): Promise<GoogleSpreadsheet> {
-  // Get authenticated.
-  const auth = new JWT(creds);
-  // Load sheets document, properties, and worksheets
-  const sheetsDoc = new GoogleSpreadsheet(sheetId, auth);
-  await sheetsDoc.loadInfo();
-  return sheetsDoc;
+async function getSheet(): Promise<GoogleSpreadsheet | null> {
+  try {
+    // Get authenticated.
+    const auth = new JWT(creds);
+    // Load sheets document, properties, and worksheets
+    const sheetsDoc = new GoogleSpreadsheet(sheetId, auth);
+    await sheetsDoc.loadInfo();
+    return sheetsDoc;
+  } catch (err) {
+    return null;
+  }
 }
 
 /**
@@ -45,6 +49,7 @@ async function loadContent() {
   if (newContent instanceof Error) {
     logger.error('Could not load content from json: ' + newContent.message);
     logger.info('Trying sheet...');
+    if (!sheetsDoc) throw new Error('Could not connect to google.');
     newContent = await parseContentSheet(sheetsDoc);
     if (newContent instanceof Error) {
       logger.error('Could not parse content from sheet: ' + newContent.message);
@@ -59,6 +64,7 @@ async function loadContent() {
   if (newCpt instanceof Error) {
     logger.error('Could not load cpt from json: ' + newCpt.message)
     logger.info('Trying sheet...');
+    if (!sheetsDoc) throw new Error('Could not connect to google.');
     newCpt = await parseCptSheet(sheetsDoc);
     if (newCpt instanceof Error) {
       logger.error('Could not parse cpt from sheet: ' + newCpt.message)
@@ -81,6 +87,7 @@ async function loadContent() {
 export async function reloadSheet(): Promise<Error | null> {
   // Load sheet from google docs.
   const sheetsDoc = await getSheet();
+  if (!sheetsDoc) throw new Error('Could not connect to google.');
   // Attempt to parse both sheets.
   const newContent = await parseContentSheet(sheetsDoc);
   const newCpt = await parseCptSheet(sheetsDoc);

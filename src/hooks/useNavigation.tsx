@@ -32,7 +32,7 @@ const useValidParams = function (content: Content): Navigation {
 export function useNavigation(content: Content) {
 
   const params = useValidParams(content);
-  const [navigation, _setNavigation] = useState<Navigation>(params);
+  const [ navigation, _setNavigation ] = useState<Navigation>(params);
   const router = useRouter();
 
   function setNavigation(newNav: Navigation) {
@@ -46,6 +46,10 @@ export function useNavigation(content: Content) {
     router.push(paramStr.length > 0 ? `/?${paramStr}` : '/');
     _setNavigation(newNav);
   }
+
+  useEffect(() => {
+    setNavigation(params);
+  }, [ JSON.stringify(params) ]);
 
   return { navigation, setNavigation };
 }

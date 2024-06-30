@@ -1,9 +1,6 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { PartnerInfo } from '@/utils/models';
-import sfsLogo from '@/resources/ui/sfsLogoWhite.svg';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 interface BrandingLayerProps {
   data: {
@@ -24,7 +21,10 @@ export function BrandingLayer(props: BrandingLayerProps) {
     }} />
   ) : null;
   return (
-    <div className='absolute top-0 flex left-0 h-fit w-full flex-row md:h-full md:w-fit md:flex-col justify-between'>
+    <div className={
+      'absolute top-0 flex left-0 justify-between font-white h-fit ' +
+      'md:h-full w-full md:w-fit flex-row md:flex-col'
+    }>
       {partnerBranding}
       <Branding data={{
         name: 'Songs for Saplings',
@@ -52,7 +52,7 @@ export function Branding(props: BrandingProps) {
     <a className='branding-container'
         href={href} target='_blank' rel='noopener noreferrer' onClick={onClick} >
       { image ? (
-        <img className='h-12 p-2 w-max' alt={name} src={image} />
+        <img className='h-12 p-2 w-auto' alt={name} src={image} />
       ) : (
         <div className='w-max'>{name}</div>
       ) }

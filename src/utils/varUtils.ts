@@ -28,7 +28,7 @@ if (process.env.NODE_ENV !== 'production') {
  */
 export async function varReadJSON(filename: string): Promise<object | Error> {
   const filePath = path.join(varDir, filename);
-  if (!fs.existsSync(filePath)) return new Error('File does not exist.');
+  if (!fs.existsSync(filePath)) return new Error('File does not exist (' + filePath + ')');
   return new Promise<any>((resolve: (value: object | null) => void) => {
     fs.readFile(path.join(filePath), 'utf-8', (err, data) => {
       if (err) {

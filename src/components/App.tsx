@@ -8,6 +8,32 @@ import { useAnalytics } from '@/hooks/useAnalytics';
 import { Content, PartnerInfo, Navigation } from '@/utils/models';
 import { usePopups } from '@/hooks/usePopups';
 import { PopupLayer } from './popups/PopupLayer';
+import localFont from 'next/font/local';
+
+const renner = localFont({
+  src: [
+    {
+      path: '../resources/fonts/renner-light.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../resources/fonts/renner-lightitalic.otf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../resources/fonts/renner-medium.otf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../resources/fonts/renner-mediumitalic.otf',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+})
 
 
 interface AppProps {
@@ -23,7 +49,7 @@ export const App: React.FC<AppProps> = (props) => {
   const { popups, openPopup, closePopup } = usePopups();
 
   return (
-    <div className='h-screen relative bg-sfs-bg text-white'>
+    <div className={renner.className + ' h-full relative bg-sfs-bg '}>
       <BrandingLayer data={{ partner }} />
       <MainContent data={{ content, openPopup }}/>
       <PopupLayer data={{

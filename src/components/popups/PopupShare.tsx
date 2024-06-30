@@ -1,9 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import { StaticImageData } from 'next/image';
 import { Channel, PopupComponent } from '@/utils/models';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import { Header, Paragraph } from '@/components/BasicStyles';
+import { Header, Paragraph } from '@/components/Styles';
 
 const copyImg = <Image src={require('@/resources/share-logos/copy.png')} alt='Copy' />
 const emailImg = <Image src={require('@/resources/share-logos/email.png')} alt='Email' />
@@ -34,44 +33,48 @@ export const PopupShare: PopupComponent<null> = () => {
       <Paragraph>
         Word-of-mouth is how we grow. You can make an impact by spreading this resource on your favorite platforms:
       </Paragraph>
-      <div className='flex flex-wrap flex-row justify-center p-8'>
-        <ShareButton data={{
-          name: 'Email',
-          img: emailImg,
-          onClick: () => onShare('email'),
-          href: `mailto:?Subject=${title}&cc=${cc}&Body=${header}%0D%0A%0D%0A${url}`
-        }} />
-        <ShareButton data={{
-          name: 'Facebook',
-          img: facebookImg,
-          onClick: () => onShare('facebook'),
-          href: `http://www.facebook.com/sharer.php?u=${url}`
-        }} />
-        <ShareButton data={{
-          name: 'Instagram',
-          img: instagramImg,
-          onClick: () => onShare('instagram'),
-          href: `https://www.instagram.com/songs_for_saplings/`
-        }} />
-        <ShareButton data={{
-          name: 'Twitter',
-          img: twitterImg,
-          onClick: () => onShare('twitter'),
-          href: `https://twitter.com/share?url=${url}&text=${title}&hashtags=${hashtag}`
-        }} />
-        <ShareButton data={{
-          name: 'Message',
-          img: messageImg,
-          onClick: () => onShare('message'),
-          href: `sms:?&body=${header}%0D%0A${url}`
-        }} />
-        <ShareButton data={{
-          name: copied ? 'Copied!' : 'Copy',
-          img: copyImg,
-          onClick: onCopy
-        }} />
+      <div className='flex flex-row justify-center p-4'>
+        <div className='flex flex-wrap flex-row justify-center max-w-72'>
+          <ShareButton data={{
+            name: 'Email',
+            img: emailImg,
+            onClick: () => onShare('email'),
+            href: `mailto:?subject=${title}&body=${header}:%20${url}`
+          }} />
+          <ShareButton data={{
+            name: 'Facebook',
+            img: facebookImg,
+            onClick: () => onShare('facebook'),
+            href: `https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=${url}`
+          }} />
+          <ShareButton data={{
+            name: 'Instagram',
+            img: instagramImg,
+            onClick: () => onShare('instagram'),
+            href: `https://www.instagram.com/songs_for_saplings/`
+          }} />
+          <ShareButton data={{
+            name: 'Twitter',
+            img: twitterImg,
+            onClick: () => onShare('twitter'),
+            href: `https://twitter.com/share?url=${url}&text=${title}&hashtags=${hashtag}`
+          }} />
+          <ShareButton data={{
+            name: 'Message',
+            img: messageImg,
+            onClick: () => onShare('message'),
+            href: `sms:?&body=${header}%0D%0A${url}`
+          }} />
+          <ShareButton data={{
+            name: copied ? 'Copied!' : 'Copy',
+            img: copyImg,
+            onClick: onCopy
+          }} />
+        </div>
       </div>
-      <Paragraph><small><center>Message and data rates may apply.</center></small></Paragraph>
+      <small><center>
+        <Paragraph>Message and data rates may apply.</Paragraph>
+      </center></small>
     </>
   );
 }
@@ -88,18 +91,18 @@ interface ShareButtonProps {
 function ShareButton(props: ShareButtonProps) {
   const { name, img, href, onClick } = props.data;
   return (
-    <a className='clickable p-1 size-20 text-center flex flex-col justify-center items-center gap-1' href={href} target='_blank' rel='noopener noreferrer' onClick={onClick}>
+    <a className='popout select-none hover:bg-sfs-darken p-1 size-20 text-center flex flex-col justify-center items-center gap-1' href={href} target='_blank' rel='noopener noreferrer' onClick={onClick}>
       <div className='size-8'>
         {img}
       </div>
-      <div className='tracking-normal'>{name}</div>
+      <div className=''>{name}</div>
     </a>
   );
 }
 
 function getGenericText() {
   const genericText: Record<string, string> = {
-    url: window.location.href,
+    url: 'music.songsforsaplings.com?c=spotify',//window.location.href,
     title: 'Free Music and More from Songs for Saplings',
     image: 'https://songsforsaplings.com/workspace/uploads/images/saplings-music-banner.jpg',
     header: `Hey, thought you would enjoy this great kid's music that teaches the Bible!`,

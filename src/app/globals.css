@@ -2,31 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-    font-family: "renner-light";
+/* @font-face {
+    font-family: "ui-sans-serif";
     src: url("/fonts/renner-light.otf");
 }
 
 @font-face {
     font-family: "renner-medium";
     src: url("/fonts/renner-medium.otf");
-}
+} */
 
 :root {
-  font-family: "renner-light", sans-serif;
-  letter-spacing: 0.1em;
+  font-family: system-ui, sans-serif;
 }
 
-.clickable {
-  /* outline-none focus-visible:bg-slate-300 hover:bg-slate-200 */
+.popout {
   outline: none;
   transition: transform 0.2s;
   cursor: pointer;
-  user-select: none;
 }
 
-.clickable:hover, .clickable:focus-visible {
+.popout:hover:not(:disabled), .popout:focus-visible:not(:disabled) {
   transform: scale(1.02);
-  background-color: #EEE;
 }
-

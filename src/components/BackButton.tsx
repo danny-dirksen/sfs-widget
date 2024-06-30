@@ -10,7 +10,8 @@ interface BackButtonProps {
 export function BackButton(props: BackButtonProps) {
   const { onClick } = props.data;
   return (
-    <div className='flex flex-row gap-2 items-center text-white cursor-pointer hover:bg-black hover:bg-opacity-10 px-2 py-1'
+    <div className={'px-2 py-1 popout flex flex-row gap-2 items-center text-white tracking-widest '
+        + 'cursor-pointer hover:bg-black hover:bg-opacity-10'}
         onClick={onClick} role='button' tabIndex={0}>
       <Arrow className='rotate-180' /> BACK
     </div>

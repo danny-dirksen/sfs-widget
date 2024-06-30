@@ -1,19 +1,18 @@
 import { Content, Navigation } from '@/utils/models';
-import { DropdownMenu, DropdownOption } from './Dropdown';
-import { MutableRefObject, ReactNode, use, useEffect, useRef, useState } from 'react';
-import { MIMEType } from 'util';
+import { DropdownMenu } from './DropdownMenu';
+import { DropdownOption } from './DropdownOption';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 
-import amazonprimeBanner from '@/resources/channel-banners/amazonprime.png'
-import applemusicBanner from '@/resources/channel-banners/applemusic.svg'
-import compactdiscBanner from '@/resources/channel-banners/compactdisc.svg'
-import downloadBanner from '@/resources/channel-banners/download.svg'
-import spotifyBanner from '@/resources/channel-banners/spotify.svg'
-import usbdriveBanner from '@/resources/channel-banners/usbdrive.svg'
-import youtubeBanner from '@/resources/channel-banners/youtube.svg'
+import amazonprimeBanner from '@/resources/channel-banners/amazonprime.png';
+import applemusicBanner from '@/resources/channel-banners/applemusic.svg';
+import compactdiscBanner from '@/resources/channel-banners/compactdisc.svg';
+import downloadBanner from '@/resources/channel-banners/download.svg';
+import spotifyBanner from '@/resources/channel-banners/spotify.svg';
+import usbdriveBanner from '@/resources/channel-banners/usbdrive.svg';
+import youtubeBanner from '@/resources/channel-banners/youtube.svg';
 
-interface DropdownChannelProps {
+interface SelectChannelProps {
   data: {
     content: Content;
     navigation: Navigation;
@@ -32,7 +31,7 @@ const banners: Record<string, StaticImport> = {
   'usbdrive': usbdriveBanner,
 };
 
-export function DropdownChannel(props: DropdownChannelProps) {
+export function SelectChannel(props: SelectChannelProps) {
   const { content, navigation, selectChannel, back } = props.data;
   const { channels } = content;
 

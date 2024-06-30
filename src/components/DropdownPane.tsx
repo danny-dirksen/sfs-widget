@@ -1,12 +1,12 @@
 import React from 'react';
 import { Content, Navigation, Popup } from '@/utils/models';
-import { DropdownChannel } from './dropdowns/DropdownChannel';
-import { DropdownLanguage } from './dropdowns/DropdownLanguage';
-// import DropdownResource from './DropdownResource';
+import { SelectChannel } from './dropdowns/SelectChannel';
+import { SelectLanguage } from './dropdowns/SelectLanguage';
+import { SelectResource } from './dropdowns/SelectResource';
 
 
 
-interface RightPaneProps {
+interface DropdownPaneProps {
   data: {
     content: Content;
     navigation: Navigation;
@@ -16,7 +16,7 @@ interface RightPaneProps {
   }
 };
 
-export function RightPane(props: RightPaneProps) {
+export function DropdownPane(props: DropdownPaneProps) {
   const { content, navigation, setNavigation, openPopup, pageNum } = props.data;
 
   function selectChannel(channelId: string) {
@@ -57,9 +57,9 @@ export function RightPane(props: RightPaneProps) {
     <div className='flex-[3] overflow-hidden'>
       {/* Carousel */}
       <div className='w-[300%] h-full transition-transform flex flex-row items-stretch' style={style}>
-        <DropdownChannel data={{ content, navigation, selectChannel, back }} />
-        <DropdownLanguage data={{ content, navigation, selectLanguage, openPopup, back }} />
-        {/* <DropdownResource data={{ content, navigation }} /> */}
+        <SelectChannel data={{ content, navigation, selectChannel, back }} />
+        <SelectLanguage data={{ content, navigation, selectLanguage, openPopup, back }} />
+        <SelectResource data={{ content, navigation, selectResource, openPopup, back }} />
       </div>
     </div>
   )

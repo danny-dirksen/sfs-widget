@@ -1,85 +1,70 @@
 import { useState } from 'react';
-import mailIcon from '../resources/ui/mail.svg';
-import { Popup } from '@/components/popups/PopupLayer';
+import { Navigation, PopupComponent } from '@/utils/models';
+import { Paragraph, Button } from '@/components/Styles';
+import { DownloadForm } from './DownloadForm';
 
 /** True if email looks valid. */
-const validEmail = (email: string) => {
+export const validEmail = (email: string) => {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
   return emailRegex.test(email);
 }
 
-interface PopupDownloadProps {
-
-};
-  
-// make sure that the email address at least looks valid. otherwise, hides the download button
-export const PopupDownload: Popup = (props: PopupDownloadProps) => {
-  const [ firstName, setFirstName ] = useState('');
-  const [ lastName, setLastName ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ status, setStatus ] = useState<'init' | 'sending' | 'sent'>('init');
-
-  if (status === 'sent') {
-    return (
-      <div style={{textAlign: 'center'}}>
-        <h1 className='pop-up-header'>Sent!</h1>
-        <img alt='Email Sent' style={{width: '3rem'}} src={mailIcon}></img>
-        <p className='pop-up-text download-instructions'>
-          Your download link has been sent to '{email}'. Check your email!
-        </p>
-      </div>
-    )
+export interface PopupDownloadProps {
+  data: {
+    navigation: Navigation;
   }
+};
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    throw new Error("Not implemented.");
-  }  
+interface PopupDownloadState {
+  member: null | 'yes' | 'no' | 'dontKnow' | 'justDownload';
+  pic: null | string;
+}
 
-  const enabled = firstName.length > 0 && lastName.length > 0 && validEmail(email);
+// make sure that the email address at least looks valid. otherwise, hides the download button
+export const PopupDownload: PopupComponent<PopupDownloadProps> = (props) => {
+  const { navigation } = props.data;
+  const { pic, language, channel, resource } = navigation;
+  if (!language) {
+    return <Paragraph>Sorry, could not find that resource.</Paragraph>
+  }
+  const [ state, setState ] = useState<PopupDownloadState>({ member: null, pic: pic });
+  const { member } = state;
 
-  return (
-    <form id='download-form' onSubmit={handleSubmit}>
-      <h1 className='pop-up-header'>Download this resource for free!</h1>
-      <p className='pop-up-text download-instructions'>Enter your email address below to receive a free download link.</p>
-      <div className='first-last-container'>
-        <input
-          type='text'
-          className='text-input name-input'
-          name='firstName'
-          placeholder='First Name'
-          value={firstName}
-          onChange={(e) => {
-            setFirstName(e.target.value)
-          }}
-        />
-        <input
-          type='text'
-          className='text-input name-input'
-          name='lastName'
-          placeholder='Last Name'
-          value={lastName}
-          onChange={(e) => {
-            setLastName(e.target.value);
-          }}
-        />
-      </div>
-      <input
-        type='email'
-        className='text-input'
-        name='email'
-        placeholder='Your Email Address'
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value)
-        }}
-      />
-      <input
-        type='submit'
-        className='form-button'
-        disabled={!enabled}
-        value='SEND DOWNLOAD LINK'
-      />
-    </form>
-  );
+  return <DownloadForm data={{ languageId: language, resourceId: resource!}} />
+
+
+  // if (member === 'yes' || member === 'justDownload') {
+  // }
+
+  // return (
+  //   <>
+  //     {/* <Header>Download this resource</Header> */}
+  //     <Paragraph>Is your church a member of our church partnership program?</Paragraph>
+  //     <div className='flex flex-row justify-center gap-2 flex-wrap'>
+  //       <Button type='secondary' onClick={() => setState({...state, member: 'yes'})}>YES</Button>
+  //       <Button type='secondary' onClick={() => setState({...state, member: 'no'})}>NO</Button>
+  //       <Button type='secondary' onClick={() => setState({...state, member: 'dontKnow'})}>I DON'T KNOW</Button>
+  //     </div>
+  //   </>
+  // )
+//   On clicking a download button, a menu shows up saying “Is your church a member of our church partnership program?” YES/NO/I DON’T KNOW
+// YES -> They type in the name of their church. We will match with “Name of Church, and City/State” and they pick one. Continue them on, give them free downloads (w/email address input)
+// NO -> Form “Joining is free and easy. Put your email address here and we’ll send you instructions.” Forms: first, last, email, and “Skip and continue to download.
+// I DON’T KNOW -> Short description of church partnership program. Lookup church again. “Don’t see your church?” brings them to the identical “Joining is free…” form.
+  
+  // 
+  // if (state === State.member || state === State.justDownload) {
+  //   return <DownloadForm />
+  // }
+  // if (state === State.init) {
+  //   return <SelectChurch />
+  // }
+  // if (state === State.dontKnow) {
+  //   // 
+  // }
+  // return (state === State.member || state === State.justDownload) ? 
+}
+
+function SelectChurch() {
+
 }
