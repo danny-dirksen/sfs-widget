@@ -78,11 +78,12 @@ async function subscribe(email: string, firstName: string, lastName: string): Pr
       FNAME: firstName,
       LNAME: lastName
     }
+  }).catch((err) => {
+    logger.error('Failed to subscribe: ' + err)
   });
-  if (!('email_address' in resp)) {
-    logger.error('Failed to subscribe')
+  if (!resp || !('full_name' in resp) ) {
     return false;
-  }
+  } 
   logger.info(`Subscribed ${resp.full_name} (${resp.email_address})`);
   return true;
 }

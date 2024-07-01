@@ -3,6 +3,7 @@ import { DropdownMenu } from './DropdownMenu';
 import { DropdownOption } from './DropdownOption';
 import { PopupInfoLanguage, PopupInfoLanguageProps } from '@/components/popups/PopupInfo';
 import { PopupShare } from '../popups/PopupShare';
+import { AnalyticsContext } from '@/hooks/useAnalytics';
 
 interface SelectLanguageProps {
   data: {
@@ -11,11 +12,12 @@ interface SelectLanguageProps {
     selectLanguage: (languageId: string) => void;
     openPopup: (newPopup: Popup<any>) => void;
     back: () => void;
+    analytics: AnalyticsContext;
   }
 };
 
 export function SelectLanguage(props: SelectLanguageProps) {
-  const { content, navigation, selectLanguage, openPopup, back } = props.data;
+  const { content, navigation, selectLanguage, openPopup, back, analytics } = props.data;
   const { channel } = navigation;
   // Create cards for languages that correspond to the translations above.
   const languages = content.languages.filter(

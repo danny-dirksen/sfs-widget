@@ -7,7 +7,7 @@ import path from 'path';
  * Paste minified html into ./email-templates/download.html
  * https://mjml.io/try-it-live/DJd50m0rOt
  */
-const downloadTemplate = fs.readFileSync(path.resolve('./email-templates/download.tml'), 'utf8');
+const downloadTemplate = fs.readFileSync(path.join(process.cwd(), 'email-templates/download.html'), 'utf8');
 
 export interface DownloadEmailData {
   firstName: string,

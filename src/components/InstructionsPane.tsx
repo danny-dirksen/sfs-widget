@@ -62,7 +62,7 @@ function Hint(props: HintProps) {
   } else if (pageNum === 2) {
     var inner = <>{ arrowOnLeft }CHOOSE A LANGUAGE{ arrowOnRight }</>
   } else {
-    var inner = <><div>CHOOSE YOUR MUSIC<br/>AND THAT'S IT!</div></>
+    var inner = <><div>CHOOSE YOUR MUSIC<br/>{`AND THAT'S IT!`}</div></>
   }
   return <div className='flex flex-row justify-center items-center gap-2'>{inner}</div>;
 }

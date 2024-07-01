@@ -3,6 +3,7 @@ import { Content, Navigation, Popup } from '@/utils/models';
 import { SelectChannel } from './dropdowns/SelectChannel';
 import { SelectLanguage } from './dropdowns/SelectLanguage';
 import { SelectResource } from './dropdowns/SelectResource';
+import { AnalyticsContext } from '@/hooks/useAnalytics';
 
 
 
@@ -10,6 +11,7 @@ interface DropdownPaneProps {
   data: {
     content: Content;
     navigation: Navigation;
+    analytics: AnalyticsContext;
     setNavigation: (navigation: Navigation) => void;
     openPopup: (newPopup: Popup<any>) => void;
     pageNum: number;
@@ -17,27 +19,34 @@ interface DropdownPaneProps {
 };
 
 export function DropdownPane(props: DropdownPaneProps) {
-  const { content, navigation, setNavigation, openPopup, pageNum } = props.data;
+  const { content, navigation, analytics, setNavigation, openPopup, pageNum } = props.data;
+  const { track } = analytics;
 
   function selectChannel(channelId: string) {
-    setNavigation({
+    const newNav = {
       ...navigation,
       channel: channelId
-    })
+    };
+    setNavigation(newNav);
+    track('selectChannel', newNav);
   }
 
   function selectLanguage(languageId: string) {
-    setNavigation({
+    const newNav = {
       ...navigation,
       language: languageId
-    });
+    };
+    setNavigation(newNav);
+    track('selectLanguage', newNav);
   }
 
   function selectResource(resourceId: string) {
-    setNavigation({
+    const newNav = {
       ...navigation,
       resource: resourceId
-    });
+    };
+    setNavigation(newNav);
+    track('selectResource', newNav);
   }
 
   function back() {
@@ -47,6 +56,11 @@ export function DropdownPane(props: DropdownPaneProps) {
     } else if (channel) {
       setNavigation({ ...navigation, channel: null, resource: null, language: null });
     }
+    track('back', navigation);
+  }
+
+  function clickChannelLink(eventType: string, link: string) {
+    track(eventType, {link});
   }
 
   let style = {
@@ -57,9 +71,9 @@ export function DropdownPane(props: DropdownPaneProps) {
     <div className='flex-[3] overflow-hidden'>
       {/* Carousel */}
       <div className='w-[300%] h-full transition-transform flex flex-row items-stretch' style={style}>
-        <SelectChannel data={{ content, navigation, selectChannel, back }} />
-        <SelectLanguage data={{ content, navigation, selectLanguage, openPopup, back }} />
-        <SelectResource data={{ content, navigation, selectResource, openPopup, back }} />
+        <SelectChannel data={{ content, navigation, analytics, selectChannel, clickChannelLink, back }} />
+        <SelectLanguage data={{ content, navigation, analytics, selectLanguage, openPopup, back }} />
+        <SelectResource data={{ content, navigation, analytics, selectResource, openPopup, back }} />
       </div>
     </div>
   )

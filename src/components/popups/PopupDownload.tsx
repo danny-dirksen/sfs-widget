@@ -27,8 +27,8 @@ export const PopupDownload: PopupComponent<PopupDownloadProps> = (props) => {
   if (!language) {
     return <Paragraph>Sorry, could not find that resource.</Paragraph>
   }
-  const [ state, setState ] = useState<PopupDownloadState>({ member: null, pic: pic });
-  const { member } = state;
+  // const [ state, setState ] = useState<PopupDownloadState>({ member: null, pic: pic });
+  // const { member } = state;
 
   return <DownloadForm data={{ languageId: language, resourceId: resource!}} />
 

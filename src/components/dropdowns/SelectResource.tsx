@@ -4,6 +4,7 @@ import { DropdownOption } from './DropdownOption';
 import { PopupInfoResource, PopupInfoResourceProps } from '@/components/popups/PopupInfo';
 import { PopupShare } from '../popups/PopupShare';
 import { PopupDownload, PopupDownloadProps } from '../popups/PopupDownload';
+import { AnalyticsContext } from '@/hooks/useAnalytics';
 
 interface SelectResourceProps {
   data: {
@@ -12,6 +13,7 @@ interface SelectResourceProps {
     selectResource: (resourceId: string) => void;
     openPopup: (newPopup: Popup<any>) => void;
     back: () => void;
+    analytics: AnalyticsContext;
   }
 };
 
@@ -51,6 +53,8 @@ interface ResourceCardProps {
     openPopup: (newPopup: Popup<any>) => void;
   };
 };
+
+
 
 /** Card for a single option in the language dropdown. */
 function ResourceCard(props: ResourceCardProps) {

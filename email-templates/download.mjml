@@ -1,0 +1,35 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column background-color='#8DC63F'>
+        <mj-text align='center' padding='40px' color='white' font-size='32px'>Songs for Saplings</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="15px">Hi, {{firstName}},</mj-text>
+        <mj-text font-size="15px">Here is a link to your free download of "{{resourceName}}".</mj-text>
+        <mj-button href='{{downloadLink}}' background-color='#8DC63F' border-bottom='4px solid #5da100' font-size='15px' font-weight='bold'>DOWNLOAD</mj-button>
+        <mj-text font-size="15px">We hope this resource is a blessing to you and the children you work with.</mj-text>
+        <mj-text font-size="15px">Here are some more free resources that may be helpful to you: <a href='{{shareLink}}' style='color: #5da100'>Lyrics, chords, sheet music, coloring books, etc. All Free!</a></mj-text>
+        <mj-text font-size="15px">If you would like to recommend the music or any of the resources to a friend, please just <a href='{{shareLink}}' style='color: #5da100'>click here</a> and send them an email with details</mj-text>
+        <mj-text font-size="15px">Finally, we'd love to hear from you. Please drop us a note here and let us know what you think of the music and how we can serve you in the future.</mj-text>
+        <mj-text font-size="15px">God bless!</mj-text>
+        <mj-text font-size="15px">Songs for Saplings</mj-text>
+
+        <mj-divider border-color="#8DC63F"></mj-divider>
+
+        <mj-text font-size="15px">If you find our resource helpful, please consider donating to our ministry.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column background-color='#8DC63F' padding-top='40px' padding-bottom='40px'>
+        <mj-text font-size="13px" color='white'>Songs for Saplings is a non-profit ministry. For mor information, visit <a href='{{websiteLink}}' style='color: white;'>our website.</a></mj-text>
+
+        <mj-text font-size="13px" color='white'>Don't like these emails? <a href='{{unsubscribeLink}}' style='color: white;'>Unsubscribe.</a></mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

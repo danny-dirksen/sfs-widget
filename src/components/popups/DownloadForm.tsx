@@ -4,6 +4,7 @@ import { Header, Paragraph, Button } from '@/components/Styles';
 import { validEmail } from './PopupDownload';
 import { DownloadRequestBody, Navigation } from '@/utils/models';
 import Image from 'next/image';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface DownloadFormProps {
   data: {
@@ -14,6 +15,7 @@ interface DownloadFormProps {
 
 export function DownloadForm(props: DownloadFormProps) {
   const { languageId, resourceId } = props.data;
+  const { track } = useAnalytics();
 
   const [firstName, setFirstName] = useState('Daniel');
   const [lastName, setLastName] = useState('Dirksen');
@@ -23,10 +25,10 @@ export function DownloadForm(props: DownloadFormProps) {
   if (status === 'sent') {
     return (
       <div className='text-center'>
-        <Header>Sent!</Header>
-        <Image alt='Email Sent' className='w-12 inline' src={mailIcon} />
+        <Header className='text-left'>Email Sent!</Header>
+        <Image alt='Email Sent' className='w-12 inline mb-4 text-red-500' src={mailIcon} />
         <Paragraph>
-          Your download link has been sent to '{email}'. Check your email!
+          {`Your download link has been sent to "${email}". Check your email!`}
         </Paragraph>
       </div>
     );
@@ -34,9 +36,9 @@ export function DownloadForm(props: DownloadFormProps) {
     return (
       <div className='text-center'>
         <Header>Oops!</Header>
-        <Image alt='Email Sent' className='w-12 inline' src={mailIcon} />
+        <Image alt='Email Sent' className='w-12 inline mb-4' src={mailIcon} />
         <Paragraph>
-          We had trouble sending the link to '{email}'. Try again?
+          ${`We had trouble sending the link to "${email}". Try again?`}
         </Paragraph>
         <Button type='primary' onClick={() => setStatus('init')} >Try Again</Button>
       </div>
@@ -45,6 +47,7 @@ export function DownloadForm(props: DownloadFormProps) {
 
   const handleSubmit = async () => {
     const body: DownloadRequestBody = { email, firstName, lastName, languageId, resourceId };
+    track('download', body);
     setStatus('sending');
     const resp = await fetch('/api/email/download', {
       method: 'post',

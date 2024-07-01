@@ -17,7 +17,7 @@ export const PopupShare: PopupComponent<null> = () => {
   const { url, title, image, header, hashtag, cc } = getGenericText();
 
   function onShare(name: string) {
-    track('share', { platform: name})
+    track('share', { platform: name })
   }
 
   function onCopy() {

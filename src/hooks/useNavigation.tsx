@@ -10,6 +10,13 @@ const useValidParams = function (content: Content): Navigation {
 
   const params = useSearchParams();
 
+  if (!params) return {
+    pic: null,
+    channel: null,
+    language: null,
+    resource: null
+  }
+
   let pic = params.get('p')?.toLowerCase() || null;
   let channel = params.get('c')?.toLowerCase() || null;
   if (!channels.some(c => c.channelId === channel)) {
@@ -47,9 +54,11 @@ export function useNavigation(content: Content) {
     _setNavigation(newNav);
   }
 
+  // When any of the params update, propagate that to navigation.
+  const { pic, channel, language, resource } = params;
   useEffect(() => {
-    setNavigation(params);
-  }, [ JSON.stringify(params) ]);
+    _setNavigation({ pic, channel, language, resource });
+  }, [ pic, channel, language, resource ]);
 
   return { navigation, setNavigation };
 }

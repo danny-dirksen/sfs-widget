@@ -24,7 +24,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
       }, 300);
       return () => clearTimeout(timeout);
     }
-  }, [ props.data.onScreen ]);
+  }, [ props, props.data.onScreen ]);
 
   const { children, data } = heldProps;
   const { onScreen, back } = data;

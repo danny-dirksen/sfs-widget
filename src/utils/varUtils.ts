@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import winston from 'winston';
 
-const varDir = path.resolve(__dirname, '../../../var');
+const varDir = path.join(process.cwd(), 'var');
 
 // Logging
 export const logger = winston.createLogger({

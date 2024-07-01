@@ -59,9 +59,15 @@ export function useAnalytics(): AnalyticsContext {
       body: JSON.stringify(event)
     });
   }
+
+  function setTrackingChoice(choice: Choice) {
+    setState({...state, choice});
+    track('setCookiePermission', state);
+  }
+
   return {
     trackingChoice: state.choice,
-    setTrackingChoice: (choice: Choice) => setState({...state, choice}),
-    track: track
+    setTrackingChoice,
+    track
   };
 }
