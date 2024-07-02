@@ -5,7 +5,7 @@ type Attributes = React.HTMLAttributes<HTMLElement>;
 type FC = React.FC<Attributes>;
 
 export const Anchor = (props: {href: string, children: ReactNode}) => (
-  <a href={props.href} className='text-sfs-accent underline font-bold'>{props.children}</a>
+  <a href={props.href} className='text-sfs-accent underline font-bold' target="_blank">{props.children}</a>
 );
 
 export const Header: FC = (props) => (
