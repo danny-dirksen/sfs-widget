@@ -8,7 +8,7 @@ const copyImg = <Image src={require('@/resources/share-logos/copy.png')} alt='Co
 const emailImg = <Image src={require('@/resources/share-logos/email.png')} alt='Email' />
 const facebookImg = <Image src={require('@/resources/share-logos/facebook.png')} alt='Facebook' />
 const instagramImg = <Image src={require('@/resources/share-logos/instagram.png')} alt='Instagram' />
-const twitterImg = <Image src={require('@/resources/share-logos/twitter.png')} alt='Twitter' />
+const xImg = <Image src={require('@/resources/share-logos/x.png')} alt='X' />
 const messageImg = <Image src={require('@/resources/share-logos/message.png')} alt='Message' />
 
 export const PopupShare: PopupComponent<null> = () => {
@@ -34,7 +34,7 @@ export const PopupShare: PopupComponent<null> = () => {
         Word-of-mouth is how we grow. You can make an impact by spreading this resource on your favorite platforms:
       </Paragraph>
       <div className='flex flex-row justify-center p-4'>
-        <div className='flex flex-wrap flex-row justify-center max-w-72'>
+        <div className='flex flex-wrap flex-row justify-center'>
           <ShareButton data={{
             name: 'Email',
             img: emailImg,
@@ -54,10 +54,10 @@ export const PopupShare: PopupComponent<null> = () => {
             href: `https://www.instagram.com/songs_for_saplings/`
           }} />
           <ShareButton data={{
-            name: 'Twitter',
-            img: twitterImg,
-            onClick: () => onShare('twitter'),
-            href: `https://twitter.com/share?url=${url}&text=${title}&hashtags=${hashtag}`
+            name: 'X (Twitter)',
+            img: xImg,
+            onClick: () => onShare('x'),
+            href: `https://x.com/share?url=${url}&text=${title}&hashtags=${hashtag}`
           }} />
           <ShareButton data={{
             name: 'Message',

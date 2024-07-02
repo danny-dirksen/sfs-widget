@@ -55,10 +55,10 @@ function PopupInfo(props: PopupInfoProps) {
 const genericParagraph = (
   <>
     Thank you for your interest in our music. Using these links, you can learn
-    about <Anchor href='https://songsforsaplings.com/resources/'>our other free resources</Anchor>,
-    how to <Anchor href='https://songsforsaplings.com/freemusic/'>share this music</Anchor> with
+    about <Anchor href='https://store.songsforsaplings.com/collections/resources'>our other free resources</Anchor>,
+    how to <Anchor href='https://www.songsforsaplings.com/listen/'>share this music</Anchor> with
     your friends and church for free, or how
-    to <Anchor href='https://songsforsaplings.com/contact/'>get in touch</Anchor> with
+    to <Anchor href='https://share.hsforms.com/1geeaoz7KRDO6zeyklqFY8wcdo1h'>get in touch</Anchor> with
     Songs for Saplings.
   </>
 );

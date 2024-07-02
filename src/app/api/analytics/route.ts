@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { TrackingEvent } from '@/utils/models';
 
 import Mixpanel from 'mixpanel';
+import { logger } from '@/utils/varUtils';
 
 
 // Initialize Mixpanel.
 const devMode = process.env.NODE_ENV === 'development';
-if (devMode) console.log('Running in dev mode.');
+if (devMode) logger.info('Running in dev mode.');
 const mixpanelToken = devMode ? (
   process.env.NEXT_PUBLIC_MIXPANEL_KEY_DEV
 ) : (
@@ -17,7 +18,6 @@ const mixpanel = Mixpanel.init(mixpanelToken);
 
 export async function POST(req: NextRequest) {
   const { userId, eventName, properties } = await req.json();
-  console.log( { userId, eventName, properties });
   if (typeof userId !== 'string' || typeof eventName !== 'string' || !properties) {
     return new NextResponse("Bad request", { status: 400 });
   }
