@@ -18,16 +18,11 @@ This webapp is primarily intended as an iframe-embeddable widget to be easily ad
 
 1. Clone the repository to your local machine.
 2. Install the necessary dependencies by running `npm install` in the root directory.
-3. To start the development server, run `npm run backend-dev` in the root directory. Then, in another terminal, run `npm start` in the root directory.
+3. To start the development server, running `npm run dev` in the root directory.
 
 ### Deployment
 
-The basic deployment process is as follows:
-
-1. To build the static server, run `npm run build` in the root directory.
-2. To run the server in production, run `npm install; npm run build; pm2 restart` in the root directory. The pm2 daemon will run the server in the background. Currently, it is set to run the command `npm run backend-prod`.
-
-Deploy to production, push changes to `main` and then run `npm run deploy` on your local machine.
+After pushing changes to `main`, you can deploy to production by entering the command `npm run deploy` on your local machine.
 
 ### Credits
 
