@@ -25,9 +25,9 @@ jobs:
       #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       #     SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-      # - name: Execute post-receive hook
-      #   run: |
-      #     ssh user@your-server-ip "cd /path/to/your/nextjs/app && git pull && .git/hooks/post-receive"
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: Execute post-receive hook
+        run: |
+          ssh daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && .git/hooks/post-receive"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
