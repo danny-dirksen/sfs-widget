@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "./deploy.sh"
+    "deploy": ".scripts/deploy.sh"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",

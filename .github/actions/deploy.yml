@@ -1,33 +1,33 @@
-# name: Deploy to Server
+name: Deploy to Server
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       # - name: Checkout code
-#       #   uses: actions/checkout@v2
+    steps:
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
-#       # - name: Install SSH client
-#       #   run: sudo apt-get install -y ssh
+      # - name: Install SSH client
+      #   run: sudo apt-get install -y ssh
 
-#       # - name: Copy files via SSH
-#       #   run: |
-#       #     scp -r . user@your-server-ip:/path/to/your/nextjs/app
-#       #   env:
-#       #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#       #     SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      # - name: Copy files via SSH
+      #   run: |
+      #     scp -r . user@your-server-ip:/path/to/your/nextjs/app
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-#       - name: Execute post-receive hook
-#         run: |
-#           ssh daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && .git/hooks/post-receive"
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-#       - name: Test
-#         run: echo "TEST"
+      - name: Execute post-receive hook
+        run: |
+          ssh daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && .git/hooks/post-receive"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: Test
+        run: echo "TEST"
