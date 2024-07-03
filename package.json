@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "echo 'Automated Testing not implemented.'",
     "start": "next start",
     "lint": "next lint",
     "deploy": ".scripts/deploy.sh"
