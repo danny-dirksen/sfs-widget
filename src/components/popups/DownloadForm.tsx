@@ -17,9 +17,9 @@ export function DownloadForm(props: DownloadFormProps) {
   const { languageId, resourceId } = props.data;
   const { track } = useAnalytics();
 
-  const [firstName, setFirstName] = useState('Daniel');
-  const [lastName, setLastName] = useState('Dirksen');
-  const [email, setEmail] = useState('daniel@dirksen.com');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'init' | 'sending' | 'failed' | 'sent'>('init');
 
   if (status === 'sent') {
