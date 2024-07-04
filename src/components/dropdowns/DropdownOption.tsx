@@ -25,7 +25,7 @@ export function DropdownOption(props: DropDownOptionProps) {
     <div tabIndex={0} role='button' onClick={onClick} className={className}>{children}</div>
   );
 
-  const rightBtnClass = 'size-8 p-1 hover:bg-black hover:bg-opacity-10';
+  const rightBtnClass = 'size-7 p-1 widget:size-5 widget:p-0.5 hover:bg-black hover:bg-opacity-10';
   const rightSide = (onClickInfo || onClickShare) ? (
     <div className='flex flex-col justify-between'>
       { onClickInfo ? (

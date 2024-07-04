@@ -1,24 +1,20 @@
-import { Content, Language, Link, Navigation, Popup, ResourceTranslation } from '@/utils/models';
+import { Content, Language, Navigation, Popup } from '@/utils/models';
 import { DropdownMenu } from './DropdownMenu';
-import { DropdownOption } from './DropdownOption';
-import { PopupInfoResource, PopupInfoResourceProps } from '@/components/popups/PopupInfo';
-import { PopupShare } from '../popups/PopupShare';
-import { PopupDownload, PopupDownloadProps } from '../popups/PopupDownload';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
+import { SelectResourceCard } from './SelectResourceCard';
 
 interface SelectResourceProps {
   data: {
     content: Content;
     navigation: Navigation;
     selectResource: (resourceId: string) => void;
-    openPopup: (newPopup: Popup<any>) => void;
     back: () => void;
     analytics: AnalyticsContext;
   }
 };
 
 export function SelectResource(props: SelectResourceProps) {
-  const { content, navigation, selectResource, openPopup, back } = props.data;
+  const { content, navigation, selectResource, back } = props.data;
   const { channel, language, pic } = navigation;
   // Find relevant links and their corresponding data, such as descriptions. above.
   const linkInfo = content.links.filter( // Only relevant links.
@@ -38,78 +34,8 @@ export function SelectResource(props: SelectResourceProps) {
   return (
     <DropdownMenu data={{ onScreen: !!(navigation.channel && navigation.language), back }}>
       { linkInfo.map(({ link, translation }, key) => (
-        <ResourceCard key={key} data={{ link, translation: translation!, navigation, selectResource, openPopup }} />
+        <SelectResourceCard key={key} data={{ link, translation: translation!, navigation, selectResource }} />
       )) }
     </DropdownMenu>
   );
-}
-
-interface ResourceCardProps {
-  data: {
-    link: Link;
-    translation: ResourceTranslation;
-    navigation: Navigation
-    selectResource: (resourceId: string) => void;
-    openPopup: (newPopup: Popup<any>) => void;
-  };
-};
-
-
-
-/** Card for a single option in the language dropdown. */
-function ResourceCard(props: ResourceCardProps) {
-  const { link, translation, navigation, selectResource, openPopup } = props.data;
-  const { url, resourceId, channelId } = link;
-  const { line1, line2 } = translation;
-  
-  function onClick() {
-    selectResource(resourceId);
-    // Special case for download: open the download dialoge.
-    if (channelId === 'download') {
-      const newPopup: Popup<PopupDownloadProps> = {
-        name: 'downloadResource',
-        Component: PopupDownload,
-        props: {
-          data: {
-            navigation: {
-              ...navigation,
-              resource: resourceId
-            }
-          }
-        }
-      };
-      openPopup(newPopup);
-    }
-  }
-
-  function onClickInfo() {
-    const newPopup: Popup<PopupInfoResourceProps> = {
-      name: 'infoResource',
-      Component: PopupInfoResource,
-      props: { data: { translation } }
-    };
-    openPopup(newPopup);
-  }
-
-  function onClickShare() {
-    const newPopup: Popup<null> = {
-      name: 'shareResource',
-      Component: PopupShare,
-      props: null
-    };
-    openPopup(newPopup);
-  }
-
-  // We don't give the download link right away. We open a popup instead
-  // to bring the user through the download process.
-  const href = (channelId === 'download') ? undefined : url;
-
-  return (
-    <DropdownOption data={{ onClick, onClickInfo, onClickShare, href }}>
-      <div className='h-full flex flex-col justify-center py-2 pl-4 pr-1'>
-        { line1 ? <div className=''>{line1}</div> : null }
-        <div className='font-bold text-sfs-accent' style={{ fontSize: '1.15rem', lineHeight: '1.1' }}>{line2}</div>
-      </div>
-    </DropdownOption>
-  )
 }

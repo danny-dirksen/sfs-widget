@@ -25,6 +25,16 @@ const config: Config = {
         // 'sfs-dark': '#3c6600',
         // 'sfs-darken': '#00000019'
       },
+      screens: {
+        /** Horizontal screens only */
+        'hz': {
+          raw: '(min-aspect-ratio: 2/3)'
+        },
+        /** Horizontal screens only */
+        'widget': {
+          raw: '((min-aspect-ratio: 2/3) and (max-width: 600px)) or (max-width: 300px)'
+        }
+      }
     },
   },
   plugins: [],

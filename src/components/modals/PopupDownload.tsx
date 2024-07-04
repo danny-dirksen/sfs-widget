@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Navigation, PopupComponent } from '@/utils/models';
-import { Paragraph, Button } from '@/components/Styles';
+import { useEffect, useState } from 'react';
+import { Navigation, PartnerInfo, PopupComponent } from '@/utils/models';
+import { Paragraph, Button, Header } from '@/components/Styles';
 import { DownloadForm } from './DownloadForm';
+import { Church, ChurchSelect } from './ChurchSelect';
 
 /** True if email looks valid. */
 export const validEmail = (email: string) => {
@@ -15,22 +16,61 @@ export interface PopupDownloadProps {
   }
 };
 
+type Member = 'init' | 'yes' | 'no' | 'dontKnow' | 'justDownload';
+
 interface PopupDownloadState {
-  member: null | 'yes' | 'no' | 'dontKnow' | 'justDownload';
-  pic: null | string;
+  member: Member;
+  church: Church | null;
 }
 
 // make sure that the email address at least looks valid. otherwise, hides the download button
 export const PopupDownload: PopupComponent<PopupDownloadProps> = (props) => {
   const { navigation } = props.data;
-  const { pic, language, channel, resource } = navigation;
-  if (!language) {
-    return <Paragraph>Sorry, could not find that resource.</Paragraph>
-  }
-  // const [ state, setState ] = useState<PopupDownloadState>({ member: null, pic: pic });
-  // const { member } = state;
+  const { pic, language, resource } = navigation;
 
-  return <DownloadForm data={{ languageId: language, resourceId: resource!}} />
+  // At this point, there should always be a language.
+  if (!language) return <Paragraph>A problem occured please close and try again.</Paragraph>;
+
+  // Track whether or not they have answered.
+  const [ state, setState ] = useState<PopupDownloadState>({
+    member: pic ? 'yes' : 'init',
+    church: null
+  });
+  // Tracks which church they are from.
+  const { member, church } = state;
+  function setMember(member: Member) {
+    setState({ ...state, member })
+  }
+  function setChurch(church: Church) {
+    setState({ ...state, church })
+  }
+  
+
+  const downloadForm = ((member === 'yes' && pic) || member === 'justDownload') ? (
+    <DownloadForm data={{ languageId: language, resourceId: resource!}} />
+  ) : null;
+
+  return (
+    <>
+      <Header>Download This Resource</Header>
+      <Paragraph>Is your church a member of our church partnership program?</Paragraph>
+      <div className='flex flex-row gap-2 flex-wrap'>
+        <Button type={member === 'yes' ? 'primary' : 'secondary'} onClick={() => setMember('yes')}>YES</Button>
+        <Button type={member === 'no' ? 'primary' : 'secondary'} onClick={() => setMember('no')}>NO</Button>
+        <Button type={member === 'dontKnow' ? 'primary' : 'secondary'} onClick={() => setMember('dontKnow')}>I DON'T KNOW</Button>
+        <Button type={member === 'justDownload' ? 'primary' : 'secondary'} onClick={() => setMember('justDownload')}>JUST DOWNLOAD</Button>
+      </div>
+      { member === 'yes' ? (
+        <ChurchSelect value={church} onChange={(church) => setChurch(church)}></ChurchSelect>
+      ) : null }
+    </>
+  );
+
+  function selectChurch(pic: string) {
+    
+  }
+
+  // return <DownloadForm data={{ languageId: language, resourceId: resource!}} />
 
 
   // if (member === 'yes' || member === 'justDownload') {

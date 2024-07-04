@@ -30,11 +30,11 @@ export function DropdownMenu(props: DropdownMenuProps) {
   const { onScreen, back } = data;
 
   return (
-    <div className='w-1/3 h-full flex flex-col md:justify-center overflow-hidden' >
+    <div className='w-1/3 h-full flex flex-col hz:justify-center overflow-hidden' >
       { onScreen ? (
         // Scroll box
         <div className='w-full h-fit max-h-full overflow-y-scroll flex flex-col items-center'>
-          <div className='w-full max-w-md text-black flex flex-col px gap-4 p-4'>
+          <div className='w-full max-w-md text-black flex flex-col px gap-4 widget:gap-2 p-4'>
             {/* Back button holder */}
             { back ? (
               <div className='flex-none flex flex-row justify-start'>

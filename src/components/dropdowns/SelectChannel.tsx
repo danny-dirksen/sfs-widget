@@ -2,7 +2,6 @@ import { Content, Navigation } from '@/utils/models';
 import { DropdownMenu } from './DropdownMenu';
 import { DropdownOption } from './DropdownOption';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import Image from 'next/image';
 
 import amazonprimeBanner from '@/resources/channel-banners/amazonprime.png';
 import applemusicBanner from '@/resources/channel-banners/applemusic.svg';
@@ -12,6 +11,9 @@ import spotifyBanner from '@/resources/channel-banners/spotify.svg';
 import usbdriveBanner from '@/resources/channel-banners/usbdrive.svg';
 import youtubeBanner from '@/resources/channel-banners/youtube.svg';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
+import { SelectChannelCard } from './SelectChannelCard';
+import { Component, ReactNode, useState } from 'react';
+import { PopupShare } from '../modals/PopupShare';
 
 interface SelectChannelProps {
   data: {
@@ -24,7 +26,7 @@ interface SelectChannelProps {
   }
 };
 
-const banners: Record<string, StaticImport> = {
+export const banners: Record<string, StaticImport> = {
   'spotify': spotifyBanner,
   'youtube': youtubeBanner,
   'amazonprime': amazonprimeBanner,
@@ -43,30 +45,15 @@ export function SelectChannel(props: SelectChannelProps) {
     clickChannelLink('orderCd', orderCdsLink);
   }
 
+
   return (
     <DropdownMenu data={{ onScreen: !navigation.channel }}>
-      { channels.map(ch => {
-        const { channelId, name } = ch;
-        const onClick = () => selectChannel(channelId)
-
-        const src = banners[channelId];
-        const inner = src ? (
-          <Image className='h-10 w-fit' src={src} alt={name} />
-        ) : (
-          name
-        );
-
-        return (
-          <DropdownOption key={channelId} data={{ onClick }}>
-            <div className='flex justify-center items-center px-4 py-4'>
-              {inner}
-            </div>
-          </DropdownOption>
-        )
-      }) }
+      { channels.map(channel => (
+        <SelectChannelCard key={channel.channelId} data={{ channel, selectChannel }} />
+      )) }
       {/* There is a link card at the bottom to order cds. */}
       <DropdownOption data={{ href: orderCdsLink, onClick: () => orderCds }}>
-        <div className='flex justify-center items-center px-4 py-4 text-2xl font-bold uppercase'>
+        <div className='flex justify-center items-center p-4 widget:p-2 text-2xl widget:text-sm font-bold uppercase'>
           ORDER CDS
         </div>
       </DropdownOption>

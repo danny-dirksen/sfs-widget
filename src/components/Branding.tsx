@@ -23,7 +23,7 @@ export function BrandingLayer(props: BrandingLayerProps) {
   return (
     <div className={
       'absolute top-0 flex left-0 justify-between font-white h-fit ' +
-      'md:h-full w-full md:w-fit flex-row md:flex-col'
+      'hz:h-full w-full hz:w-fit flex-row hz:flex-col'
     }>
       {partnerBranding}
       <Branding data={{
@@ -52,7 +52,7 @@ export function Branding(props: BrandingProps) {
     <a className='branding-container'
         href={href} target='_blank' rel='noopener noreferrer' onClick={onClick} >
       { image ? (
-        <img className='h-12 p-2 w-auto' alt={name} src={image} />
+        <img className='h-12 p-2 widget:h-7 widget:p-1 w-auto' alt={name} src={image} />
       ) : (
         <div className='w-max'>{name}</div>
       ) }

@@ -11,7 +11,7 @@ const instagramImg = <Image src={require('@/resources/share-logos/instagram.png'
 const xImg = <Image src={require('@/resources/share-logos/x.png')} alt='X' />
 const messageImg = <Image src={require('@/resources/share-logos/message.png')} alt='Message' />
 
-export const PopupShare: PopupComponent<null> = () => {
+export function PopupShare() {
   const { track } = useAnalytics();
   const [ copied, setCopied ] = React.useState(false);
   const { url, title, image, header, hashtag, cc } = getGenericText();

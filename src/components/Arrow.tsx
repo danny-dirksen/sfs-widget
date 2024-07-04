@@ -7,5 +7,5 @@ interface ArrowProps {
 
 export function Arrow(props: ArrowProps) {
   const { className } = props;
-  return <Image className={'h-[1em] w-[1em] ' + className} src={arrow} alt='->' />;
+  return <Image priority className={'h-[1em] w-[1em] ' + className} src={arrow} alt='->' />;
 }

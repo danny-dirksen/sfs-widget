@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import mailIcon from '@/resources/ui/mail.svg';
-import { Header, Paragraph, Button } from '@/components/Styles';
+import { Header, Paragraph, Button, Input } from '@/components/Styles';
 import { validEmail } from './PopupDownload';
 import { DownloadRequestBody, Navigation } from '@/utils/models';
 import Image from 'next/image';
@@ -61,25 +61,23 @@ export function DownloadForm(props: DownloadFormProps) {
   };
 
   const enabled = firstName.length > 0 && lastName.length > 0 && validEmail(email);
-  const inputClass = 'outline-none border border-black focus:border-sfs-accent px-2 py-1 w-full mb-4';
+  
 
   return (
     <form>
       <Header>Download this resource for free!</Header>
       <Paragraph>Enter your email address below to receive a free download link.</Paragraph>
       <div className='w-full flex flex-row justify-stretch gap-4'>
-        <input
+        <Input
           type='text'
-          className={inputClass}
           name='firstName'
           placeholder='First Name'
           value={firstName}
           onChange={(e) => {
             setFirstName(e.target.value);
           }} />
-        <input
+        <Input
           type='text'
-          className={inputClass}
           name='lastName'
           placeholder='Last Name'
           value={lastName}
@@ -87,9 +85,8 @@ export function DownloadForm(props: DownloadFormProps) {
             setLastName(e.target.value);
           }} />
       </div>
-      <input
+      <Input
         type='email'
-        className={inputClass}
         name='email'
         placeholder='Your Email Address'
         value={email}

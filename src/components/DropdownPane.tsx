@@ -13,13 +13,12 @@ interface DropdownPaneProps {
     navigation: Navigation;
     analytics: AnalyticsContext;
     setNavigation: (navigation: Navigation) => void;
-    openPopup: (newPopup: Popup<any>) => void;
     pageNum: number;
   }
 };
 
 export function DropdownPane(props: DropdownPaneProps) {
-  const { content, navigation, analytics, setNavigation, openPopup, pageNum } = props.data;
+  const { content, navigation, analytics, setNavigation, pageNum } = props.data;
   const { track } = analytics;
 
   function selectChannel(channelId: string) {
@@ -68,13 +67,15 @@ export function DropdownPane(props: DropdownPaneProps) {
   };
   return (
     // Holds caroseul with correct frame size
-    <div className='flex-[3] overflow-hidden'>
+    <div className='flex-[3] overflow-hidden relative'>
       {/* Carousel */}
       <div className='w-[300%] h-full transition-transform flex flex-row items-stretch' style={style}>
         <SelectChannel data={{ content, navigation, analytics, selectChannel, clickChannelLink, back }} />
-        <SelectLanguage data={{ content, navigation, analytics, selectLanguage, openPopup, back }} />
-        <SelectResource data={{ content, navigation, analytics, selectResource, openPopup, back }} />
+        <SelectLanguage data={{ content, navigation, analytics, selectLanguage, back }} />
+        <SelectResource data={{ content, navigation, analytics, selectResource, back }} />
       </div>
+      {/* Small gradient to bg at the bottom indicating scrollability */}
+      <div className='absolute w-full h-4 bg-gradient-to-t from-sfs-bg bottom-0 left-0'></div>
     </div>
   )
 }

@@ -9,13 +9,12 @@ import { AnalyticsContext } from '@/hooks/useAnalytics';
 interface MainContentProps {
   data: {
     content: Content;
-    openPopup: (newPopup: Popup<any>) => void;
     analytics: AnalyticsContext
   }
 };
 
 export function MainContent(props: MainContentProps): JSX.Element {
-  const { content, openPopup, analytics } = props.data;
+  const { content, analytics } = props.data;
   const { navigation, setNavigation } = useNavigation(content);
   const { pic, channel, language, resource } = navigation;
   // this.rightPaneRef = React.createRef();
@@ -27,9 +26,9 @@ export function MainContent(props: MainContentProps): JSX.Element {
   const pageNum = !channel ? 1 : !language ? 2 : 3;
 
   return (
-    <main className='h-full flex flex-col md:flex-row items-stretch'>
+    <main className='h-full flex flex-col hz:flex-row items-stretch'>
       <InstructionsPane data={{ content, navigation }} />
-      <DropdownPane data={{ content, navigation, analytics, setNavigation, openPopup, pageNum }} />
+      <DropdownPane data={{ content, navigation, analytics, setNavigation, pageNum }} />
     </main>
   );
 }

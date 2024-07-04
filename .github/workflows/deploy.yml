@@ -32,6 +32,3 @@ jobs:
           ssh -i $SSH_KEY_PATH daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && .git/hooks/post-receive"
         env:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
-
-      - name: Test
-        run: echo "TEST"
