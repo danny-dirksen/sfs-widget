@@ -125,6 +125,12 @@ export async function getPartnerInfo(pic: string | null): Promise<PartnerInfo | 
   return { pic, name, url };
 }
 
+export async function getPartnerList(): Promise<PartnerInfo[] | null> {
+  if (!cpt) await loadContent();
+  if (!cpt) return null;
+  return cpt.partners.map(({ pic, name, url }) => ({ pic, name, url }));
+}
+
 export async function getContent(pic: string | null = null): Promise<Content | null> {
   // Make sure content is loaded.
   if (!content) await loadContent();

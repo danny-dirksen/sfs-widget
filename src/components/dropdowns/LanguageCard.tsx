@@ -1,33 +1,33 @@
 import { Language } from '@/utils/models';
 import { DropdownOption } from './DropdownOption';
-import { PopupInfoLanguage, PopupInfoLanguageProps } from '@/components/modals/PopupInfo';
-import { PopupShare } from '../modals/PopupShare';
+import { PopupInfoLanguage } from '@/components/modals/InfoModal';
+import { ShareModal } from '../modals/ShareModal';
 import { ReactNode, useState } from 'react';
 import { Modal } from '../modals/Modal';
 
-interface SelectLanguageCardProps {
+interface LanguageCardProps {
   data: {
     language: Language;
     selectLanguage: (languageId: string) => void;
   };
 }
-;
+
 /** Card for a single option in the language dropdown. */
-export function SelectLanguageCard(props: SelectLanguageCardProps) {
+export function LanguageCard(props: LanguageCardProps) {
   const { language, selectLanguage } = props.data;
   const { languageId, autonym } = language;
-  const [ modal, setModal ] = useState<ReactNode | null>(null);
+  const [ modal, setModal ] = useState<null | 'info' | 'share'>(null);
 
   function onClick() {
     selectLanguage(languageId);
   }
 
   function onClickInfo() {
-    setModal(<PopupInfoLanguage data={{ language }} />);
+    setModal('info');
   }
 
   function onClickShare() {
-    setModal(<PopupShare/>);
+    setModal('share');
   }
 
   return (
@@ -36,7 +36,11 @@ export function SelectLanguageCard(props: SelectLanguageCardProps) {
         {autonym}
       </div>
       <Modal data={{ onClose: () => setModal(null)}}>
-        {modal}
+        { modal === 'info' ? (
+          <PopupInfoLanguage data={{ language }} />
+        ) : modal === 'share' ? (
+          <ShareModal />
+        ) : null }
       </Modal>
     </DropdownOption>
   );

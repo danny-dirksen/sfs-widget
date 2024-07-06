@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Channel, PopupComponent } from '@/utils/models';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { Header, Paragraph } from '@/components/Styles';
+import { ShareButton } from './ShareButton';
 
 const copyImg = <Image src={require('@/resources/share-logos/copy.png')} alt='Copy' />
 const emailImg = <Image src={require('@/resources/share-logos/email.png')} alt='Email' />
@@ -11,7 +12,7 @@ const instagramImg = <Image src={require('@/resources/share-logos/instagram.png'
 const xImg = <Image src={require('@/resources/share-logos/x.png')} alt='X' />
 const messageImg = <Image src={require('@/resources/share-logos/message.png')} alt='Message' />
 
-export function PopupShare() {
+export function ShareModal() {
   const { track } = useAnalytics();
   const [ copied, setCopied ] = React.useState(false);
   const { url, title, image, header, hashtag, cc } = getGenericText();
@@ -33,7 +34,7 @@ export function PopupShare() {
       <Paragraph>
         Word-of-mouth is how we grow. You can make an impact by spreading this resource on your favorite platforms:
       </Paragraph>
-      <div className='flex flex-row justify-center p-4'>
+      <div className='flex flex-row justify-center'>
         <div className='flex flex-wrap flex-row justify-center'>
           <ShareButton data={{
             name: 'Email',
@@ -79,30 +80,9 @@ export function PopupShare() {
   );
 }
 
-interface ShareButtonProps {
-  data: {
-    name: string;
-    img: JSX.Element;
-    href?: string;
-    onClick?: () => void;
-  }
-};
-
-function ShareButton(props: ShareButtonProps) {
-  const { name, img, href, onClick } = props.data;
-  return (
-    <a className='popout select-none hover:bg-sfs-darken p-1 size-20 text-center flex flex-col justify-center items-center gap-1' href={href} target='_blank' rel='noopener noreferrer' onClick={onClick}>
-      <div className='size-8'>
-        {img}
-      </div>
-      <div className=''>{name}</div>
-    </a>
-  );
-}
-
 function getGenericText() {
   const genericText: Record<string, string> = {
-    url: 'music.songsforsaplings.com?c=spotify',//window.location.href,
+    url: window.location.href,
     title: 'Free Music and More from Songs for Saplings',
     image: 'https://songsforsaplings.com/workspace/uploads/images/saplings-music-banner.jpg',
     header: `Hey, thought you would enjoy this great kid's music that teaches the Bible!`,

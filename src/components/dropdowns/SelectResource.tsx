@@ -8,13 +8,14 @@ interface SelectResourceProps {
     content: Content;
     navigation: Navigation;
     selectResource: (resourceId: string) => void;
+    selectPartner: (pic: string | null) => void;
     back: () => void;
     analytics: AnalyticsContext;
   }
 };
 
 export function SelectResource(props: SelectResourceProps) {
-  const { content, navigation, selectResource, back } = props.data;
+  const { content, navigation, selectResource, selectPartner, back } = props.data;
   const { channel, language, pic } = navigation;
   // Find relevant links and their corresponding data, such as descriptions. above.
   const linkInfo = content.links.filter( // Only relevant links.
@@ -34,7 +35,7 @@ export function SelectResource(props: SelectResourceProps) {
   return (
     <DropdownMenu data={{ onScreen: !!(navigation.channel && navigation.language), back }}>
       { linkInfo.map(({ link, translation }, key) => (
-        <SelectResourceCard key={key} data={{ link, translation: translation!, navigation, selectResource }} />
+        <SelectResourceCard key={key} data={{ link, translation: translation!, navigation, selectResource, selectPartner }} />
       )) }
     </DropdownMenu>
   );

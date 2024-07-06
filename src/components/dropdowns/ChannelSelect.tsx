@@ -11,11 +11,11 @@ import spotifyBanner from '@/resources/channel-banners/spotify.svg';
 import usbdriveBanner from '@/resources/channel-banners/usbdrive.svg';
 import youtubeBanner from '@/resources/channel-banners/youtube.svg';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
-import { SelectChannelCard } from './SelectChannelCard';
+import { ChannelCard } from './ChannelCard';
 import { Component, ReactNode, useState } from 'react';
-import { PopupShare } from '../modals/PopupShare';
+import { ShareModal } from '../modals/ShareModal';
 
-interface SelectChannelProps {
+interface ChannelSelectProps {
   data: {
     content: Content;
     navigation: Navigation;
@@ -36,7 +36,7 @@ export const banners: Record<string, StaticImport> = {
   'usbdrive': usbdriveBanner,
 };
 
-export function SelectChannel(props: SelectChannelProps) {
+export function ChannelSelect(props: ChannelSelectProps) {
   const { content, navigation, clickChannelLink, selectChannel, back } = props.data;
   const { channels } = content;
   
@@ -49,7 +49,7 @@ export function SelectChannel(props: SelectChannelProps) {
   return (
     <DropdownMenu data={{ onScreen: !navigation.channel }}>
       { channels.map(channel => (
-        <SelectChannelCard key={channel.channelId} data={{ channel, selectChannel }} />
+        <ChannelCard key={channel.channelId} data={{ channel, selectChannel }} />
       )) }
       {/* There is a link card at the bottom to order cds. */}
       <DropdownOption data={{ href: orderCdsLink, onClick: () => orderCds }}>

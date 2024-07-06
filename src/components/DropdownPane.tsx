@@ -1,7 +1,7 @@
 import React from 'react';
 import { Content, Navigation, Popup } from '@/utils/models';
-import { SelectChannel } from './dropdowns/SelectChannel';
-import { SelectLanguage } from './dropdowns/SelectLanguage';
+import { ChannelSelect } from './dropdowns/ChannelSelect';
+import { LanguageSelect } from './dropdowns/LanguageSelect';
 import { SelectResource } from './dropdowns/SelectResource';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
 
@@ -48,6 +48,15 @@ export function DropdownPane(props: DropdownPaneProps) {
     track('selectResource', newNav);
   }
 
+  function selectPartner(pic: string | null) {
+    const newNav = {
+      ...navigation,
+      pic
+    };
+    setNavigation(newNav);
+    track('selectPartner', newNav);
+  }
+
   function back() {
     const { channel, language } = navigation;
     if (language) {
@@ -70,9 +79,9 @@ export function DropdownPane(props: DropdownPaneProps) {
     <div className='flex-[3] overflow-hidden relative'>
       {/* Carousel */}
       <div className='w-[300%] h-full transition-transform flex flex-row items-stretch' style={style}>
-        <SelectChannel data={{ content, navigation, analytics, selectChannel, clickChannelLink, back }} />
-        <SelectLanguage data={{ content, navigation, analytics, selectLanguage, back }} />
-        <SelectResource data={{ content, navigation, analytics, selectResource, back }} />
+        <ChannelSelect data={{ content, navigation, analytics, selectChannel, clickChannelLink, back }} />
+        <LanguageSelect data={{ content, navigation, analytics, selectLanguage, back }} />
+        <SelectResource data={{ content, navigation, analytics, selectResource, selectPartner, back }} />
       </div>
       {/* Small gradient to bg at the bottom indicating scrollability */}
       <div className='absolute w-full h-4 bg-gradient-to-t from-sfs-bg bottom-0 left-0'></div>

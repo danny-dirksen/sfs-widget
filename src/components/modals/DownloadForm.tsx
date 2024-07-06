@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import mailIcon from '@/resources/ui/mail.svg';
-import { Header, Paragraph, Button, Input } from '@/components/Styles';
-import { validEmail } from './PopupDownload';
-import { DownloadRequestBody, Navigation } from '@/utils/models';
+import { Header, Paragraph } from '@/components/Styles';
+import { DownloadRequestBody, ContactInfo } from '@/utils/models';
 import Image from 'next/image';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { EmailForm } from './EmailForm';
 
 interface DownloadFormProps {
   data: {
@@ -17,87 +16,46 @@ export function DownloadForm(props: DownloadFormProps) {
   const { languageId, resourceId } = props.data;
   const { track } = useAnalytics();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'init' | 'sending' | 'failed' | 'sent'>('init');
-
-  if (status === 'sent') {
-    return (
-      <div className='text-center'>
-        <Header className='text-left'>Email Sent!</Header>
-        <Image alt='Email Sent' className='w-12 inline mb-4 text-red-500' src={mailIcon} />
-        <Paragraph>
-          {`Your download link has been sent to "${email}". Check your email!`}
-        </Paragraph>
-      </div>
-    );
-  } else if (status === 'failed') {
-    return (
-      <div className='text-center'>
-        <Header>Oops!</Header>
-        <Image alt='Email Sent' className='w-12 inline mb-4' src={mailIcon} />
-        <Paragraph>
-          ${`We had trouble sending the link to "${email}". Try again?`}
-        </Paragraph>
-        <Button type='primary' onClick={() => setStatus('init')} >Try Again</Button>
-      </div>
-    );
-  }
-
-  const handleSubmit = async () => {
-    const body: DownloadRequestBody = { email, firstName, lastName, languageId, resourceId };
+  const onSubmit = async (contactInfo: ContactInfo) => {
+    const body: DownloadRequestBody = { ...contactInfo, languageId, resourceId };
     track('download', body);
-    setStatus('sending');
     const resp = await fetch('/api/email/download', {
       method: 'post',
       body: JSON.stringify(body)
     });
-    if (!resp.ok) {
-      setStatus('failed');
-    } else {
-      setStatus('sent');
-    }
-  };
-
-  const enabled = firstName.length > 0 && lastName.length > 0 && validEmail(email);
-  
+    return resp.ok ? 'sent' : 'failed';
+  }
 
   return (
-    <form>
-      <Header>Download this resource for free!</Header>
-      <Paragraph>Enter your email address below to receive a free download link.</Paragraph>
-      <div className='w-full flex flex-row justify-stretch gap-4'>
-        <Input
-          type='text'
-          name='firstName'
-          placeholder='First Name'
-          value={firstName}
-          onChange={(e) => {
-            setFirstName(e.target.value);
-          }} />
-        <Input
-          type='text'
-          name='lastName'
-          placeholder='Last Name'
-          value={lastName}
-          onChange={(e) => {
-            setLastName(e.target.value);
-          }} />
-      </div>
-      <Input
-        type='email'
-        name='email'
-        placeholder='Your Email Address'
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }} />
-      <div className='text-center'>
-        <Button type='primary' onClick={handleSubmit} disabled={!enabled || status === 'sending'}>
-          { status === 'sending' ? 'SENDING...' : 'SEND DOWNLOAD LINK' }
-        </Button>
-      </div>
-    </form>
+    <EmailForm data={{
+      text: {
+        init: (
+          <>
+            <Header>Download this resource for free!</Header>
+            <Paragraph>Enter your email address below to receive a free download link.</Paragraph>
+          </>
+        ),
+        failed: (
+          <>
+            <Header>Oops!</Header>
+            <Image alt='Email Sent' className='w-12 inline mb-4 opacity-30' src={mailIcon} />
+            <Paragraph>
+              We had trouble sending the link. Try again?
+            </Paragraph>
+          </>
+        ),
+        sent: (
+          <>
+            <Header>Success!</Header>
+            <Image alt='Email Sent' className='w-12 inline mb-4' src={mailIcon} />
+            <Paragraph>
+              We have sent the download link.
+            </Paragraph>
+          </>
+        )
+      },
+      buttonText: 'SEND DOWNLOAD LINK',
+      onSubmit,
+    }} />
   );
 }

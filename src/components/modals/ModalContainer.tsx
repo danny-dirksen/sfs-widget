@@ -16,7 +16,7 @@ export function ModalContainer(props: ModalContainerProps) {
         <div className='absolute top-0 right-0'>
           <Image className='size-8 inline-block p-2 hover:bg-black hover:bg-opacity-10 cursor-pointer' alt='X' src={x} onClick={onClose} />
         </div>
-        <div className='p-4 md:p-8'>
+        <div className='p-4 md:p-8 space-y-4'>
           {children}
         </div>
       </div>

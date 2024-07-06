@@ -1,8 +1,8 @@
 import { Link, Navigation, Popup, ResourceTranslation } from '@/utils/models';
 import { DropdownOption } from './DropdownOption';
-import { PopupInfoResource, PopupInfoResourceProps } from '@/components/modals/PopupInfo';
-import { PopupShare } from '../modals/PopupShare';
-import { PopupDownload, PopupDownloadProps } from '../modals/PopupDownload';
+import { PopupInfoResource } from '@/components/modals/InfoModal';
+import { ShareModal } from '../modals/ShareModal';
+import { DownloadModal } from '../modals/DownloadModal';
 import { Modal } from '../modals/Modal';
 import { ReactNode, useState } from 'react';
 
@@ -12,16 +12,17 @@ interface SelectResourceCardProps {
     translation: ResourceTranslation;
     navigation: Navigation;
     selectResource: (resourceId: string) => void;
+    selectPartner: (pic: string | null) => void;
   };
 }
 ;
 /** Card for a single option in the language dropdown. */
 export function SelectResourceCard(props: SelectResourceCardProps) {
-  const { link, translation, navigation, selectResource } = props.data;
+  const { link, translation, navigation, selectResource, selectPartner } = props.data;
   const { url, resourceId, channelId } = link;
   const { line1, line2 } = translation;
   
-  const [ modal, setModal ] = useState<ReactNode | null>(null);
+  const [ modal, setModal ] = useState<'download' | 'info' | 'share' | null>(null);
 
   function onClick() {
     selectResource(resourceId);
@@ -31,16 +32,16 @@ export function SelectResourceCard(props: SelectResourceCardProps) {
         ...navigation,
         resource: resourceId
       };
-      setModal(<PopupDownload data={{ navigation: newNav }} />);
+      setModal('download');
     }
   }
 
   function onClickInfo() {
-    setModal(<PopupInfoResource data={{ translation}} />);
+    setModal('info');
   }
 
   function onClickShare() {
-    setModal(<PopupShare />);
+    setModal('share');
   }
 
   // We don't give the download link right away. We open a popup instead
@@ -54,7 +55,13 @@ export function SelectResourceCard(props: SelectResourceCardProps) {
         <div className='font-bold text-sfs-accent' style={{ fontSize: '1.15rem', lineHeight: '1.1' }}>{line2}</div>
       </div>
       <Modal data={{ onClose: () => setModal(null)}}>
-        {modal}
+        { modal === 'download' ? (
+          <DownloadModal data={{ navigation, selectPartner }} />
+        ) : modal === 'info' ? (
+          <PopupInfoResource data={{ translation }} />
+        ) : modal === 'share' ? (
+          <ShareModal />
+        ) : null }
       </Modal>
     </DropdownOption>
   );

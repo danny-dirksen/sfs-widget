@@ -1,16 +1,16 @@
 import { Channel } from '@/utils/models';
 import { DropdownOption } from './DropdownOption';
 import Image from 'next/image';
-import { banners } from './SelectChannel';
+import { banners } from './ChannelSelect';
 
-interface SelectChannelCardProps {
+interface ChannelCardProps {
   data: {
     channel: Channel;
     selectChannel: (channelId: string) => void;
   };
 }
 ;
-export function SelectChannelCard(props: SelectChannelCardProps) {
+export function ChannelCard(props: ChannelCardProps) {
   const { channel, selectChannel } = props.data;
   const { channelId, name } = channel;
 

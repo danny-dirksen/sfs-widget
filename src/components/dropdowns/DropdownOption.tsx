@@ -3,7 +3,7 @@ import Image from 'next/image';
 import infoIcon from '@/resources/ui/info.svg';
 import shareIcon from '@/resources/ui/share.svg';
 
-interface DropDownOptionProps {
+interface DropdownOptionProps {
   children: ReactNode;
   data: {
     href?: string;
@@ -13,7 +13,7 @@ interface DropDownOptionProps {
   }
 };
 
-export function DropdownOption(props: DropDownOptionProps) {
+export function DropdownOption(props: DropdownOptionProps) {
   const { children, data } = props;
   const { href, onClick, onClickInfo, onClickShare } = data;
 

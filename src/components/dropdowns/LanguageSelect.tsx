@@ -1,9 +1,9 @@
 import { Content, Navigation } from '@/utils/models';
 import { DropdownMenu } from './DropdownMenu';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
-import { SelectLanguageCard } from './SelectLanguageCard';
+import { LanguageCard } from './LanguageCard';
 
-interface SelectLanguageProps {
+interface LanguageSelectProps {
   data: {
     content: Content;
     navigation: Navigation;
@@ -13,7 +13,7 @@ interface SelectLanguageProps {
   }
 };
 
-export function SelectLanguage(props: SelectLanguageProps) {
+export function LanguageSelect(props: LanguageSelectProps) {
   const { content, navigation, selectLanguage, back, analytics } = props.data;
   const { channel } = navigation;
   // Create cards for languages that correspond to the translations above.
@@ -24,7 +24,7 @@ export function SelectLanguage(props: SelectLanguageProps) {
   return (
     <DropdownMenu data={{ onScreen: !(!navigation.channel || navigation.language), back }}>
       { languages.map((language, key) => (
-        <SelectLanguageCard key={key} data={{ language, selectLanguage }} />
+        <LanguageCard key={key} data={{ language, selectLanguage }} />
       )) }
     </DropdownMenu>
   );

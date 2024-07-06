@@ -55,12 +55,18 @@ export interface ContentProfileTable {
   partners: ContentProfile[];
 };
 
-export interface DownloadRequestBody {
-  email: string,
+export interface ContactInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface DownloadRequestBody extends ContactInfo {
   languageId: string,
   resourceId: string,
-  firstName: string,
-  lastName: string,
+}
+
+export interface PartnerJoinRequestBody extends ContactInfo {
 }
 
 export interface TrackingEvent {
