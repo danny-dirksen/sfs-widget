@@ -12,8 +12,7 @@ import usbdriveBanner from '@/resources/channel-banners/usbdrive.svg';
 import youtubeBanner from '@/resources/channel-banners/youtube.svg';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
 import { ChannelCard } from './ChannelCard';
-import { Component, ReactNode, useState } from 'react';
-import { ShareModal } from '../modals/ShareModal';
+import { DonateDialog } from './DonateDialog';
 
 interface ChannelSelectProps {
   data: {
@@ -21,7 +20,7 @@ interface ChannelSelectProps {
     navigation: Navigation;
     analytics: AnalyticsContext;
     selectChannel: (channelId: string) => void;
-    clickChannelLink: (eventType: string, link: string) => void;
+    clickLink: (eventType: string, link: string) => void;
     back: () => void;
   }
 };
@@ -37,12 +36,12 @@ export const banners: Record<string, StaticImport> = {
 };
 
 export function ChannelSelect(props: ChannelSelectProps) {
-  const { content, navigation, clickChannelLink, selectChannel, back } = props.data;
+  const { content, navigation, clickLink, selectChannel, back } = props.data;
   const { channels } = content;
   
   const orderCdsLink = 'https://store.songsforsaplings.com/collections/music';
   function orderCds() {
-    clickChannelLink('orderCd', orderCdsLink);
+    clickLink('orderCd', orderCdsLink);
   }
 
 
@@ -57,6 +56,7 @@ export function ChannelSelect(props: ChannelSelectProps) {
           ORDER CDS
         </div>
       </DropdownOption>
+      <DonateDialog data={{ clickLink }} />
     </DropdownMenu>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { PartnerInfo } from '@/utils/models';
+import Image from 'next/image';
 
 interface BrandingLayerProps {
   data: {
@@ -59,10 +60,10 @@ export function Branding(props: BrandingProps) {
   }, [ image ]);
 
   return (
-    <a className='branding-container text-white'
+    <a className='branding-container text-white relative h-12 widget:h-7 w-20'
         href={href} target='_blank' rel='noopener noreferrer' onClick={onClick} >
       { (!imgErr && image) ? (
-        <img className='h-12 p-2 widget:h-7 widget:p-1 w-auto'
+        <Image fill className='p-2 widget:p-1 w-auto object-contain object-left'
              alt={name} src={image} />
       ) : (
         // Backup text.

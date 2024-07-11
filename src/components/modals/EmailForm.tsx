@@ -59,7 +59,7 @@ export function EmailForm(props: EmailFormProps) {
           setContactInfo({ ...contactInfo, email: e.target.value });
         }} />
       <div className='text-center'>
-        <Button data={{ type: 'primary' }} onClick={handleSubmit} disabled={disableSubmit}>
+        <Button onClick={handleSubmit} disabled={disableSubmit}>
           {status === 'sending' ? 'SENDING...' : buttonText}
         </Button>
       </div>
@@ -67,12 +67,12 @@ export function EmailForm(props: EmailFormProps) {
   ) : (status === 'sent') ? (
     <div className='space-y-4 text-center'>
       {text.sent}
-      <Button data={{ type: 'primary' }} onClick={() => setStatus('init')}>SEND ANOTHER</Button>
+      <Button onClick={() => setStatus('init')}>SEND ANOTHER</Button>
     </div>
   ) : (status === 'failed') ? (
     <div className='space-y-4 text-center'>
       {text.failed}
-      <Button data={{ type: 'primary' }} onClick={() => setStatus('init')}>TRY AGAIN</Button>
+      <Button onClick={() => setStatus('init')}>TRY AGAIN</Button>
     </div>
   ) : null;
 }

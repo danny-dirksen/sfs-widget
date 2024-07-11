@@ -6,7 +6,7 @@ import { DownloadModal } from '../modals/DownloadModal';
 import { Modal } from '../modals/Modal';
 import { ReactNode, useState } from 'react';
 
-interface SelectResourceCardProps {
+interface ResourceCardProps {
   data: {
     link: Link;
     translation: ResourceTranslation;
@@ -17,7 +17,7 @@ interface SelectResourceCardProps {
 }
 ;
 /** Card for a single option in the language dropdown. */
-export function SelectResourceCard(props: SelectResourceCardProps) {
+export function ResourceCard(props: ResourceCardProps) {
   const { link, translation, navigation, selectResource, selectPartner } = props.data;
   const { url, resourceId, channelId } = link;
   const { line1, line2 } = translation;

@@ -20,8 +20,8 @@ export function AnalyticsNotice(props: AnalyticsNoticeProps) {
         <div className='inline-flex flex-col md:flex-row items-end md:items-center gap-2 max-w-full w-fit bg-white shadow-md px-4 py-2 text-black'>
           <div className='text-left'>We uses cookies and analytics to monitor traffic and make this tool better.</div>
           <div className='flex items-stretch h-fit w-fit gap-2 flex-row'>
-            <Button data={{ type: 'primary' }} onClick={() => setTrackingChoice('optin')}>Okay</Button>
-            <Button onClick={() => setTrackingChoice('optout')}>No Thanks</Button>
+            <Button onClick={() => setTrackingChoice('optin')}>Okay</Button>
+            <Button secondary onClick={() => setTrackingChoice('optout')}>No Thanks</Button>
           </div>
         </div>
       </div>

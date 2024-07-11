@@ -2,7 +2,7 @@ import React from 'react';
 import { Content, Navigation, Popup } from '@/utils/models';
 import { ChannelSelect } from './dropdowns/ChannelSelect';
 import { LanguageSelect } from './dropdowns/LanguageSelect';
-import { SelectResource } from './dropdowns/SelectResource';
+import { ResourceSelect } from './dropdowns/ResourceSelect';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
 
 
@@ -67,7 +67,7 @@ export function DropdownPane(props: DropdownPaneProps) {
     track('back', navigation);
   }
 
-  function clickChannelLink(eventType: string, link: string) {
+  function clickLink(eventType: string, link: string) {
     track(eventType, {link});
   }
 
@@ -79,9 +79,9 @@ export function DropdownPane(props: DropdownPaneProps) {
     <div className='flex-[3] overflow-hidden relative'>
       {/* Carousel */}
       <div className='w-[300%] h-full transition-transform flex flex-row items-stretch' style={style}>
-        <ChannelSelect data={{ content, navigation, analytics, selectChannel, clickChannelLink, back }} />
-        <LanguageSelect data={{ content, navigation, analytics, selectLanguage, back }} />
-        <SelectResource data={{ content, navigation, analytics, selectResource, selectPartner, back }} />
+        <ChannelSelect data={{ content, navigation, analytics, selectChannel, clickLink, back }} />
+        <LanguageSelect data={{ content, navigation, analytics, selectLanguage, clickLink, back }} />
+        <ResourceSelect data={{ content, navigation, analytics, selectResource, clickLink, selectPartner, back }} />
       </div>
       {/* Small gradient to bg at the bottom indicating scrollability */}
       <div className='absolute w-full h-4 bg-gradient-to-t from-sfs-bg bottom-0 left-0'></div>

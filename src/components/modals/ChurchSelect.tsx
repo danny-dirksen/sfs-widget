@@ -79,7 +79,7 @@ function useChurchSearch(query: string) {
     .filter(({ church, key }) => (key.search(cleanQuery) !== -1))
     // Discard the key when done, leaving just a list of churches.
     .map(({ church, key }) => church);
-    if (res.length === 0) res.push({ pic: 'other', name: `Don't see your chuch?`, url: ''})
+    res.push({ pic: 'other', name: `Don't see your chuch?`, url: ''})
     return res;
   }, [cleanQuery, churches]);
 

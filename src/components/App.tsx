@@ -60,7 +60,7 @@ export const App: React.FC<AppProps> = (props) => {
 
   useEffect(() => {
     analytics.track('loadPage', {});
-  }, []);
+  }, [ analytics ]);
 
   return (
     <div id='app' className={renner.className + ' h-full relative bg-sfs-bg '}>

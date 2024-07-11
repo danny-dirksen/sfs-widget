@@ -1,21 +1,23 @@
 import { Content, Language, Navigation, Popup } from '@/utils/models';
 import { DropdownMenu } from './DropdownMenu';
 import { AnalyticsContext } from '@/hooks/useAnalytics';
-import { SelectResourceCard } from './SelectResourceCard';
+import { ResourceCard } from './ResourceCard';
+import { DonateDialog } from './DonateDialog';
 
-interface SelectResourceProps {
+interface ResourceSelectProps {
   data: {
     content: Content;
     navigation: Navigation;
     selectResource: (resourceId: string) => void;
     selectPartner: (pic: string | null) => void;
+    clickLink: (eventType: string, link: string) => void;
     back: () => void;
     analytics: AnalyticsContext;
   }
 };
 
-export function SelectResource(props: SelectResourceProps) {
-  const { content, navigation, selectResource, selectPartner, back } = props.data;
+export function ResourceSelect(props: ResourceSelectProps) {
+  const { content, navigation, selectResource, selectPartner, clickLink, back } = props.data;
   const { channel, language, pic } = navigation;
   // Find relevant links and their corresponding data, such as descriptions. above.
   const linkInfo = content.links.filter( // Only relevant links.
@@ -35,8 +37,12 @@ export function SelectResource(props: SelectResourceProps) {
   return (
     <DropdownMenu data={{ onScreen: !!(navigation.channel && navigation.language), back }}>
       { linkInfo.map(({ link, translation }, key) => (
-        <SelectResourceCard key={key} data={{ link, translation: translation!, navigation, selectResource, selectPartner }} />
+        <ResourceCard key={key} data={{
+          link, translation: translation!, navigation,
+          selectResource, selectPartner
+        }} />
       )) }
+      <DonateDialog data={{ clickLink }} />
     </DropdownMenu>
   );
 }
