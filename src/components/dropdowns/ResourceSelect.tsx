@@ -1,4 +1,4 @@
-import { Content, Language, Navigation, Popup } from "@/utils/models";
+import { Content, Navigation } from "@/utils/models";
 import { DropdownMenu } from "./DropdownMenu";
 import { AnalyticsContext } from "@/hooks/useAnalytics";
 import { ResourceCard } from "./ResourceCard";
@@ -25,28 +25,24 @@ export function ResourceSelect(props: ResourceSelectProps) {
     clickLink,
     back,
   } = props.data;
-  const { channel, language, pic } = navigation;
+  const { channel, language } = navigation;
   // Find relevant links and their corresponding data, such as descriptions. above.
   const linkInfo = content.links
+    // Only relevant links.
+    // If channelId === null, it displays for all channels.
     .filter(
-      // Only relevant links.
-      // If channelId === null, it displays for all channels.
       (l) =>
         (l.channelId === channel || !l.channelId) && l.languageId === language,
     )
-    .map(
-      // Find a description of the resource in the correct langauge.
-      (l) => ({
-        link: l,
-        translation: content.resourceTranslations.find(
-          (t) => t.languageId === l.languageId && t.resourceId === l.resourceId,
-        ),
-      }),
-    )
-    .filter(
-      // If for some reason, we can't find translation, don't display.
-      (info) => info.translation,
-    );
+    // Find a description of the resource in the correct langauge.
+    .map((l) => ({
+      link: l,
+      translation: content.resourceTranslations.find(
+        (t) => t.languageId === l.languageId && t.resourceId === l.resourceId,
+      ),
+    }))
+    // If for some reason, we can't find translation, don't display.
+    .filter((info) => info.translation);
 
   return (
     <DropdownMenu

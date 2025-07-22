@@ -2,7 +2,7 @@ import { Language } from "@/utils/models";
 import { DropdownOption } from "./DropdownOption";
 import { PopupInfoLanguage } from "@/components/modals/InfoModal";
 import { ShareModal } from "../modals/ShareModal";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Modal } from "../modals/Modal";
 
 interface LanguageCardProps {

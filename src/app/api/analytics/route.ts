@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { TrackingEvent } from "@/utils/models";
 
 import Mixpanel from "mixpanel";
 import { logger } from "@/utils/varUtils";
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
   ) {
     return new NextResponse("Bad request", { status: 400 });
   }
-  const event: TrackingEvent = { userId, eventName, properties };
+
   mixpanel.track(eventName, {
     ...properties,
     distinct_id: userId,

@@ -1,10 +1,10 @@
-import { Link, Navigation, Popup, ResourceTranslation } from "@/utils/models";
+import { Link, Navigation, ResourceTranslation } from "@/utils/models";
 import { DropdownOption } from "./DropdownOption";
 import { PopupInfoResource } from "@/components/modals/InfoModal";
 import { ShareModal } from "../modals/ShareModal";
 import { DownloadModal } from "../modals/DownloadModal";
 import { Modal } from "../modals/Modal";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 interface ResourceCardProps {
   data: {
@@ -30,10 +30,7 @@ export function ResourceCard(props: ResourceCardProps) {
     selectResource(resourceId);
     // Special case for download: open the download dialoge.
     if (channelId === "download") {
-      const newNav = {
-        ...navigation,
-        resource: resourceId,
-      };
+      selectResource(resourceId);
       setModal("download");
     }
   }

@@ -2,7 +2,6 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { ContentProfile, ContentProfileTable } from "./models";
 import { env } from "./env";
 import assert from "assert";
-import { logger } from "./varUtils";
 
 const cptSheetId = parseInt(env.GOOGLE_SHEETS_CPT_ID || "0");
 assert(cptSheetId, "Missing cptSheetId");

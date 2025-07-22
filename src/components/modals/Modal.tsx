@@ -1,12 +1,6 @@
 "use-client";
 
-import {
-  MouseEventHandler,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { MouseEventHandler, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ModalContainer } from "./ModalContainer";
 

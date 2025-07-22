@@ -1,6 +1,4 @@
 import x from "@/resources/ui/x.svg";
-import { Content, Navigation } from "@/utils/models";
-import { Popup } from "@/utils/models";
 import Image from "next/image";
 
 interface ModalContainerProps {

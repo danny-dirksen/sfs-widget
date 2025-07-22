@@ -4,14 +4,12 @@ import {
   Content,
   ContentProfile,
   ContentProfileTable,
-  Link,
   PartnerInfo,
 } from "./models";
 import { parseContentSheet, removeStubs } from "./parseContentSheet";
 import { parseCptSheet } from "./parseCptSheet";
 import { varReadJSON, logger, varWriteJSON } from "./varUtils";
 import { env } from "./env";
-import assert from "assert";
 
 // Used store sheet data.
 let cpt: ContentProfileTable | null = null;

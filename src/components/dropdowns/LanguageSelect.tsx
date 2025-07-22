@@ -16,8 +16,7 @@ interface LanguageSelectProps {
 }
 
 export function LanguageSelect(props: LanguageSelectProps) {
-  const { content, navigation, selectLanguage, clickLink, back, analytics } =
-    props.data;
+  const { content, navigation, selectLanguage, clickLink, back } = props.data;
   const { channel } = navigation;
   // Create cards for languages that correspond to the translations above.
   const languages = content.languages.filter((l) =>

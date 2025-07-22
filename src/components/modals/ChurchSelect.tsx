@@ -6,15 +6,16 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Button, Header, Input, Paragraph } from "../Styles";
+import { Input } from "../Styles";
 
 interface ChurchSelectProps {
+  // Value is ignored, because the component disappears when a church is selected.
   value: string | null;
   onChange: (value: string) => void;
 }
 
 export function ChurchSelect(props: ChurchSelectProps) {
-  const { value, onChange } = props;
+  const { onChange } = props;
   const [focused, setFocused] = useState(false);
   const [search, setSearch] = useState("");
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -96,9 +97,9 @@ function useChurchSearch(query: string) {
           .toLowerCase(),
       }))
       // Filter by keys which contain the clean query.
-      .filter(({ church, key }) => key.search(cleanQuery) !== -1)
+      .filter(({ key }) => key.search(cleanQuery) !== -1)
       // Discard the key when done, leaving just a list of churches.
-      .map(({ church, key }) => church);
+      .map(({ church }) => church);
     res.push({ pic: "other", name: `Don't see your chuch?`, url: "" });
     return res;
   }, [cleanQuery, churches]);

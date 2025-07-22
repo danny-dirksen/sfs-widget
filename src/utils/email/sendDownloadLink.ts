@@ -7,9 +7,7 @@ import mailchimp from "@mailchimp/mailchimp_marketing";
 // Initialize Mailgun
 import FormData from "form-data";
 import Mailgun, { MessagesSendResult } from "mailgun.js";
-const mailgunCreds = {
-  domain: env.MAILGUN_DOMAIN,
-};
+
 const mailgun = new Mailgun(FormData);
 const mg = mailgun.client({ username: "api", key: env.MAILGUN_KEY });
 logger.info("Mailgun initialized");

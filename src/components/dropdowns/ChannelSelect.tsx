@@ -36,7 +36,7 @@ export const banners: Record<string, StaticImport> = {
 };
 
 export function ChannelSelect(props: ChannelSelectProps) {
-  const { content, navigation, clickLink, selectChannel, back } = props.data;
+  const { content, navigation, clickLink, selectChannel } = props.data;
   const { channels } = content;
 
   const orderCdsLink = "https://store.songsforsaplings.com/collections/music";

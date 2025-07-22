@@ -1,12 +1,11 @@
 "use client";
 
-import React, { RefObject, Suspense, useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { BrandingLayer } from "./Branding";
 import { MainContent } from "./MainContent";
 import { AnalyticsNotice } from "./AnalyticsNotice";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { Content, PartnerInfo, Navigation, Popup } from "@/utils/models";
-import { usePopups } from "@/hooks/usePopups";
+import { Content, PartnerInfo } from "@/utils/models";
 import localFont from "next/font/local";
 
 const renner = localFont({

@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { Channel, PopupComponent } from "@/utils/models";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Header, Paragraph } from "@/components/Styles";
 import { ShareButton } from "./ShareButton";
@@ -28,7 +27,7 @@ const messageImg = (
 export function ShareModal() {
   const { track } = useAnalytics();
   const [copied, setCopied] = React.useState(false);
-  const { url, title, image, header, hashtag, cc } = getGenericText();
+  const { url, title, header, hashtag } = getGenericText();
 
   function onShare(name: string) {
     track("share", { platform: name });

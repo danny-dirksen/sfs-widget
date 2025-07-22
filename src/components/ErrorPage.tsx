@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import sfsLogoWhite from "@/resources/ui/logoBig.png";
-import { Button } from "./Styles";
 import Link from "next/link";
 
 interface ErrorPageProps {

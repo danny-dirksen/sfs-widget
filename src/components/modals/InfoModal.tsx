@@ -1,9 +1,4 @@
-import {
-  Language,
-  PopupComponent,
-  Resource,
-  ResourceTranslation,
-} from "@/utils/models";
+import { Language, PopupComponent, ResourceTranslation } from "@/utils/models";
 import React from "react";
 import { Header, Anchor, Paragraph } from "@/components/Styles";
 

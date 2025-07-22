@@ -1,7 +1,7 @@
 import { reloadSheet } from "@/utils/sheets";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
   const result = await throttle(
     async () => reloadSheet(),
     async () => new Error(`Daily upload cap of ${REQS_PER_DAY} exceeded`),

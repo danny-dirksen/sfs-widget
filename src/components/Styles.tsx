@@ -1,8 +1,6 @@
 import {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  HTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
 } from "react";
