@@ -1,17 +1,17 @@
 export interface Channel {
   channelId: string;
   name: string;
-};
+}
 
 export interface Language {
   languageId: string;
   autonym: string;
   info: string | null;
-};
+}
 
 export interface Resource {
   resourceId: string;
-};
+}
 
 export interface ResourceTranslation {
   resourceId: string;
@@ -19,7 +19,7 @@ export interface ResourceTranslation {
   line1: string | null;
   line2: string;
   info: string | null;
-};
+}
 
 export interface Link {
   resourceId: string;
@@ -36,24 +36,24 @@ export interface Content {
   resources: Resource[];
   resourceTranslations: ResourceTranslation[];
   links: Link[];
-};
+}
 
 export interface PartnerInfo {
   pic: string;
   name: string;
   url: string;
-};
+}
 
 export interface ContentProfile extends PartnerInfo {
   emailAddress: string;
   emailSubject: string;
   languages: string[];
-};
+}
 
 export interface ContentProfileTable {
   lastUpdated: number;
   partners: ContentProfile[];
-};
+}
 
 export interface ContactInfo {
   firstName: string;
@@ -62,12 +62,11 @@ export interface ContactInfo {
 }
 
 export interface DownloadRequestBody extends ContactInfo {
-  languageId: string,
-  resourceId: string,
+  languageId: string;
+  resourceId: string;
 }
 
-export interface PartnerJoinRequestBody extends ContactInfo {
-}
+export interface PartnerJoinRequestBody extends ContactInfo {}
 
 export interface TrackingEvent {
   userId: string;
@@ -88,4 +87,4 @@ export interface Popup<T> {
   name: string;
   Component: PopupComponent<T>;
   props: T;
-};
+}

@@ -22,7 +22,8 @@
   cursor: pointer;
 }
 
-.popout:hover:not(:disabled), .popout:focus-visible:not(:disabled) {
+.popout:hover:not(:disabled),
+.popout:focus-visible:not(:disabled) {
   transform: scale(1.02);
 }
 

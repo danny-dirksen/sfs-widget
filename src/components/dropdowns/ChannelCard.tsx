@@ -1,7 +1,7 @@
-import { Channel } from '@/utils/models';
-import { DropdownOption } from './DropdownOption';
-import Image from 'next/image';
-import { banners } from './ChannelSelect';
+import { Channel } from "@/utils/models";
+import { DropdownOption } from "./DropdownOption";
+import Image from "next/image";
+import { banners } from "./ChannelSelect";
 
 interface ChannelCardProps {
   data: {
@@ -9,14 +9,13 @@ interface ChannelCardProps {
     selectChannel: (channelId: string) => void;
   };
 }
-;
 export function ChannelCard(props: ChannelCardProps) {
   const { channel, selectChannel } = props.data;
   const { channelId, name } = channel;
 
   const src = banners[channelId];
   const inner = src ? (
-    <Image className='h-10 widget:h-6 w-fit' src={src} alt={name} />
+    <Image className="h-10 widget:h-6 w-fit" src={src} alt={name} />
   ) : (
     name
   );
@@ -24,7 +23,7 @@ export function ChannelCard(props: ChannelCardProps) {
 
   return (
     <DropdownOption key={channelId} data={{ onClick }}>
-      <div className='flex justify-center items-center p-4 widget:p-1'>
+      <div className="flex justify-center items-center p-4 widget:p-1">
         {inner}
       </div>
     </DropdownOption>

@@ -1,89 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Embedded Example</title>
-  <style>
-    :root {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      line-height: 1.75;
-    }
-    body {
-      margin: 0;
-    }
-    .banner {
-      padding: 180px 0 155px;
-      background-color: rgb(111, 64, 37);
-    }
-    h1 {
-      font-size: 4rem;
-      color: white;
-      text-align: center;
-      letter-spacing: 0.1em;
-      margin: 0;
-      line-height: 1.0;
-    }
-    h2 {
-      font-size: 2.5rem;
-      letter-spacing: 0.1em;
-      color: rgb(35, 57, 85);
-    }
-    h3 {
-      font-weight: bold;
-      margin-top: 0;
-    }
-    main {
-      max-width: 60rem;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: row;
-      align-items: start;
-      padding: 1em;
-      gap: 1em;
-    }
-    @media only screen and (max-width: 600px) {
-      main {
-        flex-direction: column;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embedded Example</title>
+    <style>
+      :root {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          "Open Sans",
+          "Helvetica Neue",
+          sans-serif;
+        line-height: 1.75;
       }
-    }
-    nav {
-      min-width: 10rem;
-    }
-    nav a {
-      color: rgb(85, 89, 92);
-      text-decoration: none;
-      display: block;
-      line-height: 2;
-      letter-spacing: 0.1em;;
-      font-size: smaller;
-      font-weight: bold;
-    }
-    article {
-    }
-  </style>
-</head>
-<body>
-  <div class="banner">
-    <h1>PARTNER EXAMPLE</h1>
-  </div>
-  <main>
-    <nav>
-      <h3>Resources</h3>
-      <a href="#">SERMONS</a>
-      <a href="#">CALENDAR</a>
-      <a href="#" style="color: black">SAPLINGS</a>
-    </nav>
-    <article>
-      <h2>SONGS FOR SAPLINGS</h2>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam libero? Nisi delectus accusantium doloremque, incidunt iure sequi itaque quas voluptatibus quisquam consectetur earum? Libero, eum. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam libero? Nisi delectus accusantium doloremque, incidunt iure sequi itaque quas voluptatibus quisquam consectetur earum? Libero, eum. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam libero? Nisi delectus accusantium doloremque, incidunt iure sequi itaque quas voluptatibus quisquam consectetur earum? Libero, eum.
-      </p>
-      <iframe src="/?p=hunterstreet" style="width: 100%; height: 600px; max-height: 70vh; border: none;"></iframe>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam libero? Nisi delectus accusantium doloremque, incidunt iure sequi itaque quas voluptatibus quisquam consectetur earum? Libero, eum. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam libero? Nisi delectus accusantium doloremque, incidunt iure sequi itaque quas voluptatibus quisquam consectetur earum? Libero, eum. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam libero? Nisi delectus accusantium doloremque, incidunt iure sequi itaque quas voluptatibus quisquam consectetur earum? Libero, eum.
-      </p>
-    </article>
-  </main>
-</body>
+      body {
+        margin: 0;
+      }
+      .banner {
+        padding: 180px 0 155px;
+        background-color: rgb(111, 64, 37);
+      }
+      h1 {
+        font-size: 4rem;
+        color: white;
+        text-align: center;
+        letter-spacing: 0.1em;
+        margin: 0;
+        line-height: 1;
+      }
+      h2 {
+        font-size: 2.5rem;
+        letter-spacing: 0.1em;
+        color: rgb(35, 57, 85);
+      }
+      h3 {
+        font-weight: bold;
+        margin-top: 0;
+      }
+      main {
+        max-width: 60rem;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        padding: 1em;
+        gap: 1em;
+      }
+      @media only screen and (max-width: 600px) {
+        main {
+          flex-direction: column;
+        }
+      }
+      nav {
+        min-width: 10rem;
+      }
+      nav a {
+        color: rgb(85, 89, 92);
+        text-decoration: none;
+        display: block;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-size: smaller;
+        font-weight: bold;
+      }
+      article {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <h1>PARTNER EXAMPLE</h1>
+    </div>
+    <main>
+      <nav>
+        <h3>Resources</h3>
+        <a href="#">SERMONS</a>
+        <a href="#">CALENDAR</a>
+        <a href="#" style="color: black">SAPLINGS</a>
+      </nav>
+      <article>
+        <h2>SONGS FOR SAPLINGS</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore,
+          quis voluptates vero vel veniam libero? Nisi delectus accusantium
+          doloremque, incidunt iure sequi itaque quas voluptatibus quisquam
+          consectetur earum? Libero, eum. Lorem, ipsum dolor sit amet
+          consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam
+          libero? Nisi delectus accusantium doloremque, incidunt iure sequi
+          itaque quas voluptatibus quisquam consectetur earum? Libero, eum.
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore,
+          quis voluptates vero vel veniam libero? Nisi delectus accusantium
+          doloremque, incidunt iure sequi itaque quas voluptatibus quisquam
+          consectetur earum? Libero, eum.
+        </p>
+        <iframe
+          src="/?p=hunterstreet"
+          style="width: 100%; height: 600px; max-height: 70vh; border: none"
+        ></iframe>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore,
+          quis voluptates vero vel veniam libero? Nisi delectus accusantium
+          doloremque, incidunt iure sequi itaque quas voluptatibus quisquam
+          consectetur earum? Libero, eum. Lorem, ipsum dolor sit amet
+          consectetur adipisicing elit. Tempore, quis voluptates vero vel veniam
+          libero? Nisi delectus accusantium doloremque, incidunt iure sequi
+          itaque quas voluptatibus quisquam consectetur earum? Libero, eum.
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore,
+          quis voluptates vero vel veniam libero? Nisi delectus accusantium
+          doloremque, incidunt iure sequi itaque quas voluptatibus quisquam
+          consectetur earum? Libero, eum.
+        </p>
+      </article>
+    </main>
+  </body>
 </html>

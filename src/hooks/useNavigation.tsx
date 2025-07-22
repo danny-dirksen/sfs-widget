@@ -1,8 +1,8 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { Content, Navigation } from '@/utils/models';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useEffect, useState } from "react";
+import { Content, Navigation } from "@/utils/models";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 /** Parse and validate query string params. */
 const useValidParams = function (content: Content): Navigation {
@@ -10,26 +10,27 @@ const useValidParams = function (content: Content): Navigation {
 
   const params = useSearchParams();
 
-  if (!params) return {
-    pic: null,
-    channel: null,
-    language: null,
-    resource: null
-  }
+  if (!params)
+    return {
+      pic: null,
+      channel: null,
+      language: null,
+      resource: null,
+    };
 
-  let pic = params.get('p')?.toLowerCase() || null;
-  let channel = params.get('c')?.toLowerCase() || null;
-  if (!channels.some(c => c.channelId === channel)) {
+  let pic = params.get("p")?.toLowerCase() || null;
+  let channel = params.get("c")?.toLowerCase() || null;
+  if (!channels.some((c) => c.channelId === channel)) {
     channel = null;
   }
 
-  let language = channel && params.get('l')?.toLowerCase() || null;
-  if (!languages.some(l => l.languageId === language)) {
+  let language = (channel && params.get("l")?.toLowerCase()) || null;
+  if (!languages.some((l) => l.languageId === language)) {
     language = null;
   }
 
-  let resource = language && params.get('r')?.toLowerCase() || null;
-  if (!resources.some(r => r.resourceId === resource)) {
+  let resource = (language && params.get("r")?.toLowerCase()) || null;
+  if (!resources.some((r) => r.resourceId === resource)) {
     resource = null;
   }
 
@@ -37,20 +38,19 @@ const useValidParams = function (content: Content): Navigation {
 };
 
 export function useNavigation(content: Content) {
-
   const params = useValidParams(content);
-  const [ navigation, _setNavigation ] = useState<Navigation>(params);
+  const [navigation, _setNavigation] = useState<Navigation>(params);
   const router = useRouter();
 
   function setNavigation(newNav: Navigation) {
     const { pic, channel, language, resource } = newNav;
     const newParams = new URLSearchParams();
-    if (pic) newParams.set('p', pic);
-    if (channel) newParams.set('c', channel);
-    if (language) newParams.set('l', language);
-    if (resource) newParams.set('r', resource);
+    if (pic) newParams.set("p", pic);
+    if (channel) newParams.set("c", channel);
+    if (language) newParams.set("l", language);
+    if (resource) newParams.set("r", resource);
     const paramStr = newParams.toString();
-    router.push(paramStr.length > 0 ? `/?${paramStr}` : '/');
+    router.push(paramStr.length > 0 ? `/?${paramStr}` : "/");
     _setNavigation(newNav);
   }
 
@@ -58,7 +58,7 @@ export function useNavigation(content: Content) {
   const { pic, channel, language, resource } = params;
   useEffect(() => {
     _setNavigation({ pic, channel, language, resource });
-  }, [ pic, channel, language, resource ]);
+  }, [pic, channel, language, resource]);
 
   return { navigation, setNavigation };
 }

@@ -1,11 +1,17 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { JWT } from 'google-auth-library';
-import { Content, ContentProfile, ContentProfileTable, Link, PartnerInfo } from './models';
-import { parseContentSheet, removeStubs } from './parseContentSheet';
-import { parseCptSheet } from './parseCptSheet';
-import { varReadJSON, logger, varWriteJSON } from './varUtils';
-import { env } from './env';
-import assert from 'assert';
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import { JWT } from "google-auth-library";
+import {
+  Content,
+  ContentProfile,
+  ContentProfileTable,
+  Link,
+  PartnerInfo,
+} from "./models";
+import { parseContentSheet, removeStubs } from "./parseContentSheet";
+import { parseCptSheet } from "./parseCptSheet";
+import { varReadJSON, logger, varWriteJSON } from "./varUtils";
+import { env } from "./env";
+import assert from "assert";
 
 // Used store sheet data.
 let cpt: ContentProfileTable | null = null;
@@ -16,8 +22,8 @@ const sheetId = env.GOOGLE_SHEETS_ID!;
 const creds = {
   email: env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
   key: env.GOOGLE_PRIVATE_KEY,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-}
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+};
 
 /**
  * Gets a freshly authenticated google spreadsheet context
@@ -45,39 +51,39 @@ async function loadContent() {
   const sheetsDoc = await getSheet();
 
   // Load content
-  let newContent = await varReadJSON('content.json') as Content | Error;
+  let newContent = (await varReadJSON("content.json")) as Content | Error;
   if (newContent instanceof Error) {
-    logger.error('Could not load content from json: ' + newContent.message);
-    logger.info('Trying sheet...');
-    if (!sheetsDoc) throw new Error('Could not connect to google.');
+    logger.error("Could not load content from json: " + newContent.message);
+    logger.info("Trying sheet...");
+    if (!sheetsDoc) throw new Error("Could not connect to google.");
     newContent = await parseContentSheet(sheetsDoc);
     if (newContent instanceof Error) {
-      logger.error('Could not parse content from sheet: ' + newContent.message);
+      logger.error("Could not parse content from sheet: " + newContent.message);
       return;
     }
     // This is async, but we don't need to wait for it to return.
-    varWriteJSON('content.json', newContent);
+    varWriteJSON("content.json", newContent);
   }
 
   // Load content profile table
-  let newCpt = await varReadJSON('cpt.json') as ContentProfileTable | Error;
+  let newCpt = (await varReadJSON("cpt.json")) as ContentProfileTable | Error;
   if (newCpt instanceof Error) {
-    logger.error('Could not load cpt from json: ' + newCpt.message)
-    logger.info('Trying sheet...');
-    if (!sheetsDoc) throw new Error('Could not connect to google.');
+    logger.error("Could not load cpt from json: " + newCpt.message);
+    logger.info("Trying sheet...");
+    if (!sheetsDoc) throw new Error("Could not connect to google.");
     newCpt = await parseCptSheet(sheetsDoc);
     if (newCpt instanceof Error) {
-      logger.error('Could not parse cpt from sheet: ' + newCpt.message)
+      logger.error("Could not parse cpt from sheet: " + newCpt.message);
       return;
     }
     // This is async, but we don't need to wait for it to return.
-    varWriteJSON('cpt.json', newCpt);
+    varWriteJSON("cpt.json", newCpt);
   }
 
   // If both parse successfully, update static variables.
   content = newContent;
   cpt = newCpt;
-  logger.info('Sheets data is loaded.');
+  logger.info("Sheets data is loaded.");
 }
 
 /**
@@ -87,7 +93,7 @@ async function loadContent() {
 export async function reloadSheet(): Promise<Error | null> {
   // Load sheet from google docs.
   const sheetsDoc = await getSheet();
-  if (!sheetsDoc) throw new Error('Could not connect to google.');
+  if (!sheetsDoc) throw new Error("Could not connect to google.");
   // Attempt to parse both sheets.
   const newContent = await parseContentSheet(sheetsDoc);
   const newCpt = await parseCptSheet(sheetsDoc);
@@ -97,8 +103,8 @@ export async function reloadSheet(): Promise<Error | null> {
   // If both parse successfully, update static variables and saved json models.
   content = newContent;
   cpt = newCpt;
-  varWriteJSON('content.json', newContent);
-  varWriteJSON('cpt.json', newCpt);
+  varWriteJSON("content.json", newContent);
+  varWriteJSON("cpt.json", newCpt);
   return null;
 }
 
@@ -106,18 +112,21 @@ export async function getContentProfileTable(): Promise<ContentProfileTable | nu
   if (!cpt) await loadContent();
   if (!cpt) return null;
   return cpt;
-};
+}
 
-
-export async function getContentProfile(pic: string | null): Promise<ContentProfile | null> {
+export async function getContentProfile(
+  pic: string | null,
+): Promise<ContentProfile | null> {
   if (!cpt) await loadContent();
   if (!cpt) return null;
   if (!pic) return null;
-  const partner = cpt.partners.find(p => p.pic == pic) || null;
+  const partner = cpt.partners.find((p) => p.pic == pic) || null;
   return partner;
 }
 
-export async function getPartnerInfo(pic: string | null): Promise<PartnerInfo | null> {
+export async function getPartnerInfo(
+  pic: string | null,
+): Promise<PartnerInfo | null> {
   if (!pic) return null;
   const partner = await getContentProfile(pic);
   if (!partner) return null;
@@ -131,7 +140,9 @@ export async function getPartnerList(): Promise<PartnerInfo[] | null> {
   return cpt.partners.map(({ pic, name, url }) => ({ pic, name, url }));
 }
 
-export async function getContent(pic: string | null = null): Promise<Content | null> {
+export async function getContent(
+  pic: string | null = null,
+): Promise<Content | null> {
   // Make sure content is loaded.
   if (!content) await loadContent();
   if (!content) return null;
@@ -139,12 +150,13 @@ export async function getContent(pic: string | null = null): Promise<Content | n
   // Find partner, send the whole thing if partner not found.
   const partner = await getContentProfile(pic);
   if (!partner) return content;
-  
-  
+
   // If partner found, send only the links in the partner's enabled languages.
   const enabledLanguageIds = partner.languages;
-  const enabledLinks = content.links.filter(link => enabledLanguageIds.includes(link.languageId));
+  const enabledLinks = content.links.filter((link) =>
+    enabledLanguageIds.includes(link.languageId),
+  );
   return removeStubs(content, enabledLinks);
-};
+}
 
 loadContent();

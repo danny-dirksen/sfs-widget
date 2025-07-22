@@ -1,17 +1,17 @@
-import React, { ReactNode } from 'react';
-import { useNavigation } from '@/hooks/useNavigation';
-import { Content, Navigation } from '@/utils/models';
-import { InstructionsPane } from './InstructionsPane';
-import { DropdownPane } from './DropdownPane';
-import { Popup } from '@/utils/models';
-import { AnalyticsContext } from '@/hooks/useAnalytics';
+import React, { ReactNode } from "react";
+import { useNavigation } from "@/hooks/useNavigation";
+import { Content, Navigation } from "@/utils/models";
+import { InstructionsPane } from "./InstructionsPane";
+import { DropdownPane } from "./DropdownPane";
+import { Popup } from "@/utils/models";
+import { AnalyticsContext } from "@/hooks/useAnalytics";
 
 interface MainContentProps {
   data: {
     content: Content;
-    analytics: AnalyticsContext
-  }
-};
+    analytics: AnalyticsContext;
+  };
+}
 
 export function MainContent(props: MainContentProps): JSX.Element {
   const { content, analytics } = props.data;
@@ -22,13 +22,14 @@ export function MainContent(props: MainContentProps): JSX.Element {
   //   this.rightPaneRef.current.scrollTo({top: 0, behavior: 'smooth'})
   // }
 
-
   const pageNum = !channel ? 1 : !language ? 2 : 3;
 
   return (
-    <main className='h-full flex flex-col hz:flex-row items-stretch'>
+    <main className="h-full flex flex-col hz:flex-row items-stretch">
       <InstructionsPane data={{ content, navigation }} />
-      <DropdownPane data={{ content, navigation, analytics, setNavigation, pageNum }} />
+      <DropdownPane
+        data={{ content, navigation, analytics, setNavigation, pageNum }}
+      />
     </main>
   );
 }

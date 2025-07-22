@@ -1,9 +1,9 @@
-import { Language } from '@/utils/models';
-import { DropdownOption } from './DropdownOption';
-import { PopupInfoLanguage } from '@/components/modals/InfoModal';
-import { ShareModal } from '../modals/ShareModal';
-import { ReactNode, useState } from 'react';
-import { Modal } from '../modals/Modal';
+import { Language } from "@/utils/models";
+import { DropdownOption } from "./DropdownOption";
+import { PopupInfoLanguage } from "@/components/modals/InfoModal";
+import { ShareModal } from "../modals/ShareModal";
+import { ReactNode, useState } from "react";
+import { Modal } from "../modals/Modal";
 
 interface LanguageCardProps {
   data: {
@@ -16,31 +16,34 @@ interface LanguageCardProps {
 export function LanguageCard(props: LanguageCardProps) {
   const { language, selectLanguage } = props.data;
   const { languageId, autonym } = language;
-  const [ modal, setModal ] = useState<null | 'info' | 'share'>(null);
+  const [modal, setModal] = useState<null | "info" | "share">(null);
 
   function onClick() {
     selectLanguage(languageId);
   }
 
   function onClickInfo() {
-    setModal('info');
+    setModal("info");
   }
 
   function onClickShare() {
-    setModal('share');
+    setModal("share");
   }
 
   return (
-    <DropdownOption key={languageId} data={{ onClick, onClickInfo, onClickShare }}>
-      <div className='h-full flex flex-col justify-center text-center text-xl widget:text-sm font-bold'>
+    <DropdownOption
+      key={languageId}
+      data={{ onClick, onClickInfo, onClickShare }}
+    >
+      <div className="h-full flex flex-col justify-center text-center text-xl widget:text-sm font-bold">
         {autonym}
       </div>
-      <Modal data={{ onClose: () => setModal(null)}}>
-        { modal === 'info' ? (
+      <Modal data={{ onClose: () => setModal(null) }}>
+        {modal === "info" ? (
           <PopupInfoLanguage data={{ language }} />
-        ) : modal === 'share' ? (
+        ) : modal === "share" ? (
           <ShareModal />
-        ) : null }
+        ) : null}
       </Modal>
     </DropdownOption>
   );
