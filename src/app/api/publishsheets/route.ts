@@ -1,4 +1,4 @@
-import { reloadSheet } from "@/utils/sheets";
+import { reloadSheet } from "@/utils/googleSheets/sheets";
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse> {

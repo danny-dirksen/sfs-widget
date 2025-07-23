@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TrackingEvent } from "../utils/models";
+import { TrackingEvent } from "../models/models";
 
 /** Generate a random base36 id */
 const randomID = () =>

@@ -1,4 +1,4 @@
-import { Channel } from "@/utils/models";
+import { Channel } from "@/models/models";
 import { DropdownOption } from "./DropdownOption";
 import Image from "next/image";
 import { banners } from "./ChannelSelect";

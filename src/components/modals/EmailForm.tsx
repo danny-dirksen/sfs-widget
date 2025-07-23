@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { Input, Button } from "../Styles";
-import { ContactInfo } from "@/utils/models";
+import { ContactInfo } from "@/models/models";
 
 interface EmailFormProps {
   data: {

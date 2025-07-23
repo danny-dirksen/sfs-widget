@@ -1,4 +1,4 @@
-import { Content, Navigation } from "@/utils/models";
+import { Content, Navigation } from "@/models/models";
 import { DropdownMenu } from "./DropdownMenu";
 import { AnalyticsContext } from "@/hooks/useAnalytics";
 import { LanguageCard } from "./LanguageCard";

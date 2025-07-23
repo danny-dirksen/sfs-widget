@@ -1,4 +1,4 @@
-import { getPartnerList } from "@/utils/sheets";
+import { getPartnerList } from "@/utils/googleSheets/sheets";
 import { NextResponse } from "next/server";
 
 /** Lists partners and their display names. */

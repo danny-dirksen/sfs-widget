@@ -1,4 +1,4 @@
-import { PartnerInfo } from "@/utils/models";
+import { PartnerInfo } from "@/models/models";
 import {
   ChangeEventHandler,
   MouseEventHandler,

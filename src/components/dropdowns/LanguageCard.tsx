@@ -1,4 +1,4 @@
-import { Language } from "@/utils/models";
+import { Language } from "@/models/models";
 import { DropdownOption } from "./DropdownOption";
 import { PopupInfoLanguage } from "@/components/modals/InfoModal";
 import { ShareModal } from "../modals/ShareModal";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { PartnerInfo } from "@/utils/models";
+import { PartnerInfo } from "@/models/models";
 import Image from "next/image";
 
 interface BrandingLayerProps {

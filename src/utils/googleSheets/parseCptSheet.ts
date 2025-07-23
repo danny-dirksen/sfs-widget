@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ContentProfile, ContentProfileTable } from "./models";
-import { env } from "./env";
+import { ContentProfile, ContentProfileTable } from "@/models/models";
+import { env } from "../env";
 import assert from "assert";
 
 const cptSheetId = parseInt(env.GOOGLE_SHEETS_CPT_ID || "0");

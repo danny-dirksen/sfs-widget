@@ -6,8 +6,8 @@ import {
   Link,
   Resource,
   ResourceTranslation,
-} from "./models";
-import { env } from "./env";
+} from "@/models/models";
+import { env } from "../env";
 import assert from "assert";
 
 const contentSheetId = parseInt(env.GOOGLE_SHEETS_CONTENT_ID || "0");

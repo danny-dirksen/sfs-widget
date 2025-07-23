@@ -5,11 +5,11 @@ import {
   ContentProfile,
   ContentProfileTable,
   PartnerInfo,
-} from "./models";
-import { parseContentSheet, removeStubs } from "./parseContentSheet";
+} from "../../models/models";
+import { parseContentSheet, removeStubs } from "./parseContent";
 import { parseCptSheet } from "./parseCptSheet";
-import { varReadJSON, logger, varWriteJSON } from "./varUtils";
-import { env } from "./env";
+import { varReadJSON, logger, varWriteJSON } from "../varUtils";
+import { env } from "../env";
 
 // Used store sheet data.
 let cpt: ContentProfileTable | null = null;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getContent } from "@/utils/sheets";
-import { DownloadRequestBody } from "@/utils/models";
+import { getContent } from "@/utils/googleSheets/sheets";
+import { DownloadRequestBody } from "@/models/models";
 import { logger } from "@/utils/varUtils";
 import { sendDownloadLink } from "@/utils/email/sendDownloadLink";
 

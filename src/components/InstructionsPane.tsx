@@ -1,4 +1,4 @@
-import { Content, Navigation } from "@/utils/models";
+import { Content, Navigation } from "@/models/models";
 import { Arrow } from "./Arrow";
 
 interface InstructionsPaneProps {

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Content, Navigation } from "@/utils/models";
+import { Content, Navigation } from "@/models/models";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 

@@ -1,4 +1,4 @@
-import { getContent, getPartnerInfo } from "@/utils/sheets";
+import { getContent, getPartnerInfo } from "@/utils/googleSheets/sheets";
 import { App } from "@/components/App";
 
 interface Props {

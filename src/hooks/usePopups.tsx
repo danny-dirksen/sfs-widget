@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Popup } from "@/utils/models";
+import { Popup } from "@/models/models";
 
 export function usePopups() {
   const [popups, setPopups] = useState<Popup<any>[]>([]);

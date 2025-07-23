@@ -1,4 +1,4 @@
-import { getContent } from "@/utils/sheets";
+import { getContent } from "@/utils/googleSheets/sheets";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
