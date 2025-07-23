@@ -145,6 +145,34 @@ export async function parseContentSheet(
     }
   }
 
+  // Check links to ensure that there are no conflicts (e.g. a resource translation has an "All Channels" link and a specific channel link).
+  type Conflict = {
+    resourceId: string;
+    languageId: string;
+    links: Link[];
+  }
+  const allChannelLinks = links.filter((l) => l.channelId === null);
+  const specificChannelLinks = links.filter((l) => l.channelId !== null);
+  const conflicts: Conflict[] = allChannelLinks.flatMap(allChannelLink => ({
+    resourceId: allChannelLink.resourceId,
+    languageId: allChannelLink.languageId,
+    links: specificChannelLinks.filter(specificChannelLink =>
+      specificChannelLink.resourceId === allChannelLink.resourceId &&
+      specificChannelLink.languageId === allChannelLink.languageId
+    )
+  })).filter(conflict => conflict.links.length > 0);
+
+  if (conflicts.length > 0) {
+    return new Error(
+      `Found conflicts between "All Channels" links and specific channel links. ` +
+      `If a resource translation has an "All Channels" link, it cannot have any specific channel links.\n` +
+      `Conflicts:\n` +
+      conflicts
+        .map(conflict => `- At resource "${conflict.resourceId}" in language "${conflict.languageId}"`)
+        .join("\n\n")
+    );
+  }
+
   const content: Content = {
     lastUpdated,
     languages,
@@ -154,7 +182,7 @@ export async function parseContentSheet(
     links,
   };
 
-  // Remove anything that isn't covered in links.
+  // Remove any content with no links associated with it.
   return removeStubs(content, links);
 }
 
