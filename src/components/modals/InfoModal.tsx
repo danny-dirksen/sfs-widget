@@ -1,6 +1,7 @@
-import { Language, PopupComponent, ResourceTranslation } from "@/models/models";
+import { Language, ResourceTranslation } from "@/models/content";
 import React from "react";
 import { Header, Anchor, Paragraph } from "@/components/Styles";
+import { PopupComponent } from "@/hooks/usePopups";
 
 export interface PopupInfoLanguageProps {
   data: {

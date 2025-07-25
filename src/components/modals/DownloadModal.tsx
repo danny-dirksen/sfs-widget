@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Navigation } from "@/models/models";
+import { Navigation } from "@/hooks/useNavigation";
 import { Paragraph, Button, Header, ButtonAnchor } from "@/components/Styles";
 import { DownloadForm } from "./DownloadForm";
 import { ChurchSelect } from "./ChurchSelect";

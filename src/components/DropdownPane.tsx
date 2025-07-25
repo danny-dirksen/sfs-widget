@@ -1,5 +1,6 @@
 import React from "react";
-import { Content, Navigation } from "@/models/models";
+import { Navigation } from "@/hooks/useNavigation";
+import { Content } from "@/models/content";
 import { ChannelSelect } from "./dropdowns/ChannelSelect";
 import { LanguageSelect } from "./dropdowns/LanguageSelect";
 import { ResourceSelect } from "./dropdowns/ResourceSelect";

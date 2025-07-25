@@ -1,4 +1,3 @@
-import { PartnerInfo } from "@/models/models";
 import {
   ChangeEventHandler,
   MouseEventHandler,
@@ -7,6 +6,7 @@ import {
   useState,
 } from "react";
 import { Input } from "../Styles";
+import { PartnerInfo } from "@/models/partners";
 
 interface ChurchSelectProps {
   // Value is ignored, because the component disappears when a church is selected.

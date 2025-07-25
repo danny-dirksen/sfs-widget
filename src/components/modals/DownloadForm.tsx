@@ -1,6 +1,6 @@
 import mailIcon from "@/resources/ui/mail.svg";
 import { Header, Paragraph } from "@/components/Styles";
-import { DownloadRequestBody, ContactInfo } from "@/models/models";
+import { DownloadRequestBody, ContactInfo } from "@/models/api";
 import Image from "next/image";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { EmailForm } from "./EmailForm";

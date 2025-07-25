@@ -1,4 +1,5 @@
-import { Content, Navigation } from "@/models/models";
+import { Navigation } from "@/hooks/useNavigation";
+import { Content } from "@/models/content";
 import { DropdownMenu } from "./DropdownMenu";
 import { DropdownOption } from "./DropdownOption";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";

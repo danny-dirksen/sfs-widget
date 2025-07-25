@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Content, Navigation } from "@/models/models";
+import { Content } from "@/models/content";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -61,4 +61,10 @@ export function useNavigation(content: Content) {
   }, [pic, channel, language, resource]);
 
   return { navigation, setNavigation };
+}
+export interface Navigation {
+  pic: string | null;
+  channel: string | null;
+  language: string | null;
+  resource: string | null;
 }

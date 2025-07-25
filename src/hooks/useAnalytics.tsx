@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TrackingEvent } from "../models/models";
+import { AnalyticsEvent } from "@/models/api";
+import type { PropertyDict } from "mixpanel";
 
 /** Generate a random base36 id */
 const randomID = () =>
@@ -53,10 +54,10 @@ export function useAnalytics(): AnalyticsContext {
    * @param eventName same as for mixpanel.track()
    * @param properties same as for mixpanel.track()
    */
-  function track(eventName: string, properties: Object) {
+  function track(eventName: string, properties: PropertyDict) {
     const { id, choice } = state;
     if (!id || !choice || choice !== "optin") return;
-    const event: TrackingEvent = { userId: id, eventName, properties };
+    const event: AnalyticsEvent = { userId: id, eventName, properties };
     fetch("/api/analytics", {
       method: "post",
       headers: { "Content-Type": "application/json" },

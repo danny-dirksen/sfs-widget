@@ -5,8 +5,9 @@ import { BrandingLayer } from "./Branding";
 import { MainContent } from "./MainContent";
 import { AnalyticsNotice } from "./AnalyticsNotice";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { Content, PartnerInfo } from "@/models/models";
+import { Content } from "@/models/content";
 import localFont from "next/font/local";
+import { PartnerInfo } from "@/models/partners";
 
 const renner = localFont({
   src: [

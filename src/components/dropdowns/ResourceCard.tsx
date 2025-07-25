@@ -1,4 +1,5 @@
-import { Link, Navigation, ResourceTranslation } from "@/models/models";
+import { Navigation } from "@/hooks/useNavigation";
+import { Link, ResourceTranslation } from "@/models/content";
 import { DropdownOption } from "./DropdownOption";
 import { PopupInfoResource } from "@/components/modals/InfoModal";
 import { ShareModal } from "../modals/ShareModal";

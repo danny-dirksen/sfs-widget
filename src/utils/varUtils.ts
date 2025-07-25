@@ -1,10 +1,11 @@
 import path from "path";
-import fs from "fs";
+import fs from "fs/promises";
 import winston from "winston";
+import { ZodType } from "zod/v4";
 
-const varDir = path.join(process.cwd(), "var");
+export const varDir = path.join(process.cwd(), "var");
 
-// Logging
+// Logs to several files in the var directory
 export const logger = winston.createLogger({
   format: winston.format.json(),
   defaultMeta: { service: "user-service" },
@@ -36,45 +37,44 @@ if (process.env.NODE_ENV !== "production") {
  * @param filename e.g. `data.json`
  * @returns the data if successful, Error otherwise.
  */
-export async function varReadJSON(filename: string): Promise<object | Error> {
+export async function varReadJSON<T>(filename: string, schema: ZodType<T>): Promise<T | Error> {
   const filePath = path.join(varDir, filename);
-  if (!fs.existsSync(filePath))
-    return new Error("File does not exist (" + filePath + ")");
-  return new Promise<any>((resolve: (value: object | null) => void) => {
-    fs.readFile(path.join(filePath), "utf-8", (err, data) => {
-      if (err) {
-        logger.error("An error occured while reading " + filePath);
-        resolve(new Error("Could not read " + filePath + "\n\n" + err));
-      } else {
-        logger.info(filename + " has been read.");
-        resolve(JSON.parse(data));
-      }
-    });
-  });
+  try {
+    const data = await fs.readFile(filePath, "utf-8");
+    const parsed = JSON.parse(data);
+    const validation = schema.safeParse(parsed);
+    if (!validation.success) {
+      const message = `Invalid JSON schema for ${filePath}:\n${validation.error.message}`;
+      logger.error(message);
+      return new Error(message);
+    }
+    return validation.data;
+  } catch (err) {
+    logger.error("An error occured while reading " + filePath);
+    return new Error("Could not read " + filePath + "\n\n" + err);
+  }
 }
 
 /**
  * Saves a json file to [projectroot]/var/[filename]
  * @param filename e.g. `data.json`
  * @param data json data to save.
- * @returns `true` if successful
+ * @returns `null` if successful, Error otherwise.
  */
-export async function varWriteJSON(
+export async function varWriteJSON<T>(
   filename: string,
-  data: object,
-): Promise<boolean> {
+  data: T,
+): Promise<null | Error> {
   const filePath = path.join(varDir, filename);
   // write content profiles object to a json file
-  return new Promise<any>((resolve: (value: any) => void) => {
-    fs.writeFile(filePath, JSON.stringify(data), "utf8", function (err) {
-      if (err) {
-        logger.error("An error occured while saving to " + filePath);
-        logger.error(err);
-        resolve(false);
-      } else {
-        logger.info(filename + " has been saved to a JSON file.");
-        resolve(true);
-      }
-    });
-  });
+  try {
+    await fs.mkdir(varDir, { recursive: true });
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+    logger.info(filename + " has been saved to a JSON file.");
+    return null;
+  } catch (err) {
+    logger.error(`An error occured while saving to ${filePath}:\n`);
+    logger.error(err);
+    return err instanceof Error ? err : new Error("Could not write to " + filePath + "\n\n" + String(err));
+  }
 }

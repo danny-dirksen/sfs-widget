@@ -13,6 +13,7 @@
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@types/mixpanel-browser": "^2.49.0",
+    "dotenv": "^17.2.0",
     "google-auth-library": "^9.10.0",
     "google-spreadsheet": "^4.1.2",
     "html-to-text": "^9.0.5",

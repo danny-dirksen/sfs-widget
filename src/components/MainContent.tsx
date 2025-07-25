@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigation } from "@/hooks/useNavigation";
-import { Content } from "@/models/models";
+import { Content } from "@/models/content";
 import { InstructionsPane } from "./InstructionsPane";
 import { DropdownPane } from "./DropdownPane";
 import { AnalyticsContext } from "@/hooks/useAnalytics";
