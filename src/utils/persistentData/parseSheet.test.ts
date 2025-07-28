@@ -18,6 +18,5 @@ describe("parseSheet", () => {
     // Ensure that general links are included
     const generalLinks = result.content.links.filter(l => !l.channelId);
     expect(generalLinks.length).toBeGreaterThan(0);
-    console.log("Parsing completed successfully.");
   });
 });

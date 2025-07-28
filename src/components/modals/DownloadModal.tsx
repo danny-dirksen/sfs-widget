@@ -49,7 +49,6 @@ export function DownloadModal(props: ModalDownloadProps) {
   }
 
   function onSelectPartner(pic: string | null) {
-    console.log("onSelectPartner", { pic });
     if (pic === "other") {
       setMember("no");
       selectPartner(null);

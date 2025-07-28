@@ -48,7 +48,6 @@ export function ChurchSelect(props: ChurchSelectProps) {
           <div className="border-2 border-t-0 border-sfs-accent max-h-40 overflow-y-auto">
             {results.map(({ pic, name, url }) => {
               const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-                console.log("onClick", { pic, name, url });
                 setSearch(name);
                 onChange(pic);
                 setFocused(false);
