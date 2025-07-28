@@ -20,7 +20,7 @@ const sheetCache: CacheLevel<PersistentData> = {
 
 const fileCache: CacheLevel<PersistentData> = {
   read: async () => {
-    return await varReadJSON("persistentData.json", PersistentDataSchema);
+    return await varReadJSON("persistentData.json", PersistentDataSchema) ?? new Error("File not found.");
   },
   write: async (data: PersistentData) => {
     return await varWriteJSON("persistentData.json", data);

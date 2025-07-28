@@ -35,9 +35,9 @@ if (process.env.NODE_ENV !== "production") {
 /**
  * Saves a json file to [projectroot]/var/[filename]
  * @param filename e.g. `data.json`
- * @returns the data if successful, Error otherwise.
+ * @returns the data if successful, null if not found, Error otherwise.
  */
-export async function varReadJSON<T>(filename: string, schema: ZodType<T>): Promise<T | Error> {
+export async function varReadJSON<T>(filename: string, schema: ZodType<T>): Promise<T | null | Error> {
   const filePath = path.join(varDir, filename);
   try {
     const data = await fs.readFile(filePath, "utf-8");
@@ -50,6 +50,11 @@ export async function varReadJSON<T>(filename: string, schema: ZodType<T>): Prom
     }
     return validation.data;
   } catch (err) {
+    // If the file does not exist, don't throw an error, just return null.
+    if (err && typeof err === 'object' && "code" in err && err.code === "ENOENT") {
+      return null;
+    }
+
     logger.error("An error occured while reading " + filePath);
     return new Error("Could not read " + filePath + "\n\n" + err);
   }

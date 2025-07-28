@@ -36,4 +36,10 @@ describe("varUtils", () => {
 
     await fs.unlink(filePath);
   });
+
+  it("should return null for non-existant files", async () => {
+    const filename = "dne-1204u29u02592.json";
+    const readResult = await varReadJSON(filename, testSchema);
+    expect(readResult).toBeNull();
+  });
 });

@@ -10,6 +10,7 @@ import { Content, Link} from "@/models/content";
  */
 export function removeUnlinkedContent(content: Content, enabledLinks: Link[] = content.links): Content {
   const { languages, resources, resourceTranslations, channels } = content;
+
   return {
     ...content,
     links: enabledLinks,
