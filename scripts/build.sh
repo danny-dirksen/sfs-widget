@@ -17,7 +17,7 @@ git --work-tree=$APP_DIR --git-dir=$GIT_DIR checkout -f $BRANCH
 rm -r .next
 
 cd $APP_DIR
-npm ci
+npm i --no-save
 
 # Run tests/build
 npm run test
