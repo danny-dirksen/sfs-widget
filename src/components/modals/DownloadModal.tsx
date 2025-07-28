@@ -48,10 +48,11 @@ export function DownloadModal(props: ModalDownloadProps) {
     track("selectChurchMembership", { member });
   }
 
-  function onSelectPartner(pic: string) {
+  function onSelectPartner(pic: string | null) {
+    console.log("onSelectPartner", { pic });
     if (pic === "other") {
       setMember("no");
-      if (pic !== null) selectPartner(null);
+      selectPartner(null);
     } else {
       selectPartner(pic);
     }

@@ -6,7 +6,8 @@ import {
   useState,
 } from "react";
 import { Input } from "../Styles";
-import { PartnerInfo } from "@/models/partners";
+import { PartnerInfo, PartnerInfoSchema } from "@/models/partners";
+import { z } from "zod/v4";
 
 interface ChurchSelectProps {
   // Value is ignored, because the component disappears when a church is selected.
@@ -26,20 +27,28 @@ export function ChurchSelect(props: ChurchSelectProps) {
 
   return (
     <>
-      <div>
+      <label htmlFor="church-select" className="block">
         <Input
           id="church-select"
           type="text"
           placeholder="Enter church name"
           value={search}
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 100)}
+          onBlur={(e) => {
+            // If it was an option click, don't hide the options.
+            // Doing so would sometimes prevent the option's click from registering!
+            if (e.relatedTarget !== null && e.relatedTarget.getAttribute("data-church-option") === "true") {
+              return;
+            }
+            setFocused(false)
+          }}
           onChange={handleChange}
-        ></Input>
+        />
         {focused && results && results.length > 0 ? (
           <div className="border-2 border-t-0 border-sfs-accent max-h-40 overflow-y-auto">
             {results.map(({ pic, name, url }) => {
               const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+                console.log("onClick", { pic, name, url });
                 setSearch(name);
                 onChange(pic);
                 setFocused(false);
@@ -51,6 +60,7 @@ export function ChurchSelect(props: ChurchSelectProps) {
                 dispUrl = dispUrl.substring(0, 37) + "...";
               return (
                 <button
+                  data-church-option
                   key={pic}
                   className="px-2 py-1 block w-full text-left hover:bg-sfs-accent text-black hover:text-white"
                   onClick={onClick}
@@ -64,23 +74,22 @@ export function ChurchSelect(props: ChurchSelectProps) {
             })}
           </div>
         ) : null}
-      </div>
+      </label>
     </>
   );
 }
 
 function useChurchSearch(query: string) {
   // Get all churches.
-  const [churches, setChurches] = useState<PartnerInfo[] | null>([]);
+  const [allChurches, setAllChurches] = useState<PartnerInfo[] | null>([]);
   useEffect(() => {
     async function getChurches() {
-      const resp = await fetch("/api/partners");
-      if (!resp.ok) {
-        setChurches(null);
+      const resp = await fetchChurches();
+      if (resp instanceof Error) {
+        console.error("Failed to fetch churches:", resp);
         return;
       }
-      const data = await resp.json();
-      setChurches(validateChurches(data));
+      setAllChurches(resp);
     }
     getChurches();
   }, []);
@@ -89,7 +98,7 @@ function useChurchSearch(query: string) {
 
   const results = useMemo<PartnerInfo[]>(() => {
     // Concatinate name and pic, replacing all non-alphanumeric characters.
-    const res = (churches || [])
+    const res = (allChurches || [])
       .map((church) => ({
         church,
         key: (church.name + church.pic + church.url)
@@ -102,20 +111,16 @@ function useChurchSearch(query: string) {
       .map(({ church }) => church);
     res.push({ pic: "other", name: `Don't see your chuch?`, url: "" });
     return res;
-  }, [cleanQuery, churches]);
+  }, [cleanQuery, allChurches]);
 
   return results;
 }
 
-function validateChurches(arr: any): PartnerInfo[] | null {
-  if (!Array.isArray(arr)) return null;
-  const churches: PartnerInfo[] = [];
-  for (let el of arr) {
-    if (typeof el !== "object") return null;
-    const { pic, name, url } = el;
-    if (typeof pic !== "string") return null;
-    if (name !== undefined && typeof name !== "string") return null;
-    churches.push({ pic, name, url });
-  }
-  return churches;
+async function fetchChurches(): Promise<PartnerInfo[] | Error> {
+  const resp = await fetch("/api/partners");
+  if (!resp.ok) return new Error("Network error while fetching churches");
+  const data = await resp.json();
+  const parsed = z.array(PartnerInfoSchema).safeParse(data);
+  if (!parsed.success) return new Error("Invalid church data");
+  return parsed.data;
 }
