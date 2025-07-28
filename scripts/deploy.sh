@@ -1,1 +1,1 @@
-ssh daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && .git/hooks/post-receive"
+ssh daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && ./scripts/build.sh"
