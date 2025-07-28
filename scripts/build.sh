@@ -17,11 +17,20 @@ git --work-tree=$APP_DIR --git-dir=$GIT_DIR checkout -f $BRANCH
 rm -r .next
 
 cd $APP_DIR
-npm i --no-save
+npm i --no-save || {
+  echo "Failed to install dependencies. Exiting."
+  exit 1
+}
 
 # Run tests/build
-npm run test
-npm run build
+npm run test || {
+  echo "Tests failed. Exiting."
+  exit 1
+}
+npm run build || {
+  echo "Build failed. Exiting."
+  exit 1
+}
 
 # Restart the application
 pm2 restart app
