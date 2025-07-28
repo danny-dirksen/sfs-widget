@@ -42,11 +42,11 @@ export function useAnalytics(): AnalyticsContext {
   useEffect(() => {
     // Load storage, resetting any invalid values.
     const id = localStorage.getItem("sfs_id") || randomID();
-    let choice = localStorage.getItem("sfs_choice") || "none";
-    if (choice !== "none" && choice !== "optin" && choice !== "optout") {
-      choice = "none";
-    }
-    setState({ id, choice: choice as Choice });
+    let storedChoice = localStorage.getItem("sfs_choice");
+    const choice = (storedChoice === "optin" || storedChoice === "optout")
+      ? storedChoice
+      : "none";
+    setState({ id, choice });
   }, []);
 
   /**

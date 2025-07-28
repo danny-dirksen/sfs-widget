@@ -89,39 +89,3 @@ export function Branding(props: BrandingProps) {
     </a>
   );
 }
-
-// const mimeTypes = {
-//   'svg': 'image/svg+xml',
-//   'png': 'image/png',
-//   'jpg': 'image/jpeg',
-//   'gif': 'image/gif',
-// };
-// type Format = keyof (typeof mimeTypes);
-// const defaultFormats = Object.keys(mimeTypes) as Format[];
-
-// interface ImgAndBackupProps {
-//   data: {
-//     alt: string;
-//     formats?: Format[]
-//     path: string;
-//   },
-//   className?: string;
-//   children: ReactNode;
-// };
-
-// function ImgAndBackup(props: ImgAndBackupProps) {
-//   const { data, className, children } = props;
-//   const { alt, formats, path } = data;
-//   const pathWithoutExt = path.split('.')[0];
-//   const [ toTry, setToTry ] = useState<Format[] | null>(null);
-//   useEffect(() => {
-//     setToTry(formats || defaultFormats);
-//   }, []);
-//   const format = (toTry && toTry.length > 0) ? toTry[0] : null;
-//   if (!format) return children;
-
-//   const onError = () => {
-//     if (toTry) setToTry(toTry.slice(1));
-//   };
-//   return <img className={className} src={`${pathWithoutExt}.${format}`} onError={onError} alt={alt}></img>
-// }

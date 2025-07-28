@@ -37,7 +37,7 @@ export function generateDownloadEmail(data: DownloadEmailData) {
       "https://songsforsaplings.us14.list-manage.com/unsubscribe?u=09c372bf98b7d30635bd0cb5c&id=2458faf7dd",
     shareLink: `mailto:?bcc=${shareBCC}&subject=${shareTitle}&body=${shareBody}`,
     resourcesLink:
-      "https://songsforsaplings.com/resources/free-guitar-chords-lyrics-and-sheet-music/#content",
+      "https://www.songsforsaplings.com/resources/",
     logo: "https://music.songsforsaplings.com/logo%20big.png",
     donateLink: "https://songsforsaplings.com/donate",
     contactLink: "https://songsforsaplings.com/contact",
