@@ -18,11 +18,18 @@ jobs:
 
       - name: Setup SSH
         run: |
+          # Create SSH directory and set permissions like so:
+          # ~/.ssh/
+          #   private.key (SSH_PRIVATE_KEY)
+          #   known_hosts (SSH_KNOWN_HOSTS)
+          #   config (SSH config, disables TCPKeepAlive to prevent connection drops during build)
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ../private.key
-          sudo chmod 600 ../private.key
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
+          chmod 600 ~/.ssh/private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
+          echo -e "Host *\n    ServerAliveInterval 20\n    TCPKeepAlive no" > ~/.ssh/config
+          chmod 644 ~/.ssh/config
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
