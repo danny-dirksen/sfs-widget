@@ -30,14 +30,23 @@ jobs:
           chmod 644 ~/.ssh/known_hosts
           echo -e "Host *\n    ServerAliveInterval 20\n    TCPKeepAlive no" > ~/.ssh/config
           chmod 644 ~/.ssh/config
+          # Start the SSH agent and add the private key
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/private.key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      
+      - name: Pull latest code
+        run: |
+          # Pull the latest code from the repository
+          ssh $PROD "cd ~/sfs-widget && git pull"
+        env:
+          PROD: "daniel@music.songsforsaplings.com"
 
-      - name: Execute post-receive hook
+      - name: Run build script
         run: |
           # Run the build script and copy the output to a log file
-          BUILD_COMMAND="cd ~/sfs-widget && git pull && ./scripts/build.sh | tee -a ~/sfs-widget/env/builds.log"
-          ssh -i $SSH_KEY_PATH daniel@music.songsforsaplings.com $BUILD_COMMAND
+          ssh $PROD "./scripts/build.sh | tee -a ~/sfs-widget/env/builds.log"
         env:
-          SSH_KEY_PATH: ~/.ssh/private.key
+          PROD: "daniel@music.songsforsaplings.com"
