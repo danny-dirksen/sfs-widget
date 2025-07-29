@@ -44,6 +44,6 @@ jobs:
       - name: Run build script
         run: |
           # Run the build script and copy the output to a log file
-          ssh -i "~/.ssh/private.key" $PROD "./scripts/build.sh | tee -a ~/sfs-widget/env/builds.log"
+          ssh -i "~/.ssh/private.key" $PROD "./scripts/build.sh | tee ~/sfs-widget/env/build.log"
         env:
           PROD: "daniel@music.songsforsaplings.com"
