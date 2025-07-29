@@ -36,6 +36,8 @@ jobs:
 
       - name: Execute post-receive hook
         run: |
-          ssh -i $SSH_KEY_PATH daniel@music.songsforsaplings.com "cd ~/sfs-widget && git pull && ./scripts/build.sh"
+          # Run the build script and copy the output to a log file
+          BUILD_COMMAND="cd ~/sfs-widget && git pull && ./scripts/build.sh | tee -a ~/sfs-widget/env/builds.log"
+          ssh -i $SSH_KEY_PATH daniel@music.songsforsaplings.com $BUILD_COMMAND
         env:
           SSH_KEY_PATH: ~/.ssh/private.key
