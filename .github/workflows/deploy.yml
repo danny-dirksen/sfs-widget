@@ -47,7 +47,7 @@ jobs:
           ssh -i "~/.ssh/private.key" $PROD "
             mkdir -p ~/sfs-widget/env && \
             touch ~/sfs-widget/env/build.log && \
-            ./scripts/build.sh | tee -a ~/sfs-widget/env/build.log
+            ~/sfs-widget/scripts/build.sh | tee -a ~/sfs-widget/env/build.log
           "
         env:
           PROD: "daniel@music.songsforsaplings.com"
