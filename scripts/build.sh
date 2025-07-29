@@ -33,13 +33,16 @@ mv .next .next.old
 npm run build
 BUILD_EXIT_CODE=$?
 if [ $BUILD_EXIT_CODE -ne 0 ]; then
+  # Build failed, so revert to the previous build
   echo "Build failed with exit code $BUILD_EXIT_CODE. Reverting to previous build."
   mv .next.old .next || {
     echo "Failed to revert to previous build. Exiting."
     exit 1
   }
+else
+  # Build succeeded, so clean up the old build directory
+  rm -r .next.old
 fi
-rm -r .next.old
 
 # Restart the application regardless of the build status
 pm2 restart app

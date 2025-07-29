@@ -2,8 +2,6 @@ import React from "react";
 import { AnalyticsContext } from "@/hooks/useAnalytics";
 import { Button } from "./Styles";
 
-let unusedVarMakeBuildFail = "This causes the build script to fail! Just for CICD testing.";
-
 interface AnalyticsNoticeProps {
   data: {
     analytics: AnalyticsContext;
