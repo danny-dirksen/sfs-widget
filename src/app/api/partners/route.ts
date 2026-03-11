@@ -1,5 +1,5 @@
 import { PartnerInfo } from "@/models/partners";
-import { getPartnerInfoList } from "@/utils/persistentData/persistentData";
+import { getPartnerInfoList } from "@/data-access/persistentData";
 import { NextResponse } from "next/server";
 
 /** Lists partners and their display names. */

@@ -1,5 +1,5 @@
 import { App } from "@/components/App";
-import { getContent, getPartnerInfo } from "@/utils/persistentData/persistentData";
+import { getContent, getPartnerInfo } from "@/data-access/persistentData";
 
 interface Props {
   searchParams?: {

@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { env } from "../env";
+import { env } from "../utils/env";
 import { JWT } from "google-auth-library";
 
 // Get environment variables.

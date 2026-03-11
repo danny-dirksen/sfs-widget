@@ -1,5 +1,5 @@
 import { validatePersistentData, ValidationError } from "./validatePersistentData";
-import { PersistentData } from "@/models/PersistentData";
+import { PersistentData } from "@/data-access";
 
 const mockPersistentData: PersistentData = {
   lastUpdated: Date.now(),

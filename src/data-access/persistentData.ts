@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
 
 import { ContentSchema } from "@/models/content";
-import { ContentProfileSchema } from "./partners";
+import { ContentProfileSchema } from "@/models/partners";
 
 /**
  * The application uses one `PersistentData` object to store all data that is not

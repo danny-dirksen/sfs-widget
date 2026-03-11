@@ -1,4 +1,4 @@
-import { PersistentData } from "@/models/PersistentData";
+import { PersistentData } from "@/data-access/persistentData";
 
 
 /**

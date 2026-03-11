@@ -5,7 +5,7 @@ import { parsePartnerTable } from "./tables/parsePartnerTable";
 import { parseResourcesTable } from "./tables/parseResourcesTable";
 
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { PersistentData } from "@/models/PersistentData";
+import { PersistentData } from "@/data-access/persistentData";
 import { validatePersistentData } from "./validatePersistentData";
 import { removeUnlinkedContent } from "./removeUnlinkedContent";
 

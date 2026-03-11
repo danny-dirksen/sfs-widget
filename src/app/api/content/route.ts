@@ -1,5 +1,5 @@
 import { Content } from "@/models/content";
-import { getContent } from "@/utils/persistentData/persistentData";
+import { getContent } from "@/data-access/persistentData";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse<Content>> {
