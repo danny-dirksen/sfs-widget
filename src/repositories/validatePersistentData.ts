@@ -1,4 +1,4 @@
-import { PersistentData } from "@/data-access/persistentData";
+import { PersistentData } from "@/repositories/persistentData";
 
 
 /**

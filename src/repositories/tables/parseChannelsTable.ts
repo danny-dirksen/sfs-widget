@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { parseTable } from "./parseTable";
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import { Channel } from "@/models/content";
+import { parseTable } from "@/utils/parseTable";
+import { ISpreadsheetRepo } from "../spreadsheet";
+
+const CHANNELS_SHEET_TITLE = "CHANNELS";
 
 // Required schema for each row in the table
 const RowSchema = z.object({
@@ -10,10 +12,13 @@ const RowSchema = z.object({
 });
 
 export async function parseChannelsTable(
-  document: GoogleSpreadsheet,
+  sheetRepo: ISpreadsheetRepo,
 ): Promise<Channel[] | Error> {
+  const rawSheet = await sheetRepo.getTableByTitle(CHANNELS_SHEET_TITLE);
+  if (rawSheet instanceof Error) return rawSheet;
+
   const table = await parseTable({
-    sheet: document.sheetsByTitle["CHANNELS"],
+    rawSheet,
     schema: RowSchema,
   });
 

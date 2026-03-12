@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { parseTable } from "./parseTable";
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import { Language } from "@/models/content";
+import { parseTable } from "@/utils/parseTable";
+import { ISpreadsheetRepo } from "../spreadsheet";
+
+const LANGUAGES_SHEET_TITLE = "LANGUAGES";
 
 // Required schema for each row in the table
 const RowSchema = z.object({
@@ -11,10 +13,13 @@ const RowSchema = z.object({
 });
 
 export async function parseLanguagesTable(
-  document: GoogleSpreadsheet,
+  sheetRepo: ISpreadsheetRepo,
 ): Promise<Language[] | Error> {
+  const rawSheet = await sheetRepo.getTableByTitle(LANGUAGES_SHEET_TITLE);
+  if (rawSheet instanceof Error) return rawSheet;
+
   const table = await parseTable({
-    sheet: document.sheetsByTitle["LANGUAGES"],
+    rawSheet,
     schema: RowSchema,
   });
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { DownloadRequestBodySchema } from "@/models/api";
 import { logger } from "@/utils/varUtils";
 import { sendDownloadLink } from "@/utils/email/sendDownloadLink";
-import { getContent } from "@/data-access/persistentData";
+import { getContent } from "@/repositories/getPersistentData";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   // Parse and validate request body

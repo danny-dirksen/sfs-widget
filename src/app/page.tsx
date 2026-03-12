@@ -1,5 +1,6 @@
 import { App } from "@/components/App";
-import { getContent, getPartnerInfo } from "@/data-access/persistentData";
+import { getContent, getPartnerInfo } from "@/repositories/getPersistentData";
+import { connection } from 'next/server'
 
 interface Props {
   searchParams?: {
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default async function Page(props: Props) {
+  
+  await connection();
   const pic = props.searchParams?.p || null;
   const content = await getContent(pic);
   const partner = pic ? await getPartnerInfo(pic) : null;

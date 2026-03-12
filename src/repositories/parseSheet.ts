@@ -4,13 +4,13 @@ import { parseLinksTable } from "./tables/parseLinksTable";
 import { parsePartnerTable } from "./tables/parsePartnerTable";
 import { parseResourcesTable } from "./tables/parseResourcesTable";
 
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { PersistentData } from "@/data-access/persistentData";
+import { PersistentData } from "@/repositories/persistentData";
 import { validatePersistentData } from "./validatePersistentData";
 import { removeUnlinkedContent } from "./removeUnlinkedContent";
+import { ISpreadsheetRepo } from "./spreadsheet";
 
 export async function parseSheet(
-  doc: GoogleSpreadsheet,
+  doc: ISpreadsheetRepo,
 ): Promise<PersistentData | Error> {
 
   const channels = await parseChannelsTable(doc);

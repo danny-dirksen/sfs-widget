@@ -4,9 +4,11 @@
  */
 
 import { z } from "zod";
-import { parseTable, TableRow } from "./parseTable";
-import { GoogleSpreadsheet } from "google-spreadsheet";
+import { parseTable, TableRow } from "@/utils/parseTable";
+import { ISpreadsheetRepo } from "../spreadsheet";
 import { Link, ResourceTranslation } from "@/models/content";
+
+const LINKS_SHEET_TITLE = "LINKS";
 
 // Required schema for each row in the table
 // We don't know all of the channel IDs in advance, so we only define the known fields.
@@ -21,10 +23,13 @@ const LinkRowSchema = z.object({
 type LinkRow = z.infer<typeof LinkRowSchema>;
 
 export async function parseLinksTable(
-  document: GoogleSpreadsheet,
+  sheetRepo: ISpreadsheetRepo,
 ): Promise<{ links: Link[]; resourceTranslations: ResourceTranslation[] } | Error> {
+  const rawSheet = await sheetRepo.getTableByTitle(LINKS_SHEET_TITLE);
+  if (rawSheet instanceof Error) return rawSheet;
+
   const table = await parseTable({
-    sheet: document.sheetsByTitle["LINKS"],
+    rawSheet,
     schema: LinkRowSchema,
   });
   
@@ -32,7 +37,6 @@ export async function parseLinksTable(
 
   const parsedRows = table.rows.map(parseLinksTableRow)
     .filter(r => r !== null);
-
 
   return {
     resourceTranslations: parsedRows.map(row => row.resourceTranslation),

@@ -3,16 +3,18 @@
 // It will fail if the sheet structure changes or if the data is not as expected.
 // This ensures that we do not deploy code that breaks the parsing logic.
 
-import { parseSheet } from "./parseSheet";
-import { getSheetDoc } from "./getSheetDoc";
+import { createGoogleSpreadsheet, GoogleSpreadsheetRepo } from "@/repositories/spreadsheet/GoogleSheetsRepo";
+import { parseSheet } from "../../repositories/parseSheet";
 
 describe("parseSheet", () => {
   it("should parse the sheet and return valid PersistentData", async () => {
-    const doc = await getSheetDoc();
+    const doc = await createGoogleSpreadsheet();
+    const spreadsheetRepo = new GoogleSpreadsheetRepo(doc);
+
     if (doc instanceof Error) {
       throw new Error("Failed to get Google Sheets document: " + doc.message);
     }
-    const result = await parseSheet(doc!);
+    const result = await parseSheet(spreadsheetRepo);
     if (result instanceof Error) throw result;
 
     // Ensure that general links are included

@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { parseTable } from "./parseTable";
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import { Resource } from "@/models/content";
+import { parseTable } from "@/utils/parseTable";
+import { ISpreadsheetRepo } from "../spreadsheet";
+
+const RESOURCES_SHEET_TITLE = "RESOURCES";
 
 // Required schema for each row in the table
 const RowSchema = z.object({
@@ -9,10 +11,13 @@ const RowSchema = z.object({
 });
 
 export async function parseResourcesTable(
-  document: GoogleSpreadsheet,
+  sheetRepo: ISpreadsheetRepo,
 ): Promise<Resource[] | Error> {
+  const rawSheet = await sheetRepo.getTableByTitle(RESOURCES_SHEET_TITLE);
+  if (rawSheet instanceof Error) return rawSheet;
+
   const table = await parseTable({
-    sheet: document.sheetsByTitle["RESOURCES"],
+    rawSheet,
     schema: RowSchema,
   });
 

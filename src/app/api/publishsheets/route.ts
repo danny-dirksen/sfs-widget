@@ -1,4 +1,4 @@
-import { reloadSheet } from "@/data-access/persistentData";
+import { reloadSheet } from "@/repositories/getPersistentData";
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse> {
