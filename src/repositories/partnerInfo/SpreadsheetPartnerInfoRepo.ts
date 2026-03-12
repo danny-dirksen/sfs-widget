@@ -14,11 +14,6 @@ export class SpreadsheetPartnerInfoRepo implements IPartnerInfoRepo {
     }
     return profiles.map(contentProfileToPartnerInfo);
   }
-
-  async setPartners(partners: PartnerInfo[]): Promise<undefined | PartnerRepoError> {
-    // Not enough information to implement this method, and since spreadsheets are the source of truth, we can just ignore it for now
-    return undefined;
-  }
 }
 
 function contentProfileToPartnerInfo({ name, pic, url }: ContentProfile): PartnerInfo {

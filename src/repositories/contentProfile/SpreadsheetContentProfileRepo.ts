@@ -23,11 +23,6 @@ export class SpreadsheetContentProfileRepo implements IContentProfileRepo {
     return partner;
   }
 
-  async setContentProfiles(): Promise<undefined> {
-    // Do nothing. Spreadsheets are sources of truth, so we don't need to set them`
-    return undefined;
-  }
-
   private async fetchContentProfiles(): Promise<ContentProfile[] | ContentProfileRepoError> {
     const result = await parsePartnerTable(this.repo);
     if (result instanceof Error) {
