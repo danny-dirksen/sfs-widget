@@ -5,7 +5,7 @@
 
 import { z } from "zod";
 import { parseTable, TableRow } from "@/utils/parseTable";
-import { ISpreadsheetRepo } from "../spreadsheet";
+import { ISpreadsheetRepo } from "../../spreadsheet";
 import { Link, ResourceTranslation } from "@/models/content";
 
 const LINKS_SHEET_TITLE = "LINKS";

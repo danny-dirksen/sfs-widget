@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Resource } from "@/models/content";
 import { parseTable } from "@/utils/parseTable";
-import { ISpreadsheetRepo } from "../spreadsheet";
+import { ISpreadsheetRepo } from "../../spreadsheet";
 
 const RESOURCES_SHEET_TITLE = "RESOURCES";
 

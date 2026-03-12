@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Channel } from "@/models/content";
 import { parseTable } from "@/utils/parseTable";
-import { ISpreadsheetRepo } from "../spreadsheet";
+import { ISpreadsheetRepo } from "../../spreadsheet";
 
 const CHANNELS_SHEET_TITLE = "CHANNELS";
 

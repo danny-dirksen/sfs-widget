@@ -1,9 +1,8 @@
 import { Content } from "@/models/content";
 
-export interface IContentRepository {
-  getContent(): Promise<Content | GetContentError>;
-  setContent(): Promise<undefined | SetContentError>;
+export interface IContentRepo {
+  getContent(): Promise<Content | ContentRepoError>;
+  setContent(): Promise<undefined | ContentRepoError>;
 }
 
-export class GetContentError extends Error {}
-export class SetContentError extends Error {}
+export class ContentRepoError extends Error {}

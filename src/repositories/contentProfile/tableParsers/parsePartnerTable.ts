@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ContentProfile } from "@/models/partners";
 import { parseTable } from "@/utils/parseTable";
-import { ISpreadsheetRepo } from "../spreadsheet";
+import { ISpreadsheetRepo } from "../../spreadsheet";
 
 const PARTNERS_SHEET_TITLE = "PARTNERS";
 

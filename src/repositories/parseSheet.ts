@@ -1,8 +1,8 @@
-import { parseChannelsTable } from "./tables/parseChannelsTable";
-import { parseLanguagesTable } from "./tables/parseLanguagesTable";
-import { parseLinksTable } from "./tables/parseLinksTable";
-import { parsePartnerTable } from "./tables/parsePartnerTable";
-import { parseResourcesTable } from "./tables/parseResourcesTable";
+import { parseChannelsTable } from "./content/tableParsers/parseChannelsTable";
+import { parseLanguagesTable } from "./content/tableParsers/parseLanguagesTable";
+import { parseLinksTable } from "./content/tableParsers/parseLinksTable";
+import { parseResourcesTable } from "./content/tableParsers/parseResourcesTable";
+import { parsePartnerTable } from "./contentProfile/tableParsers/parsePartnerTable";
 
 import { PersistentData } from "@/repositories/persistentData";
 import { validatePersistentData } from "./validatePersistentData";

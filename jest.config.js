@@ -10,4 +10,7 @@ module.exports = {
   },
   testMatch: ["**/src/**/*.test.[jt]s?(x)"],
   testTimeout: 20_000,
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
 };

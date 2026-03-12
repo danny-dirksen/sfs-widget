@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Language } from "@/models/content";
 import { parseTable } from "@/utils/parseTable";
-import { ISpreadsheetRepo } from "../spreadsheet";
+import { ISpreadsheetRepo } from "../../spreadsheet";
 
 const LANGUAGES_SHEET_TITLE = "LANGUAGES";
 
