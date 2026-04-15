@@ -22,7 +22,7 @@ mailchimp.setConfig({
   if ("health_status" in response) {
     logger.info(response.health_status); // Everything's chimpy!
   } else {
-    logger.error("Could not initialize mailchimp: " + response);
+    logger.error("Mailchimp initialization failed: Unexpected response format: " + JSON.stringify(response));
   }
 })();
 
@@ -52,21 +52,32 @@ export async function sendDownloadLink(
         text: emailTXT, // plain text body
         html: emailHTML, // html body
       })
-      .then((msg) => res({ msg })) // logs response data
-      .catch((err) => res({ err })); // logs any error
+      .then((msg) => res({ msg }))
+      .catch((err) => res({ err }));
   });
+
   if (err || !msg) {
-    logger.error("Failed to send email: " + err);
+    logger.error(
+      `Failed to send email to ${emailData.email} via Mailgun.`
+      + ` Error: ${err?.message || err || "Unknown error"}.`
+      + ` Data: ${JSON.stringify({
+        domain: env.MAILGUN_DOMAIN,
+        to: emailData.email,
+        subject: "Your Free Download",
+      })}`
+    );
     return false;
   }
-  logger.info("Sent message: " + msg.details);
+  logger.info(`Sent message to ${emailData.email}: ${msg.details}`);
   const subscribed = await subscribe(
     emailData.email,
     emailData.firstName,
     emailData.lastName,
   );
   if (!subscribed) {
-    logger.error("Could not subscribe ");
+    logger.error(
+      `Could not subscribe ${emailData.email} to Mailchimp after sending email.`
+    );
   }
   return true;
 }
@@ -85,21 +96,35 @@ async function subscribe(
 ): Promise<boolean> {
   const listId = "2458faf7dd";
 
-  const resp = await mailchimp.lists
-    .addListMember(listId, {
-      email_address: email,
-      status: "subscribed",
-      merge_fields: {
-        FNAME: firstName,
-        LNAME: lastName,
-      },
-    })
-    .catch((err) => {
-      logger.error("Failed to subscribe: " + err);
-    });
-  if (!resp || !("full_name" in resp)) {
+  const resp = await mailchimp.lists.addListMember(listId, {
+    email_address: email,
+    status: "subscribed",
+    merge_fields: {
+      FNAME: firstName,
+      LNAME: lastName,
+    },
+  }).catch((err) => (
+    // Wrap errors in a consistent format for easier logging.
+    new Error(`Mailchimp subscription failed for ${email}: ${err?.message || err || "Unknown error"}`)
+  ));
+
+  if (resp instanceof Error) {
+    logger.error(resp.message);
     return false;
   }
+
+  // Check if response is a falure response (e.g. if the full_name field is missing,
+  // it's likely the subscription failed but Mailchimp returned a 200 status code with an error message
+  // in the body instead of throwing an error)
+  if (!("full_name" in resp)) {
+    logger.error(
+      `Mailchimp subscription for ${email} seems to have failed.`
+      + ` Response: ${JSON.stringify(resp)}`
+    );
+    return false;
+  }
+
+  // If we reach this point, the subscription was successful
   logger.info(`Subscribed ${resp.full_name} (${resp.email_address})`);
   return true;
 }
