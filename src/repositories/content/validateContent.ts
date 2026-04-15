@@ -1,5 +1,6 @@
-import { PersistentData } from "@/repositories/persistentData";
-
+import { Content } from "@/models/content";
+import { findDuplicates } from "@/utils/stringArrayUtils";
+import { ValidationError } from "@/utils/ValidationError";
 
 /**
  * We do not need to validate the entire `PersistentData` schema,
@@ -12,12 +13,10 @@ import { PersistentData } from "@/repositories/persistentData";
  * @param param0
  */
 
-export function validatePersistentData({
-  content: {
-    channels, languages, resources, resourceTranslations, links,
-  }, partners,
-}: PersistentData): ValidationError | null {
-  // Make sure that ids are unique and refer to existing objects.
+
+export function validateContent(content: Content): ValidationError | null {
+  const { channels, languages, resources, resourceTranslations, links } = content;
+
   // Channels
   const channelIds = new Set(channels.map(channel => channel.channelId));
   const referencedChannelIds = new Set<string>(
@@ -49,13 +48,10 @@ export function validatePersistentData({
     resourceTranslations.map(rt => `"${rt.resourceId}" in "${rt.languageId}"`)
   );
 
-  // Partners (no references. we call ids "pic" (partner identification code) for partners)
-  const duplicatePartnerPics = findDuplicates(partners.map(partner => partner.pic));
-
   // Links (no references)
   const duplicateLinks = findDuplicates(
     links.map(link => `resourceId "${link.resourceId}" and languageId "${link.languageId}" on channel "${link.channelId ?? 'all'}"`)
-  )
+  );
 
   // Throw an error if any duplicates are found
   const duplicateIds = [
@@ -63,7 +59,6 @@ export function validatePersistentData({
     ...duplicateLanguageIds.map(id => `Language with languageId "${id}" is duplicated.`),
     ...duplicateResourceIds.map(id => `Resource with resourceId "${id}" is duplicated.`),
     ...duplicateTranslations.map(translation => `Resource Translation ${translation} is duplicated.`),
-    ...duplicatePartnerPics.map(pic => `Partner with pic "${pic}" is duplicated.`),
     ...duplicateLinks.map(link => `Link for ${link} is duplicated.`),
   ];
   if (duplicateIds.length > 0) {
@@ -85,8 +80,7 @@ export function validatePersistentData({
   const generalLinks = links.filter(link => link.channelId === null);
   const conflicts = generalLinks
     .filter(generalLink => (
-      channelLinks.some(channelLink =>
-        channelLink.resourceId === generalLink.resourceId &&
+      channelLinks.some(channelLink => channelLink.resourceId === generalLink.resourceId &&
         channelLink.languageId === generalLink.languageId
       )
     ))
@@ -97,38 +91,4 @@ export function validatePersistentData({
 
   // If we reach this point, the data is valid.
   return null;
-}
-
-export class ValidationError extends Error {
-  constructor(message: string, public problems: string[]) {
-    super(message);
-    this.name = "ValidationError";
-  }
-
-  toString() {
-    return `${this.name}: ${this.message}\n\n${this.problems.map(p => `- ${p}`).join("\n")}`;
-  }
-}
-
-/**
- * Finds duplicate strings in an array.
- * @param arr The array of strings to check for duplicates.
- * @returns An array of duplicate strings.
- */
-function findDuplicates(arr: string[]): string[] {
-  return Object.entries(countStrings(arr))
-    .filter(([_, count]) => count > 1)
-    .map(([str]) => str);
-}
-
-/**
- * Counts the occurrences of each string in an array.
- * @param arr The array of strings to count.
- * @returns An object mapping each string to its count.
- */
-function countStrings(arr: string[]): Record<string, number> {
-  return arr.reduce<Record<string, number>>((acc, id) => {
-    acc[id] = (acc[id] || 0) + 1;
-    return acc;
-  }, {});
 }

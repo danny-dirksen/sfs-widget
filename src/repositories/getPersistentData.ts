@@ -10,6 +10,9 @@ import { parseSheet } from "./parseSheet";
 import { CacheLevel, multiLevelCache } from "@/utils/multiLevelCache";
 import { createGoogleSpreadsheet, GoogleSpreadsheetRepo } from "./spreadsheet/GoogleSheetsRepo";
 
+const doc = createGoogleSpreadsheet();
+const spreadsheetRepo = new GoogleSpreadsheetRepo(doc);
+
 const sheetCache: CacheLevel<PersistentData> = {
   read: async () => {
     const doc = await createGoogleSpreadsheet();
@@ -104,7 +107,7 @@ export async function getPartnerInfo(
 export async function getContent(
   pic: string | null = null,
 ): Promise<Content | Error> {
-  const data = await getPersistentData();
+  const content = 
   if (data instanceof Error) return data;
   const { content } = data;
 

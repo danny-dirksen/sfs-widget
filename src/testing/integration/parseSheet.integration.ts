@@ -4,7 +4,7 @@
 // This ensures that we do not deploy code that breaks the parsing logic.
 
 import { createGoogleSpreadsheet, GoogleSpreadsheetRepo } from "@/repositories/spreadsheet/GoogleSheetsRepo";
-import { parseSheet } from "../../repositories/parseSheet";
+import { parseSheet } from "../../repositories/content/tableParsers/parseContent";
 
 describe("parseSheet", () => {
   it("should parse the sheet and return valid PersistentData", async () => {

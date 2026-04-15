@@ -5,46 +5,37 @@ import { parseResourcesTable } from "./content/tableParsers/parseResourcesTable"
 import { parsePartnerTable } from "./contentProfile/tableParsers/parsePartnerTable";
 
 import { PersistentData } from "@/repositories/persistentData";
-import { validatePersistentData } from "./validatePersistentData";
 import { removeUnlinkedContent } from "./removeUnlinkedContent";
 import { ISpreadsheetRepo } from "./spreadsheet";
+import { parseContent } from "./content/tableParsers/parseContent";
+import { validateContentProfile } from "./contentProfile/validateContentProfile";
+import { validateContent } from "./content/validateContent";
 
 export async function parseSheet(
   doc: ISpreadsheetRepo,
 ): Promise<PersistentData | Error> {
 
-  const channels = await parseChannelsTable(doc);
-  if (channels instanceof Error) return channels;
+  const content = await parseContent(doc);
+  if (content instanceof Error) return content;
 
-  const languages = await parseLanguagesTable(doc);
-  if (languages instanceof Error) return languages;
+  // Check the persistent data for consistency.
+  const contentValidationError = validateContent(content);
+  if (contentValidationError) return contentValidationError;
 
-  const resources = await parseResourcesTable(doc);
-  if (resources instanceof Error) return resources;
-
-  const linksTableResult = await parseLinksTable(doc);
-  if (linksTableResult instanceof Error) return linksTableResult;
-  const { links, resourceTranslations } = linksTableResult;
-
+  // Parse and validate partners separately, since they are referenced by the content and must be validated together.
   const partners = await parsePartnerTable(doc);
   if (partners instanceof Error) return partners;
 
   // Combine all data into a single object, then validate it.
   const persistentData: PersistentData = {
     lastUpdated: Date.now(),
-    content: {
-      channels,
-      languages,
-      resources,
-      resourceTranslations,
-      links,
-    },
+    content,
     partners,
   };
 
   // Check the persistent data for consistency.
-  const error = validatePersistentData(persistentData);
-  if (error) return error;
+  const contentProfileValidationError = validateContentProfile(partners, content);
+  if (contentProfileValidationError) return contentProfileValidationError;
 
   // If we reach this point, the data is valid.
   return {
