@@ -35,7 +35,6 @@ const runtimeCache: CacheLevel<PersistentData> = {
   },
   write: async (data: PersistentData) => {
     runtimeValue = data;
-    await revalidatePath("/"); // Revalidate the "/" route after updating the runtime cache
     return null; // No error
   },
 };
@@ -66,7 +65,7 @@ export async function reloadSheet(): Promise<Error | null> {
   await fileCache.write?.(result);
   await runtimeCache.write?.(result);
   logger.info("Sheet data reloaded successfully.");
-  revalidatePath("/"); // Revalidate the "/" route after reloading the sheet
+  await revalidatePath("/"); // Revalidate the "/" route after reloading the sheet
   return null;
 }
 
