@@ -6,34 +6,8 @@ import { MainContent } from "./MainContent";
 import { AnalyticsNotice } from "./AnalyticsNotice";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Content } from "@/models/content";
-import localFont from "next/font/local";
 import { PartnerInfo } from "@/models/partners";
 import { AppContainer } from "./AppContainer";
-
-const renner = localFont({
-  src: [
-    {
-      path: "../resources/fonts/renner-light.otf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../resources/fonts/renner-lightitalic.otf",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../resources/fonts/renner-medium.otf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../resources/fonts/renner-mediumitalic.otf",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-});
 
 interface AppProps {
   data: {
