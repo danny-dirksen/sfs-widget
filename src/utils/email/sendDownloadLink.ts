@@ -1,30 +1,16 @@
 import { env } from "../env";
 import { convert } from "html-to-text";
 import { DownloadEmailData, generateDownloadEmail } from "./generateEmail";
-import { logger } from "../varUtils";
-import mailchimp from "@mailchimp/mailchimp_marketing";
+import { logger } from "../logger";
 
 // Initialize Mailgun
 import FormData from "form-data";
 import Mailgun, { MessagesSendResult } from "mailgun.js";
+import { subscribe } from "./subscribe";
 
 const mailgun = new Mailgun(FormData);
 const mg = mailgun.client({ username: "api", key: env.MAILGUN_KEY });
 logger.info("Mailgun initialized");
-
-// Initialize Mailchimp
-mailchimp.setConfig({
-  apiKey: env.MAILCHIMP_KEY,
-  server: env.MAILCHIMP_PREFIX,
-});
-(async () => {
-  const response = await mailchimp.ping.get();
-  if ("health_status" in response) {
-    logger.info(response.health_status); // Everything's chimpy!
-  } else {
-    logger.error("Mailchimp initialization failed: Unexpected response format: " + JSON.stringify(response));
-  }
-})();
 
 /**
  * Send download link via mailgun and subscribe them via mailchimp.
@@ -82,49 +68,3 @@ export async function sendDownloadLink(
   return true;
 }
 
-/**
- * Subscribe the user using the mailchimp API
- * @param email
- * @param firstName
- * @param lastName
- * @returns true if successful.
- */
-async function subscribe(
-  email: string,
-  firstName: string,
-  lastName: string,
-): Promise<boolean> {
-  const listId = "2458faf7dd";
-
-  const resp = await mailchimp.lists.addListMember(listId, {
-    email_address: email,
-    status: "subscribed",
-    merge_fields: {
-      FNAME: firstName,
-      LNAME: lastName,
-    },
-  }).catch((err) => (
-    // Wrap errors in a consistent format for easier logging.
-    new Error(`Mailchimp subscription failed for ${email}: ${err?.message || err || "Unknown error"}`)
-  ));
-
-  if (resp instanceof Error) {
-    logger.error(resp.message);
-    return false;
-  }
-
-  // Check if response is a falure response (e.g. if the full_name field is missing,
-  // it's likely the subscription failed but Mailchimp returned a 200 status code with an error message
-  // in the body instead of throwing an error)
-  if (!("full_name" in resp)) {
-    logger.error(
-      `Mailchimp subscription for ${email} seems to have failed.`
-      + ` Response: ${JSON.stringify(resp)}`
-    );
-    return false;
-  }
-
-  // If we reach this point, the subscription was successful
-  logger.info(`Subscribed ${resp.full_name} (${resp.email_address})`);
-  return true;
-}

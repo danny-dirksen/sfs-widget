@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Suspense } from "react";
+import { AppContainer } from "@/components/AppContainer";
 
 export const metadata: Metadata = {
   title: "Free Resources - Songs for Saplings",
@@ -17,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       {/* <meta name="theme-color" content="#2fb257"></meta> */}
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        <AppContainer>
+          <Suspense>{children}</Suspense>
+        </AppContainer>
+      </body>
     </html>
   );
 }

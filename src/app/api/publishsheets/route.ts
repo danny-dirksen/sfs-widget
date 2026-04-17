@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse> {
   const result = await throttle({
-    allow: async () => await reloadSheet(),
+    allow: reloadSheet,
     block: async () => new Error(`Daily upload cap of ${REQS_PER_DAY} reloads exceeded`),
   });
   // If the request is blocked due to throttling, return an error response.

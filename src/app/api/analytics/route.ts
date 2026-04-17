@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import Mixpanel from "mixpanel";
-import { logger } from "@/utils/varUtils";
+import { logger } from "@/utils/logger";
 import { AnalyticsEventSchema } from "@/models/api";
 
 // Initialize Mixpanel.

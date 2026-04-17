@@ -4,12 +4,14 @@ import {
 } from "@/models/partners";
 import { Content } from "@/models/content";
 import { removeUnlinkedContent } from "./removeUnlinkedContent";
-import { varReadJSON, logger, varWriteJSON } from "../varUtils";
+import { varReadJSON, varWriteJSON } from "./fileUtils";
+import { logger } from "../logger";
 import { PersistentData, PersistentDataSchema } from "@/models/PersistentData";
 import { parseSheet } from "./parseSheet";
 import { CacheLevel, multiLevelCache } from "../multiLevelCache";
 import { getSheetDoc } from "./getSheetDoc";
-import { revalidatePath } from 'next/cache'
+import { cacheTag, revalidatePath, revalidateTag } from 'next/cache'
+import { PARTNERS_CACHE_TAG, CONTENT_CACHE_TAG } from "./constants";
 
 const sheetCache: CacheLevel<PersistentData> = {
   read: async () => {
@@ -28,25 +30,12 @@ const fileCache: CacheLevel<PersistentData> = {
   },
 };
 
-let runtimeValue: PersistentData | null = null;
-const runtimeCache: CacheLevel<PersistentData> = {
-  read: async () => {
-    return runtimeValue ?? new Error("No runtime cache value set.");
-  },
-  write: async (data: PersistentData) => {
-    runtimeValue = data;
-    return null; // No error
-  },
-};
-
 /**
- * 3-level caching for persistent data retrieval.
- * 1. (checked first): In-memory cache (runtime).
- * 2. (checked 2nd): Local file system cache with zod validation.
- * 3. (If the L1 and L2 miss): it parses from the provided Google Sheets function.
+ * Simple caching for persistent data retrieval.
+ * 1. (checked 1st): Local file system cache with zod validation.
+ * 2. (If the L1 misses): it parses from the provided Google Sheets function.
  */
 export const getPersistentData = multiLevelCache<PersistentData>([
-  runtimeCache,
   fileCache,
   sheetCache,
 ]);
@@ -63,13 +52,17 @@ export async function reloadSheet(): Promise<Error | null> {
   }
   // Don't care if they fail, just log them.
   await fileCache.write?.(result);
-  await runtimeCache.write?.(result);
   logger.info("Sheet data reloaded successfully.");
-  await revalidatePath("/"); // Revalidate the "/" route after reloading the sheet
+
+  revalidatePath("/"); // Revalidate the homepage to update the cache there as well.
+  revalidateTag(CONTENT_CACHE_TAG, { expire: 0 });
+  revalidateTag(PARTNERS_CACHE_TAG, { expire: 0 });
   return null;
 }
 
 export async function getContentProfiles(): Promise<ContentProfile[] | Error> {
+  "use cache";
+  cacheTag(PARTNERS_CACHE_TAG);
   const data = await getPersistentData();
   return data instanceof Error
     ? data
@@ -79,6 +72,8 @@ export async function getContentProfiles(): Promise<ContentProfile[] | Error> {
 export async function getContentProfile(
   pic: string,
 ): Promise<ContentProfile | null | Error> {
+  "use cache";
+  cacheTag(PARTNERS_CACHE_TAG);
   const data = await getPersistentData();
   return data instanceof Error
     ? data
@@ -86,6 +81,8 @@ export async function getContentProfile(
 }
 
 export async function getPartnerInfoList(): Promise<PartnerInfo[] | Error> {
+  "use cache";
+  cacheTag(PARTNERS_CACHE_TAG);
   const data = await getPersistentData();
   return data instanceof Error
     ? data
@@ -95,6 +92,8 @@ export async function getPartnerInfoList(): Promise<PartnerInfo[] | Error> {
 export async function getPartnerInfo(
   pic: string,
 ): Promise<PartnerInfo | Error | null> {
+  "use cache";
+  cacheTag(PARTNERS_CACHE_TAG);
   const data = await getPersistentData();
   if (data instanceof Error) return data;
   const partner = data.partners.find((p) => p.pic === pic);
@@ -106,6 +105,8 @@ export async function getPartnerInfo(
 export async function getContent(
   pic: string | null = null,
 ): Promise<Content | Error> {
+  "use cache";
+  cacheTag(CONTENT_CACHE_TAG);
   const data = await getPersistentData();
   if (data instanceof Error) return data;
   const { content } = data;

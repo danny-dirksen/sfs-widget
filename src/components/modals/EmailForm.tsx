@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { Input, Button } from "../Styles";
-import { ContactInfo } from "@/models/api";
+import { ContactInfo, ContactInfoSchema } from "@/models/api";
 
 interface EmailFormProps {
   data: {
@@ -26,17 +26,16 @@ export function EmailForm(props: EmailFormProps) {
     "init",
   );
 
-  const disableSubmit =
-    firstName.length === 0 ||
-    lastName.length === 0 ||
-    !validEmail(email) ||
-    status === "sending";
+  const parsedContactInfo = ContactInfoSchema.safeParse(contactInfo);
+  const disableSubmit = !parsedContactInfo.success || status === "sending";
 
-  const handleSubmit = async () => {
-    setStatus("sending");
-    const result = await onSubmit(contactInfo);
-    setStatus(result);
-  };
+  const handleSubmit = parsedContactInfo.success
+    ? async () => {
+        setStatus("sending");
+        const result = await onSubmit(parsedContactInfo.data);
+        setStatus(result);
+      }
+    : undefined;
 
   return status === "init" || status === "sending" ? (
     <>

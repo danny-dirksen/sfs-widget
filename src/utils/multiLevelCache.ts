@@ -1,4 +1,4 @@
-import { logger } from "./varUtils";
+import { logger } from "./logger";
 
 /**
  * Multi-level caching function.

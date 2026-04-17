@@ -1,9 +1,10 @@
 import path from "path";
 import fs from "fs/promises";
-import { varReadJSON, varWriteJSON, varDir } from "./varUtils";
+import { varReadJSON, varWriteJSON } from "./fileUtils";
+import { PERSISTANCE_DIRECTORY } from "./constants";
 import { z } from "zod/v4";
 
-describe("varUtils", () => {
+describe("fileUtils", () => {
   const testSchema = z.object({
     name: z.string(),
     age: z.number(),
@@ -32,7 +33,7 @@ describe("varUtils", () => {
     expect(newReadResult).toEqual(newData);
 
     // Clean up the test file
-    const filePath = path.join(varDir, filename);
+    const filePath = path.join(PERSISTANCE_DIRECTORY, filename);
 
     await fs.unlink(filePath);
   });

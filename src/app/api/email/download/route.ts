@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DownloadRequestBodySchema } from "@/models/api";
-import { logger } from "@/utils/varUtils";
+import { logger } from "@/utils/logger";
 import { sendDownloadLink } from "@/utils/email/sendDownloadLink";
 import { getContent } from "@/utils/persistentData/persistentData";
 

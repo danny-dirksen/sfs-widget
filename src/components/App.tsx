@@ -8,6 +8,7 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import { Content } from "@/models/content";
 import localFont from "next/font/local";
 import { PartnerInfo } from "@/models/partners";
+import { AppContainer } from "./AppContainer";
 
 const renner = localFont({
   src: [
@@ -62,12 +63,12 @@ export const App: React.FC<AppProps> = (props) => {
   }, [analytics]);
 
   return (
-    <div id="app" className={renner.className + " h-full relative bg-sfs-bg "}>
+    <AppContainer>
       <BrandingLayer data={{ partner }} />
       <MainContent data={{ content, analytics }} />
       {/* Popup layer */}
       <AnalyticsNotice data={{ analytics }} />
       {/* { popup && <div id='popup-layer' className='absolute top-0 left-0 w-full h-full' /> } */}
-    </div>
+    </AppContainer>
   );
 };
