@@ -7,7 +7,7 @@
     "build": "next build",
     "build:templates": "mjml email-templates/download.mjml -o email-templates/download.html",
     "test": "jest",
-    "test:integration": "jest --config jest-integration.config.js",
+    "test:integration": "jest --config jest.config.integration.js",
     "start": "next start",
     "lint": "next lint",
     "deploy": ".scripts/deploy.sh"
