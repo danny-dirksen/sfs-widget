@@ -1,13 +1,7 @@
-const { createDefaultPreset } = require("ts-jest");
-
-const tsJestTransformCfg = createDefaultPreset().transform;
+const baseConfig = require("./jest.config");
 
 /** @type {import("jest").Config} **/
 module.exports = {
-  testEnvironment: "node",
-  transform: {
-    ...tsJestTransformCfg,
-  },
+  ...baseConfig,
   testMatch: ["**/src/**/*.integration.[jt]s?(x)"],
-  testTimeout: 20_000,
 };

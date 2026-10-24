@@ -33,12 +33,20 @@ This webapp is primarily intended as an iframe-embeddable widget to be easily ad
 ### Setup
 
 1. Clone the repository to your local machine.
-2. Install the necessary dependencies by running `npm install` in the root directory.
-3. To start the development server, running `npm run dev` in the root directory.
+2. Install the necessary dependencies by running `npm ci` in the root directory.
+3. To start the development server, run `npm run dev` in the root directory.
+
+Node.js 24 or newer is required for development, tests, builds, and production. The Node.js type definitions target v24.
+
+### Testing
+
+Run `npm test` for unit tests. Run `npm run test:integration` for the Google Sheets integration tests, which require the credentials and spreadsheet configuration described in `.env-example`.
+
+Both test configurations transform the ESM-only `ky` dependency used by `google-spreadsheet`, along with `gaxios` and its ESM fetch dependencies used during Google authentication, so they can run in Jest's CommonJS environment.
 
 ### Deployment
 
-After pushing changes to `main`, you can deploy to production by entering the command `npm run deploy` on your local machine.
+Pushing changes to `main` runs the unit tests on Node.js 24 in GitHub Actions before deploying to production. You can also deploy manually with `npm run deploy`.
 
 ### Credits
 

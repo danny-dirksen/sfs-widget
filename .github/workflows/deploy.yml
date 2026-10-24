@@ -6,12 +6,28 @@ on:
       - main
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test -- --runInBand
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install SSH client
         run: sudo apt-get install -y ssh
@@ -45,6 +61,8 @@ jobs:
         run: |
           # Create build log file if it doesn't exist and run the build script
           ssh -i "~/.ssh/private.key" $PROD "
+            # Exit immediately if any command fails and propagate the error code
+            set -o pipefail
             mkdir -p ~/sfs-widget/env && \
             touch ~/sfs-widget/env/build.log && \
             ~/sfs-widget/scripts/build.sh | tee -a ~/sfs-widget/env/build.log

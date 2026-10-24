@@ -4,6 +4,12 @@ import { logger } from "../logger";
 
 jest.mock("@mailchimp/mailchimp_marketing");
 jest.mock("../logger");
+jest.mock("../env", () => ({
+  env: {
+    MAILCHIMP_KEY: "test-key",
+    MAILCHIMP_PREFIX: "us1",
+  },
+}));
 
 const mockGetListMember = jest.fn();
 const mockSetListMember = jest.fn();

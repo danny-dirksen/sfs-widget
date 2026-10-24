@@ -15,7 +15,7 @@ git --work-tree=$APP_DIR --git-dir=$GIT_DIR checkout -f $BRANCH
 
 # Install dependencies
 cd $APP_DIR
-npm i --no-save || {
+npm ci || {
   echo "Failed to install dependencies. Exiting."
   exit 1
 }
@@ -45,4 +45,4 @@ else
 fi
 
 # Restart the application regardless of the build status
-pm2 restart app
+pm2 restart ecosystem.config.js --only app --update-env
